@@ -320,6 +320,9 @@ section{position:relative;z-index:1}
 .wordmark{width:clamp(58px,5.6vw,80px);height:auto;display:block}
 .brand-sub{font-size:.5rem;font-variation-settings:'wght' 620;letter-spacing:.26em;
   text-transform:uppercase;line-height:1.5;padding-bottom:.3em;white-space:nowrap}
+/* empurra o botão para a direita: a marca fica na esquerda e o pedido na
+   ponta oposta, sem nada disputando o meio (as âncoras não voltaram) */
+.hdr-end{flex:1;display:flex;justify-content:flex-end;align-items:center}
 
 /* ══ 10 · CTA — o único hover da página, motion aprovado ═══════════
 
@@ -621,13 +624,15 @@ section{position:relative;z-index:1}
       <div class="r label">10 dias úteis de produção</div>
     </div>
   </div>
-  <!-- Só a marca. As três âncoras e o botão duplicado saíram: em tráfego
-       pago âncora é vazamento, e o botão do header disputava a mesma tela
-       com o do hero — dois pedidos de conversão visíveis ao mesmo tempo. -->
+  <!-- As três âncoras de navegação continuam fora: em tráfego pago,
+       âncora é vazamento. O botão fica, por decisão de Mateus. -->
   <div class="wrap hdr-row">
     <a class="brand" href="#topo" aria-label="MR Private Label">
       <svg class="wordmark" viewBox="0 0 2110 790" fill="currentColor" aria-hidden="true"><use href="#mrg"/></svg><span class="brand-sub" aria-hidden="true">Private<br>Label</span>
     </a>
+    <div class="hdr-end">
+      <a class="cta sm js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+    </div>
   </div>
 </header>
 
