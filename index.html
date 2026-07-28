@@ -514,10 +514,69 @@ section{position:relative;z-index:1}
 /* o passe-partout é opaco, na superfície relativa do item 7: um degrau
    de L* afastando-se da tinta. A moldura vira objeto na frente da
    página em vez de recorte invisível. */
-.fig{background:var(--surf);border:1px solid var(--rule);padding:12px}
-.fig-in{aspect-ratio:4/5;overflow:hidden}
-.fig img{width:100%;height:100%;object-fit:cover}
-.fig figcaption{padding-top:12px;padding-bottom:2px}
+/* ── POLAROID ────────────────────────────────────────────────────────
+   A moldura é branca fixa, e não a superfície da jornada: papel
+   fotográfico é branco em qualquer parede, então ela NÃO viaja na
+   jornada de cor. Nas paradas escuras isso faz a foto saltar, que é o
+   comportamento certo de uma foto pousada sobre a página.
+
+   Base alta (a margem de baixo é o dobro das outras) porque é isso que
+   distingue uma Polaroid de uma moldura qualquer. Sombra em duas
+   camadas: uma justa e escura, que dá o contorno, e uma larga e macia,
+   que dá o ar entre a foto e a página. Uma só das duas lê como caixa.
+
+   Cada figura tem seu próprio ângulo em --gir. Ao passar o mouse ela
+   endireita, que é o gesto de quem pega a foto para olhar de perto.   */
+.fig{background:#FDFDFB;padding:13px 13px 0;
+  box-shadow:0 1px 2px rgba(7,22,35,.16), 0 16px 34px -14px rgba(7,22,35,.34);
+  transition:transform .55s var(--ease),box-shadow .55s var(--ease)}
+/* A rotação precisa conviver com a revelação, que também usa transform:
+   `.rv.in{transform:none}` apagava o ângulo assim que a figura entrava.
+   Então o giro entra nos dois estados da revelação, e o repouso do hover
+   é declarado com a mesma especificidade, senão o `.in` ganharia dele. */
+.fig.rv{transform:translateY(22px) rotate(var(--gir,-1.5deg))}
+.fig.rv.in{transform:rotate(var(--gir,-1.5deg))}
+.fig.rv.in:hover,.fig.rv.in:focus-within{transform:rotate(0deg) translateY(-5px);
+  box-shadow:0 2px 4px rgba(7,22,35,.18), 0 26px 46px -16px rgba(7,22,35,.38)}
+.hero-fig{--gir:-1.1deg}
+.mod-fig{--gir:1.9deg}
+.tro-fig{--gir:-2.2deg}
+.cam-fig{--gir:1.4deg}
+.gru-fig{--gir:-1.7deg}
+
+.fig-in{aspect-ratio:4/5;overflow:hidden;background:#e9ebe8}
+/* ── A REVELAÇÃO ─────────────────────────────────────────────────────
+   A foto não aparece: ela REVELA. Entra lavada — quase sem cor, sem
+   contraste, estourada de claro, que é como uma Polaroid sai da câmera
+   — e ganha imagem ao longo de 1,8s. É a única animação da página que
+   imita o próprio objeto que ela anima.
+
+   Só o filtro anima, nunca a opacidade: a figura do hero é o elemento
+   de LCP, e opacidade zerada faria o cronômetro esperar a animação
+   inteira, que foi exatamente o defeito corrigido antes.             */
+.fig img{width:100%;height:100%;object-fit:cover;
+  filter:saturate(.12) contrast(.5) brightness(1.42);
+  transition:filter 1.8s var(--ease) var(--d,0ms)}
+.fig.in img{filter:none}
+
+/* a legenda é escrita à mão sobre a base branca */
+.fig figcaption{font-family:var(--serif);font-style:italic;
+  font-size:1.22rem;line-height:1.2;letter-spacing:.005em;
+  font-variation-settings:'wght' 500;
+  color:#22364a;text-transform:none;
+  text-align:center;padding:15px 8px 19px;transform:rotate(-.7deg)}
+
+/* a fita: só onde ela conta, senão vira maneirismo */
+.fita{position:relative}
+.fita::before{content:"";position:absolute;top:-12px;left:50%;translate:-50% 0;
+  width:92px;height:27px;rotate:-3.5deg;z-index:2;pointer-events:none;
+  background:rgba(185,182,173,.5);
+  border-left:1px dashed rgba(7,22,35,.16);border-right:1px dashed rgba(7,22,35,.16)}
+
+@media (prefers-reduced-motion:reduce){
+  .fig.rv,.fig.rv.in,.fig.rv.in:hover{transform:none}
+  .fig img{filter:none}
+}
 
 /* ══ COMPOSIÇÕES DE DOBRA — mesmos tijolos, arranjos diferentes ═══ */
 
@@ -813,7 +872,7 @@ section{position:relative;z-index:1}
       <p class="lead rv">Quando a marca é sua, a reputação da peça também é.</p>
     </div>
 
-    <figure class="fig tro-fig rv">
+    <figure class="fig tro-fig fita rv">
       <div class="fig-in"><img loading="lazy" src="img/03-troca.jpg" alt="Peça de malha da linha Inverno 2026 em uso, sem marca aplicada." width="880" height="1100"></div>
       <figcaption class="label">Peça de pronta entrega, sem marca</figcaption>
     </figure>
@@ -910,7 +969,7 @@ section{position:relative;z-index:1}
       <h2 class="d2 rvl">O que tem <em>dentro</em> do grupo</h2>
     </div>
 
-    <figure class="fig gru-fig rv">
+    <figure class="fig gru-fig fita rv">
       <div class="fig-in"><img loading="lazy" src="img/05-grupo.jpg" alt="Peça de inverno da linha 2026, sem marca aplicada." width="880" height="1100"></div>
       <figcaption class="label">Produção própria, Taquaritinga do Norte</figcaption>
     </figure>
