@@ -524,6 +524,14 @@ section{position:relative;z-index:1}
 .rv{opacity:0;transform:translateY(20px);
   transition:opacity .9s var(--ease) var(--d,0ms),transform .9s var(--ease) var(--d,0ms)}
 .rv.in{opacity:1;transform:none}
+/* A figura do hero é o elemento de LCP. Entrando com opacity:0 o
+   navegador não conta a pintura dela até a animação acabar: medido em
+   mobile com 4G lento e CPU 4x mais lenta, 1.340ms de LCP contra 112ms
+   sem isso, com a imagem pronta em 325ms nos dois casos. Ou seja, 1,2s
+   de atraso que era animação, não rede.
+   Ela passa a nascer visível e entra só por deslocamento. O movimento
+   continua; o cronômetro deixa de esperar por ele. */
+.hero-fig.rv{opacity:1}
 /* ── TÍTULO: REVELAÇÃO POR LETRA, ESCALONADA POR PALAVRA ─────────────
    A PALAVRA é a unidade do escalonamento. Cada palavra parte um pouco
    depois da anterior, e dentro dela as letras entram em sequência curta.
