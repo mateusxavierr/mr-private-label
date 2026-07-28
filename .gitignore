@@ -1,0 +1,23 @@
+# Arquivos de marca do cliente: logos editáveis (EPS/SVG), ilustrações, posts
+# e o brandbook de 208MB (que também estouraria o teto de 100MB por arquivo do
+# GitHub). Ficam em disco como fonte de verdade, fora deste repositório público.
+docs/
+
+# Contexto de trabalho, regras do projeto e skills. Só local.
+CLAUDE.md
+.claude/
+.agents/
+skills-lock.json
+
+# Ambiente / segredos
+.env
+.env.*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.log

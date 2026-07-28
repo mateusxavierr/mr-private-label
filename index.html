@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MR Private Label · fábrica de roupa masculina com marca própria</title>
+<meta name="description" content="Fábrica própria em Taquaritinga do Norte/PE que produz para a marca do lojista. Produção da peça de pronta entrega com a sua marca em 10 dias úteis a partir da aprovação da arte, a partir de 12 peças por cor.">
+<style>
+/* ════════════════════════════════════════════════════════════════════
+   MR · SISTEMA DE DESIGN DA PÁGINA (v1)
+   Um vocabulário fechado. Toda seção é composta SÓ com estes tijolos.
+   Composições mudam de seção para seção; os tijolos, nunca.
+   ────────────────────────────────────────────────────────────────────
+   1 · COR — SÓ A PALETA DO BRANDBOOK, NADA ALÉM
+       Paleta fechada: Azul #2D4E71 · Azul claro #AABED6 ·
+       Cinza claro #B9B6AD · Preto #071623 · Branco #F8FCFF, mais as
+       tintas de Azul sobre Branco que o brandbook exibe:
+       80% #56718D · 60% #7E94AA · 30% #BBC8D4 · 15% #DAE2EA.
+       Todo valor de cor deste arquivo é um desses nove ou uma
+       interpolação entre dois deles. Não existe outra matiz.
+
+       A tela inteira é UMA cor a cada instante. O `html` recebe
+       `background-color` interpolada pelo progresso do scroll.
+       NENHUMA seção tem fundo próprio. Não existe divisa entre seções.
+
+       A JORNADA É UMA RAMPA SÓ: BRANCO → AZUL → PRETO.
+       Nenhuma parada quente. Cinza claro saiu do fundo — é a única
+       tinta quente da paleta e, no meio de uma descida azul, lia como
+       corpo estranho. Ele sobrevive só fora do fundo (nenhum uso hoje).
+       7 paradas (o miolo de cada zona assenta na cor pura dela):
+                              hex        L*      passo
+         0 hero     Branco    #F8FCFF   98,75      —
+         1 números  Azul 15%  #DAE2EA   89,47    -9,3
+         2 modelo   Azul 30%  #BBC8D4   79,95    -9,5
+         3 troca    Azul 60%  #7E94AA   60,38   -19,6
+         4 caminho  Azul 80%  #56718D   46,59   -13,8  ← a tinta inverte
+         5 grupo    Azul      #2D4E71   32,28   -14,3     antes daqui
+         6 fecho    Preto     #071623    6,23   -26,1
+       Monótona em luminância, sem nenhuma subida, e com passo de L*
+       perceptível entre TODA dobra vizinha — era o remédio contra a
+       monotonia do miolo, que antes andava 3,8 de L* entre a terceira
+       e a quarta dobra. As quatro paradas do meio são exatamente as
+       quatro tintas de Azul do brandbook, na ordem: 15, 30, 60, 80.
+
+       INVERSÃO. Nenhuma tinta única serve a fundo claro e a fundo
+       escuro, então a tinta não interpola de Preto a Branco (isso
+       atravessaria o meio-tom e zeraria o contraste): ela TROCA, de uma
+       vez, no ponto em que Preto e Branco empatam sobre o fundo
+       (L do fundo = 0,2004; empate em ~4,1:1). Texto secundário e
+       acento convergem para a tinta antes da troca e voltam a se abrir
+       depois dela, então nunca ficam sozinhos no meio-tom. Com a rampa
+       nova a troca mudou de lugar: acontece na travessia troca→caminho,
+       porque Azul 80% já é escuro demais para tinta Preta (3,6:1) e
+       Azul 60% é claro demais para tinta Branca (3,0:1).
+
+       DOIS ANDARES DE TEXTO SÓ ENQUANTO A PALETA DÁ. Nas paradas 3 e 4
+       o secundário colapsa na tinta: sobre Azul 60% nenhum membro da
+       paleta além de Preto passa 4,5:1, e sobre Azul 80% nenhum além
+       de Branco. Nessas duas dobras a hierarquia é carregada pela
+       forma (caixa alta, corpo, peso) e pela SUPERFÍCIE RELATIVA
+       (itens 7 e 8), não pela cor — foi por isso que a superfície
+       entrou.
+
+       Validado a cada 1% de cada um dos 6 segmentos, e conferido em
+       401 posições de scroll no navegador, em 1440 e em 375.
+       Único ponto fraco conhecido e declarado: na travessia
+       troca→caminho a tinta atravessa o empate e cai a ~4,1:1 numa
+       faixa estreita do segmento — o mínimo matematicamente possível
+       para inverter a polaridade com fundo contínuo. Nas paradas em si
+       o pior par de tinta é 4,92:1 (Branco sobre Azul 80%). Fora do
+       segmento de inversão tudo é AA, e a maior parte da página é AAA.
+
+       RESSALVA DE PUREZA. --bg, --ink, --soft, --accent, --onacc e
+       --fld são sempre um membro da paleta ou uma interpolação entre
+       DOIS membros — verificado nas 401 amostras. Duas exceções
+       declaradas, ambas derivadas do fundo e sem matiz nova:
+       --rule é o fundo caminhando 28% em direção à tinta, e --surf é
+       o fundo caminhando na direção OPOSTA à tinta (ver item 7).
+       Numa travessia, cada um mistura três membros. Nenhuma cor de
+       fora da lista entra em lugar nenhum.
+   ────────────────────────────────────────────────────────────────────
+   2 · TIPOGRAFIA — seis papéis, nada além disso
+       display-1  clamp(3rem,5.2vw,4.9rem)     Playfair 500   (h1)
+       display-2  clamp(2.15rem,3.4vw,3.05rem) Playfair 520   (h2)
+       numero     clamp(2.4rem,3.6vw,3.2rem)   Playfair 560   (valor de ficha)
+       titulo-3   clamp(1.28rem,1.5vw,1.5rem)  Sans 620       (h3)
+       lead       clamp(1.25rem,1.5vw,1.5rem)  Sans 400
+       corpo      1.1875rem / 1.68             Sans 400   ← 19px
+       rotulo     .75rem, .16em, caixa alta    Sans 620
+       A didone (Playfair) só existe acima de 28px. Abaixo, tudo é sans.
+   ────────────────────────────────────────────────────────────────────
+   3 · ESPAÇO — 4 8 16 24 32 48 64 96 128. Nada fora da escala.
+       Entre seções 128 (96 no mobile) · entre blocos 48 · dentro 24.
+   ────────────────────────────────────────────────────────────────────
+   4 · GRID — UM container (1240px, respiro lateral clamp(24,5vw,72))
+       e UM grid (12 colunas, calha 32px). Zero sangria, zero seção
+       de largura total. A medida de coluna é a mesma na página toda.
+   ────────────────────────────────────────────────────────────────────
+   5 · FIO — 1px do fundo caminhando 28% em direção à tinta.
+       Aparece SÓ como borda de topo de uma linha de ficha, e como
+       moldura de cartão e de figura. Desde que a superfície relativa
+       voltou (item 7), o fio deixou de ser a única delimitação e volta
+       a ser o que era: contorno, não estrutura.
+       Proibido: fio de seção, fio depois de rótulo,
+       fio embaixo de título, fio decorativo solto.
+   ────────────────────────────────────────────────────────────────────
+   6 · FICHA — a única forma de par rótulo/valor da página.
+       rótulo em cima (caixa alta), valor embaixo, fio no topo.
+       Duas orientações: .ficha--cols (colunas) e .ficha--stack (pilha).
+       Usada 4 vezes: números da fábrica, a troca, prazo/mínimo, o grupo.
+   ────────────────────────────────────────────────────────────────────
+   7 · CARTÃO — UMA anatomia, usada UMA vez: o painel do passo ativo
+       em "O caminho". Borda 1px, canto reto, padding 32.
+
+       SUPERFÍCIE RELATIVA (--surf). Nenhum tom FIXO de superfície
+       funciona dos dois lados da inversão — isso continua verdade e foi
+       por isso que o preenchimento tinha sumido. Mas um tom RELATIVO
+       funciona: --surf é o --bg do momento andando um passo fixo de
+       L* na direção OPOSTA à tinta — para o Branco enquanto a tinta é
+       Preta, para o Preto depois que ela vira Branca. Duas garantias
+       caem de graça:
+         · a superfície nunca reduz contraste, porque só se afasta da
+           tinta: todo texto sobre o cartão mede >= o que mede no fundo;
+         · o passo é medido em L*, não em porcentagem de RGB, então
+           lê igual em cima (Azul 15%) e embaixo (Azul) da rampa.
+       No ponto de inversão o passo vai a zero e reabre do outro lado,
+       pelo mesmo mecanismo com que secundário e acento convergem — a
+       superfície não vira ao contrário de um quadro para o outro.
+       Reverter é um número: SURF_DL = 0 devolve a página chapada.
+
+       Dentro do cartão, a geometria de linha de ficha
+       (rótulo à esquerda, texto à direita) sem fio, porque a borda do
+       painel já delimita. Se um conteúdo não cabe nessa anatomia, ele
+       não é cartão: é texto corrido, ficha ou figura.
+   ────────────────────────────────────────────────────────────────────
+   8 · FOTO — UMA moldura (passe-partout opaco de 12px na superfície
+       relativa do item 7, borda 1px), UMA proporção (4/5) e UMA legenda
+       (rótulo, dentro da moldura, embaixo da imagem). Cinco figuras,
+       todas iguais. Com --surf o passe-partout volta a existir como
+       objeto: a moldura descola do fundo em todas as dobras menos a
+       primeira, onde o fundo já é Branco e não há para onde clarear.
+       As FOTOGRAFIAS mantêm a cor natural: nada de duotone,
+       nada de recolorir. A trava de paleta vale para a interface.
+   ────────────────────────────────────────────────────────────────────
+  12 · CAMPO DE MARCA — o wordmark "mr" ampliado atrás do texto.
+       Mesmo vetor do wordmark do header, sem rasterizar: um <use> do
+       glifo. Aparece UMA vez e só: atrás do fechamento.
+       Saiu do hero — ali a moldura da foto caía em cima do "r" e o que
+       restava não lia como wordmark, lia como mancha.
+       INTEIRO, NÃO RECORTADO. O viewBox é o vetor completo
+       (0 0 2110 790) com preserveAspectRatio "meet": a palavra cabe
+       dentro do bloco de fechamento, centrada, com respiro em volta.
+       O recorte antigo (570 48 1212 682) sangrava o glifo pelas
+       bordas e devolvia fragmento, não palavra.
+       Decorativo, aria-hidden. O traço é --fld (Azul sobre Preto,
+       2,13:1 — campo, não ilustração) e a manchete branca por cima
+       mede 8,34:1 contra ele.
+   ────────────────────────────────────────────────────────────────────
+   9 · ITÁLICO — Playfair itálico marca UMA palavra por título de dobra.
+       Nunca em corpo, nunca em rótulo, nunca em legenda, nunca em
+       número, nunca em lead. É marcação de ênfase, não textura.
+   ────────────────────────────────────────────────────────────────────
+  10 · HOVER — UM comportamento, e só em elemento interativo: a
+       superfície do botão sobe por baixo do rótulo (motion aprovado).
+       Nada informativo tem hover. Nenhum hover altera layout.
+   ────────────────────────────────────────────────────────────────────
+  11 · LISTA DE PASSOS DIRIGIDA POR SCROLL — usada UMA vez, em
+       "O caminho". Não é um dispositivo novo: é uma composição feita
+       com os tijolos acima. Cada passo é uma linha de ficha (fio no
+       topo), o título é display-2, o rótulo é o rótulo, e o painel do
+       passo ativo é a anatomia de cartão do item 7.
+       A fonte da verdade é a POSIÇÃO DE SCROLL, nunca o ponteiro:
+       funciona igual no celular, sem depender de hover.
+       A altura reservada do painel é medida uma vez e é a mesma para
+       os quatro. Como há sempre exatamente um passo aberto, a altura
+       do bloco é constante: abrir um passo não empurra nada.
+       Os quatro textos existem no DOM o tempo todo (recorte por
+       overflow, sem display:none), então o leitor de tela alcança
+       todos. Com prefers-reduced-motion a troca é instantânea.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* TIPOGRAFIA — self-hosted, licença livre (OFL)
+   Display: Playfair Display · Texto: Instrument Sans */
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;
+  src:url(fonts/pf-rm-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;
+  src:url(fonts/pf-rm-latinext.woff2) format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:swap;
+  src:url(fonts/pf-it-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:swap;
+  src:url(fonts/pf-it-latinext.woff2) format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url(fonts/is-rm-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url(fonts/is-rm-latinext.woff2) format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Instrument Sans';font-style:italic;font-weight:400 700;font-display:swap;
+  src:url(fonts/is-it-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body,h1,h2,h3,p,figure,figcaption,ul,li,blockquote{margin:0;padding:0}
+ul{list-style:none}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+:root{
+  /* escritos por JS a cada quadro — ver bloco 1 do sistema.
+     Os valores abaixo são a parada 0 (hero), para o primeiro quadro. */
+  --bg:#F8FCFF;      /* Branco      */
+  --ink:#071623;     /* Preto       */
+  --soft:#2D4E71;    /* Azul        */
+  --accent:#2D4E71;  /* Azul        */
+  --onacc:#F8FCFF;   /* Branco      */
+  --fld:#BBC8D4;     /* Azul 30%    — traço do campo de marca */
+  --rule:#B5BCC1;    /* interpolação Branco→Preto a 28% */
+  --surf:#F8FCFF;    /* superfície relativa — na parada 0 empata com o
+                        fundo, porque Branco não tem para onde clarear */
+
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Instrument Sans',system-ui,-apple-system,sans-serif;
+
+  /* 3 · escala de espaço */
+  --s1:4px;  --s2:8px;  --s3:16px; --s4:24px; --s5:32px;
+  --s6:48px; --s7:64px; --s8:96px; --s9:128px;
+  --sec:clamp(96px,9vw,128px);      /* entre dobras */
+
+  /* 4 · grid único */
+  --maxw:1240px;
+  --pad:clamp(24px,5vw,72px);
+  --gap:32px;
+
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+html{background-color:var(--bg)}
+body{
+  background:transparent;
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:1.1875rem;line-height:1.68;   /* 2 · corpo = 19px */
+  font-variation-settings:'wght' 400;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* O grão em multiply saiu: ele escurecia cada pixel do fundo e o
+   resultado deixava de ser cor da paleta. Fundo chapado, sem textura. */
+
+/* ══ 12 · CAMPO DE MARCA ═══════════════════════════════════════════
+   O glifo INTEIRO do wordmark, dimensionado para caber no bloco de
+   fechamento com respiro em volta. Fica atrás do conteúdo, no plano -1
+   do próprio bloco, então nunca cobre texto.
+   A caixa cobre o bloco todo e o `meet` do SVG resolve a escala: a
+   palavra ocupa o maior tamanho que cabe inteira, centrada. O padding
+   é o respiro — o glifo nunca encosta na borda do bloco. */
+.field{position:absolute;inset:0;z-index:-1;overflow:hidden;
+  pointer-events:none;padding:var(--s5) var(--s3);
+  display:flex;align-items:center;justify-content:center}
+.field svg{display:block;width:100%;height:100%;fill:var(--fld)}
+
+/* ══ 2 · TIPOGRAFIA — os seis papéis ═══════════════════════════════ */
+.d1{font-family:var(--serif);font-variation-settings:'wght' 500;
+  font-size:clamp(2.75rem,4.2vw,3.9rem);line-height:1.08;letter-spacing:-.021em}
+.d2{font-family:var(--serif);font-variation-settings:'wght' 520;
+  font-size:clamp(2.15rem,3.4vw,3.05rem);line-height:1.11;letter-spacing:-.017em}
+.num{font-family:var(--serif);font-variation-settings:'wght' 560;
+  font-size:clamp(2.4rem,3.6vw,3.2rem);line-height:1.04;letter-spacing:-.02em;
+  font-feature-settings:"lnum" 1,"onum" 0}
+.h3{font-family:var(--sans);font-variation-settings:'wght' 620;
+  font-size:clamp(1.28rem,1.5vw,1.5rem);line-height:1.32;letter-spacing:-.012em}
+.lead{font-size:clamp(1.25rem,1.5vw,1.5rem);line-height:1.48;letter-spacing:-.006em;color:var(--soft)}
+.body{font-size:1.1875rem;line-height:1.68;color:var(--soft)}
+.label{font-size:.75rem;line-height:1.4;font-variation-settings:'wght' 620;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+
+/* título de dobra nunca deixa palavra órfã na última linha */
+.d1,.d2{text-wrap:balance}
+/* 9 · itálico: uma palavra por título de dobra, e só aí */
+.d1 em,.d2 em{font-family:var(--serif);font-style:italic;color:var(--accent)}
+.d1 em{font-variation-settings:'wght' 500}
+.d2 em{font-variation-settings:'wght' 520}
+.mw{max-width:62ch}
+
+/* ══ 4 · GRID ══════════════════════════════════════════════════════ */
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.g12{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap)}
+section{position:relative;z-index:1}
+.sec{padding-block:var(--sec)}
+
+/* ══ HEADER — motion aprovado, preservado ══════════════════════════ */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:40;color:var(--ink);
+  transition:background-color .5s var(--ease),backdrop-filter .5s}
+.hdr::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--rule);
+  transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease)}
+.hdr.stuck{background:var(--bg)}
+.hdr.stuck::after{transform:scaleX(1)}
+.ticker{height:34px;overflow:hidden;border-bottom:1px solid var(--rule);
+  transition:height .55s var(--ease),opacity .35s,border-color .5s}
+.hdr.stuck .ticker{height:0;opacity:0;border-color:transparent}
+.ticker .wrap{display:flex;align-items:center;justify-content:space-between;height:34px}
+.tick-slot{position:relative;height:34px;flex:1;overflow:hidden}
+.tick-slot span{position:absolute;inset:0;display:flex;align-items:center;
+  transition:transform .7s var(--ease),opacity .5s var(--ease)}
+.tick-slot span[data-st="out"]{transform:translateY(-100%);opacity:0}
+.tick-slot span[data-st="in"]{transform:translateY(100%);opacity:0}
+.ticker .r{white-space:nowrap;padding-left:var(--s4)}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+  padding-block:clamp(16px,1.8vw,24px);transition:padding .55s var(--ease)}
+.hdr.stuck .hdr-row{padding-block:12px}
+.hdr-nav{display:flex;gap:clamp(20px,2.2vw,32px);flex:1}
+.hdr-nav a{position:relative;padding-block:4px}
+.hdr-nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;
+  transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.hdr-nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.brand{flex:0 0 auto;display:flex;align-items:flex-end;gap:clamp(7px,.8vw,11px);
+  transform-origin:center;transition:transform .55s var(--ease)}
+.hdr.stuck .brand{transform:scale(.74)}
+.wordmark{width:clamp(58px,5.6vw,80px);height:auto;display:block}
+.brand-sub{font-size:.5rem;font-variation-settings:'wght' 620;letter-spacing:.26em;
+  text-transform:uppercase;line-height:1.5;padding-bottom:.3em;white-space:nowrap}
+.hdr-end{flex:1;display:flex;justify-content:flex-end;align-items:center}
+
+/* ══ 10 · CTA — o único hover da página, motion aprovado ═══════════
+
+   O BOTÃO NÃO ANDA NA JORNADA. Ele usa --ink sobre --bg, que é o par
+   de contraste MÁXIMO de cada parada, garantido pelo próprio motor:
+   a tinta é escolhida para ser a cor que passa 4,5:1 contra aquele
+   fundo, e no ponto de inversão ela pula de polaridade junto com ele.
+   Assim o botão fica no topo do contraste em TODA a página, sem
+   nenhuma cor nova fora do brandbook.
+
+   Antes ele usava --accent, que é uma parada da jornada e desce junto
+   com o fundo: media 8,3:1 no hero, 4,4:1 na dobra do modelo e 3,3:1
+   na do grupo — sumia exatamente no miolo, onde o leitor decide.
+
+   O hover inverte: a cortina que sobe agora é o ACENTO, não a tinta.  */
+.cta{position:relative;display:inline-flex;align-items:center;gap:14px;
+  padding:18px 30px;background:var(--ink);color:var(--bg);overflow:hidden;isolation:isolate;
+  transition:color .45s var(--ease),background-color .5s var(--ease)}
+.cta .lbl{position:relative;z-index:2;font-size:.75rem;font-variation-settings:'wght' 620;
+  letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.cta .arw{position:relative;z-index:2;transition:transform .55s var(--ease)}
+.cta::before{content:"";position:absolute;inset:0;z-index:1;background:var(--accent);
+  transform:translateY(101%);transition:transform .55s var(--ease)}
+.cta:hover::before{transform:translateY(0)}
+.cta:hover{color:var(--onacc)}
+.cta:hover .arw{transform:translateX(6px)}
+/* O anel de foco vive FORA do botão, sobre o fundo da página: quem ele
+   precisa contrastar é --bg, não o preenchimento. Por isso --ink, e não
+   o --accent global do :focus-visible lá embaixo. */
+.cta:focus-visible{outline-color:var(--ink)}
+.cta.sm{padding:12px 20px}
+.cta.big{padding:26px 32px;width:100%;justify-content:space-between}
+
+/* Ação de seção: o botão fecha cada dobra, em linha própria e largura
+   total do grid. A colocação é explícita por seção porque as dobras
+   posicionam os blocos por grid-row nomeado — item sem linha declarada
+   cairia num buraco de linha anterior. */
+.sec-act{grid-column:1/13;margin-top:var(--s7)}
+.mod-act{grid-row:3}
+.tro-act{grid-row:5}
+.cam-act{grid-row:4}
+.gru-act{grid-row:3}
+
+/* ══ RÓTULO DE DOBRA — o único eyebrow, uma vez por dobra numerada,
+      sempre imediatamente acima do H2. Nunca no hero, nunca em
+      outro lugar, sem fio, sem itálico. ════════════════════════════ */
+.eyebrow{display:flex;align-items:baseline;gap:var(--s3);margin-bottom:var(--s4)}
+/* o número do rótulo é tinta cheia, não acento: com 12px o acento
+   mediria 4,25:1 sobre Cinza claro, que é AA-large e não serve aqui.
+   O acento fica reservado ao itálico (texto grande) e ao CTA. */
+.eyebrow .n{color:var(--ink)}
+
+/* ══ 6 · FICHA — o único par rótulo/valor ══════════════════════════ */
+.ficha{display:grid}
+.ficha--cols{grid-template-columns:repeat(4,1fr);column-gap:var(--gap)}
+.ficha--stack{grid-template-columns:1fr}
+.fi{border-top:1px solid var(--rule);padding-top:var(--s4);padding-bottom:var(--s5)}
+.ficha--stack .fi:last-child{padding-bottom:0}
+.fi-k{display:block;margin-bottom:var(--s3)}
+.fi-v{display:block}
+/* em colunas, o valor reserva duas linhas: os complementos das quatro
+   colunas assentam sempre na mesma altura, mesmo com valores de
+   comprimentos diferentes */
+.ficha--cols .fi-v{min-height:2.08em}
+.fi-s{display:block;margin-top:var(--s2);max-width:34ch}
+.ficha--stack .fi{display:grid;grid-template-columns:minmax(150px,.42fr) 1fr;
+  column-gap:var(--gap);align-items:baseline}
+.ficha--stack .fi-k{margin-bottom:0;padding-top:.42em}
+.ficha--stack .fi-v{font-size:1.1875rem;line-height:1.68;
+  font-variation-settings:'wght' 620;letter-spacing:-.006em}
+.ficha--stack .fi-s{margin-top:var(--s2);max-width:46ch}
+
+/* ══ 7 + 11 · CARTÃO E LISTA DE PASSOS ═════════════════════════════
+   O cartão existe uma vez: é o painel do passo ativo.
+   A altura do bloco é constante — sempre há exatamente um painel
+   aberto, e todos reservam a mesma altura (--panel-h, medida por JS). */
+.steps{--panel-h:184px}
+.step{border-top:1px solid var(--rule)}
+/* A recessão do passo fechado deixou de ser opacidade e passou a ser
+   cor: fechado = secundário, aberto = tinta. Opacidade compunha tinta
+   com fundo e derrubava o rótulo de 12px para baixo de AA; o par
+   secundário/tinta é o mesmo par já validado da jornada. */
+.step-hd{display:flex;align-items:baseline;gap:var(--s4);padding-block:var(--s4)}
+.step-n{flex:0 0 auto;color:var(--soft);transition:color .55s var(--ease)}
+.step-t{color:var(--soft);
+  transition:color .55s var(--ease),font-variation-settings .55s var(--ease)}
+.step.on .step-n,.step.on .step-t{color:var(--ink)}
+/* A lista inteira vive na parada 4 (Azul 80%), a dobra em que a paleta
+   não tem secundário: secundário e tinta são os dois Branco, então
+   fechado e aberto ficariam da MESMA cor. Restam dois níveis de
+   hierarquia — tamanho, travado pelo layout, e peso. É o peso que
+   carrega: 520 fechado, 620 aberto, no mesmo papel display-2. Não
+   desloca nada (o título é o último item da linha) e não custa
+   contraste nenhum, que é exatamente o que falta aqui. */
+.step.on .step-t{font-variation-settings:'wght' 620}
+.step-panel{height:0;overflow:hidden;transition:height .62s var(--ease)}
+.step.on .step-panel{height:var(--panel-h)}
+.step-in{padding:var(--s5);margin-bottom:var(--s4);
+  background:var(--surf);border:1px solid var(--rule);
+  display:grid;grid-template-columns:minmax(150px,.42fr) 1fr;
+  column-gap:var(--gap);align-items:baseline}
+.step-in .body{color:var(--ink);max-width:56ch}
+
+/* ══ 8 · FOTO — uma moldura, uma proporção, uma legenda ════════════ */
+/* o passe-partout é opaco, na superfície relativa do item 7: um degrau
+   de L* afastando-se da tinta. A moldura vira objeto na frente da
+   página em vez de recorte invisível. */
+.fig{background:var(--surf);border:1px solid var(--rule);padding:12px}
+.fig-in{aspect-ratio:4/5;overflow:hidden}
+.fig img{width:100%;height:100%;object-fit:cover}
+.fig figcaption{padding-top:12px;padding-bottom:2px}
+
+/* ══ COMPOSIÇÕES DE DOBRA — mesmos tijolos, arranjos diferentes ═══ */
+
+/* hero */
+.hero{padding-top:clamp(112px,9vw,152px);padding-bottom:var(--sec)}
+.hero-row{position:relative}
+.hero-txt{grid-column:1/8;padding-top:var(--s5)}
+.hero h1{margin-bottom:var(--s5)}
+.hero-sub{max-width:34ch;margin-bottom:var(--s6)}
+.hero-act{display:flex;align-items:center;gap:var(--s5);flex-wrap:wrap}
+.hero-act .note{max-width:26ch;font-size:1.0625rem;line-height:1.55;color:var(--soft)}
+.hero-fig{grid-column:8/13}
+.hero-num{margin-top:var(--s8)}
+.hero-num .cap{margin-bottom:var(--s5);max-width:46ch}
+
+/* 01 · o modelo */
+.mod-a{grid-column:1/8;grid-row:1}
+.mod-b{grid-column:8/13;grid-row:1;align-self:end;padding-bottom:.35em}
+.mod-b p+p{margin-top:var(--s4)}
+.mod-fig{grid-column:1/5;grid-row:2;margin-top:var(--s8)}
+.mod-c{grid-column:6/12;grid-row:2;align-self:center;margin-top:var(--s8)}
+.mod-c h3{margin-bottom:var(--s4);max-width:14ch}
+
+/* 02 · a troca */
+.tro-a{grid-column:1/6;grid-row:1}
+.tro-a .lead{margin-top:var(--s4);max-width:26ch}
+.tro-fig{grid-column:1/6;grid-row:2;margin-top:var(--s6)}
+.tro-b{grid-column:7/13;grid-row:1/3}
+.tro-b .fecho{margin-top:var(--s6);max-width:48ch}
+.tro-c{grid-column:1/13;grid-row:3;margin-top:var(--s8)}
+.tro-d{grid-column:1/10;grid-row:4;margin-top:var(--s5);font-size:1.0625rem;line-height:1.62}
+
+/* 03 · o caminho */
+.cam-a{grid-column:1/8;grid-row:1}
+.cam-b{grid-column:9/13;grid-row:1;align-self:end;padding-bottom:.35em}
+.cam-cards{grid-column:1/13;grid-row:2;margin-top:var(--s8)}
+.cam-fig{grid-column:1/5;grid-row:3;margin-top:var(--s8)}
+.cam-c{grid-column:6/13;grid-row:3;margin-top:var(--s8);align-self:center}
+.cam-c .pull{margin-bottom:var(--s4);max-width:15ch}
+.cam-c .fecho{margin-top:var(--s6);max-width:52ch}
+
+/* 04 · o grupo */
+.gru-a{grid-column:1/6;grid-row:1}
+.gru-fig{grid-column:1/6;grid-row:2;margin-top:var(--s6)}
+.gru-b{grid-column:7/13;grid-row:1/3}
+.close{position:relative;margin-top:var(--s8);display:grid;
+  grid-template-columns:repeat(12,1fr);column-gap:var(--gap);align-items:end;
+  padding-block:var(--s6)}          /* o campo respira além do texto */
+.close-h{grid-column:1/7}
+.close-h h2{max-width:13ch}
+.close-act{grid-column:8/13}
+.close-act .lead{margin-bottom:var(--s5)}
+.close-act .note{margin-top:var(--s4);font-size:1.0625rem;line-height:1.55;color:var(--soft);max-width:38ch}
+/* o rodapé usa as mesmas 12 colunas da página */
+.foot{margin-top:var(--s8);padding-top:var(--s4);
+  border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap);row-gap:var(--s3);
+  font-size:1rem;line-height:1.55;color:var(--soft)}
+.foot p:nth-child(1){grid-column:1/6}
+.foot p:nth-child(2){grid-column:6/10}
+.foot p:nth-child(3){grid-column:10/13}
+
+/* barra fixa mobile */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:45;
+  padding:var(--s2) var(--pad) calc(var(--s2) + env(safe-area-inset-bottom));
+  background:var(--bg);
+  border-top:1px solid var(--rule);transform:translateY(105%);
+  transition:transform .5s var(--ease);display:none}
+.mbar.on{transform:none}
+
+/* ══ MOTION ════════════════════════════════════════════════════════ */
+.rv{opacity:0;transform:translateY(20px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rvl{overflow:hidden;padding:0 .16em .22em .16em}
+.rvl>.mk{display:block;margin:0 -.16em -.22em -.16em;
+  transform:translateY(115%);transition:transform 1.05s var(--ease)}
+.rvl.in>.mk{transform:none}
+.hero .rvl,.hero .rv{transition-delay:var(--d,0ms)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  .rv,.rvl{opacity:1;transform:none}
+  .rvl>.mk{transform:none}
+}
+
+/* ══ RESPONSIVO ════════════════════════════════════════════════════ */
+@media (max-width:1120px){
+  .hero-txt{grid-column:1/7}.hero-fig{grid-column:7/13}
+  .mod-fig{grid-column:1/6}.mod-c{grid-column:7/13}
+  .tro-a,.tro-fig{grid-column:1/6}.tro-b{grid-column:7/13}
+  .cam-b{grid-column:8/13}.cam-fig{grid-column:1/6}.cam-c{grid-column:7/13}
+  .gru-a,.gru-fig{grid-column:1/6}.gru-b{grid-column:7/13}
+  .close-h{grid-column:1/7}.close-act{grid-column:7/13}
+}
+@media (max-width:860px){
+  :root{--sec:96px;--gap:24px}
+  .hdr-nav{display:none}
+  .brand{order:-1}.hdr-end{flex:0 0 auto}
+  .ticker{display:none}
+  .hero{padding-top:104px}
+  .hero-txt{padding-top:0}
+  /* pilha única: nenhuma colocação explícita de coluna ou linha sobrevive */
+  .g12>*,.close>*{grid-column:1/13!important;grid-row:auto!important}
+  .g12{row-gap:0}
+  .hero-fig{margin-top:var(--s6)}
+  .mod-fig,.mod-c,.cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
+  .tro-b{margin-top:var(--s7)}
+  .gru-b{margin-top:var(--s7)}
+  .close{margin-top:var(--s7);display:block}
+  .close-act{margin-top:var(--s6)}
+  .foot{margin-top:var(--s7);display:block}
+  .foot p+p{margin-top:var(--s2)}
+  .ficha--cols{grid-template-columns:repeat(2,1fr)}
+  .ficha--stack .fi{grid-template-columns:1fr;row-gap:var(--s2)}
+  .ficha--stack .fi-k{padding-top:0}
+  .step-in{grid-template-columns:1fr;row-gap:var(--s3)}
+  .step-hd{gap:var(--s3);padding-block:var(--s3)}
+  /* na pilha, cada bloco recebe a mesma folga de 32 */
+  .mod-b,.cam-b,.tro-a .lead{margin-top:var(--s5)}
+  .cta.sm{padding:11px 16px}
+  .cta.sm .lbl{font-size:.68rem;letter-spacing:.12em}
+  .cta.sm .arw{display:none}
+  .mbar{display:block}
+  main{padding-bottom:var(--s7)}
+  /* 12 · em coluna única o bloco de fechamento fica alto e estreito,
+     então o glifo inteiro é limitado pela LARGURA e sobra folga em
+     cima e embaixo: a palavra fica centrada na vertical, com o dobro
+     do respiro. É o comportamento do "meet" — nada a ajustar aqui. */
+}
+@media (max-width:560px){
+  /* em coluna única não há o que alinhar entre colunas */
+  .ficha--cols{grid-template-columns:1fr}
+  .ficha--cols .fi-v{min-height:0}
+  .ficha--cols .fi{padding-bottom:var(--s4)}
+  .hero-act{gap:var(--s4)}
+  .hero-act .cta{width:100%;justify-content:space-between}
+  .hero-act .note{max-width:none}
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:var(--pad);top:12px;z-index:99;background:var(--bg);padding:10px 16px;border:1px solid var(--ink)}
+</style>
+</head>
+<body>
+<!-- O glifo do wordmark, definido UMA vez. O header o usa inteiro; o
+     campo de marca (bloco 12) o usa recortado por viewBox. Mesmo vetor,
+     zero rasterização, recolorível pela jornada. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><g id="mrg">
+<path d="M111.25,770.48l50.82-211.5,67.3-339.24c10.51-52.64,15.78-86.97,15.78-103,0-28.38-13.5-42.57-40.52-42.57-44.87,0-113.06,50.3-204.63,150.93l12.37-63.1C112.17,54,202.12,0,282.24,0c65.94,0,98.88,34.6,98.88,103.78,0,23.38-5.27,62.09-15.78,116.17l-33.65,169.77h9.62c58.57-119.14,122.56-213.87,191.94-284.22C602.59,35.18,666.55,0,725.15,0c30.69,0,56.44,12.15,77.28,36.43,20.81,24.28,31.22,54.52,31.22,90.73,0,26.58-3.88,58.42-11.66,95.54l-32.97,167.01h9.62c50.82-114.55,110.78-208.15,179.92-280.78C1047.67,36.32,1111.09,0,1168.78,0c81.04,0,121.55,43.03,121.55,129.1,0,25.65-3.67,57.23-11.01,94.77l-66.59,335.11c-10.54,52.64-15.8,86.98-15.8,103,0,28.84,13.5,43.26,40.52,43.26,45.31,0,117.87-56.02,208.97-156.62l-16.68,69.52c-100.01,107.53-190.13,161.27-270.4,161.27-66.5,0-99.74-34.52-99.74-103.59,0-22.4,5.51-61.27,16.6-116.61l67.1-334.78c6.45-30.17,9.68-52.12,9.68-65.84,0-37.97-14.18-56.94-42.56-56.94-79.67,0-195.04,137.42-346.1,412.22l-51.5,248.38-134.61,8.24,107.82-544.68c5.95-30.19,8.94-52.13,8.94-65.85,0-38.86-13.73-58.31-41.23-58.31-34.33,0-85.03,40.24-152.1,120.73-67.07,80.49-132.42,179.49-196.05,297l-50.14,242.87-144.2,8.24Z"/>
+<path d="M1400.65,770.48l50.82-211.31,66.59-335.46c6.87-33.83,10.3-63.1,10.3-87.8,0-39.33-13.73-59-41.2-59-48.54,0-112.66,51.69-202.84,155.07l10.48-59.76C1400.55,58.27,1489,0,1566.84,0c65.91,0,98.88,37.75,98.88,113.22,0,33.4-4.14,70.44-12.37,111.15l-32.97,165.39h8.94c54.46-114.57,118.89-208.15,193.3-280.8C1897.02,36.32,1965.12,0,2026.92,0c32.02,0,60.64,7.16,85.83,21.49l-91.34,124.05c-27.02-17.83-49.9-26.74-68.66-26.74-89.26,0-208.07,131.01-356.4,393.06l-50.14,250.39-145.56,8.23Z"/>
+</g></defs></svg>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+
+<header class="hdr" id="hdr">
+  <div class="ticker">
+    <div class="wrap">
+      <div class="tick-slot label" id="tick"></div>
+      <div class="r label">10 dias úteis de produção</div>
+    </div>
+  </div>
+  <div class="wrap hdr-row">
+    <nav class="hdr-nav label" aria-label="Seções">
+      <a href="#modelo">O modelo</a>
+      <a href="#caminho">O caminho</a>
+      <a href="#grupo">O grupo</a>
+    </nav>
+    <a class="brand" href="#topo" aria-label="MR Private Label">
+      <svg class="wordmark" viewBox="0 0 2110 790" fill="currentColor" aria-hidden="true"><use href="#mrg"/></svg><span class="brand-sub" aria-hidden="true">Private<br>Label</span>
+    </a>
+    <div class="hdr-end">
+      <a class="cta sm js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo">
+
+<!-- ══ HERO ═══════════════════════════════════════════════════════ -->
+<section class="hero wrap" id="topo">
+  <!-- 12 · o campo de marca NÃO existe aqui: a moldura da foto cobria
+       o "r" e o que sobrava não lia como wordmark. Ele vive só no fecho. -->
+  <div class="g12 hero-row" data-fold="0">
+    <div class="hero-txt">
+      <h1 class="d1">
+        <span class="rvl" style="--d:0ms;display:block">Nossa fábrica.</span>
+        <span class="rvl" style="--d:120ms;display:block"><em>Sua marca</em> na peça.</span>
+      </h1>
+      <p class="lead hero-sub rv" style="--d:280ms">Produção própria de roupa masculina para o lojista que quer vender marca própria, não o mesmo produto do vizinho.</p>
+      <div class="hero-act rv" style="--d:380ms">
+        <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+        <p class="note">Coleção nova com a condição dela junto. Sair é um toque, a qualquer momento.</p>
+      </div>
+    </div>
+
+    <figure class="fig hero-fig rv" style="--d:200ms">
+      <div class="fig-in"><img src="img/01-hero.jpg" alt="Peça de malha da linha Inverno 2026 em uso, sem marca aplicada." width="880" height="1100"></div>
+      <figcaption class="label">Linha Inverno 2026</figcaption>
+    </figure>
+  </div>
+
+  <div class="hero-num" data-fold="1">
+    <p class="body cap rv">Quem vai produzir a sua peça é esta fábrica, e estes são os números dela.</p>
+    <div class="ficha ficha--cols">
+      <div class="fi rv"><span class="fi-k label">Produção própria</span><span class="fi-v num">40 mil</span><span class="fi-s body">peças por mês</span></div>
+      <div class="fi rv"><span class="fi-k label">Carteira</span><span class="fi-v num">+1.500</span><span class="fi-s body">marcas atendidas</span></div>
+      <div class="fi rv"><span class="fi-k label">Instagram</span><span class="fi-v num">80,3 mil</span><span class="fi-s body">seguidores</span></div>
+      <div class="fi rv"><span class="fi-k label">Em operação</span><span class="fi-v num">2021</span><span class="fi-s body">empresa aberta em 03/08/2021</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 01 · O MODELO ══════════════════════════════════════════════ -->
+<section class="sec wrap" id="modelo" data-fold="2">
+  <div class="g12">
+    <div class="mod-a">
+      <p class="eyebrow label rv"><span class="n">01</span><span>O modelo</span></p>
+      <h2 class="d2 rvl">Quem revende recebe o preço <em>sugerido</em> junto com a peça.</h2>
+    </div>
+
+    <div class="mod-b body rv">
+      <p>É assim que o modelo funciona: a peça chega pronta, com a marca de outra empresa, e a margem já vem calculada por quem vendeu. O lojista da rua de trás compra a mesma peça, pelo mesmo caminho, com a mesma sugestão de preço.</p>
+      <p>Quando o produto é igual, o que sobra para disputar é desconto.</p>
+    </div>
+
+    <figure class="fig mod-fig rv">
+      <div class="fig-in"><img loading="lazy" src="img/02-modelo.jpg" alt="Detalhe de malha e acabamento de peça da linha Inverno 2026." width="880" height="1100"></div>
+      <figcaption class="label">Malha, acabamento, textura</figcaption>
+    </figure>
+
+    <div class="mod-c">
+      <h3 class="d2 rvl">Marca <em>própria</em> tira a peça dessa disputa.</h3>
+      <p class="lead rv">Controle, margem e nome no mercado param de depender de fornecedor.</p>
+    </div>
+
+    <div class="sec-act mod-act rv">
+      <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02 · A TROCA ═══════════════════════════════════════════════ -->
+<section class="sec wrap" id="troca" data-fold="3">
+  <div class="g12">
+    <div class="tro-a">
+      <p class="eyebrow label rv"><span class="n">02</span><span>A troca</span></p>
+      <h2 class="d2 rvl">O que muda quando a peça é <em>sua</em></h2>
+      <p class="lead rv">Quando a marca é sua, a reputação da peça também é.</p>
+    </div>
+
+    <figure class="fig tro-fig rv">
+      <div class="fig-in"><img loading="lazy" src="img/03-troca.jpg" alt="Peça de malha da linha Inverno 2026 em uso, sem marca aplicada." width="880" height="1100"></div>
+      <figcaption class="label">Peça de pronta entrega, sem marca</figcaption>
+    </figure>
+
+    <div class="tro-b">
+      <div class="ficha ficha--stack">
+        <div class="fi rv"><span class="fi-k label">Produto</span><span class="fi-v">A peça passa a sair com a sua marca aplicada, em vez de chegar com a marca de outra empresa.</span></div>
+        <div class="fi rv"><span class="fi-k label">Preço</span><span class="fi-v">Você define quanto ela vale, em vez de receber a sugestão de preço junto com a mercadoria.</span></div>
+        <div class="fi rv"><span class="fi-k label">Cliente</span><span class="fi-v">Quem gostou volta procurando a sua marca, e não a marca de quem fabricou.</span></div>
+      </div>
+      <p class="body fecho rv">A mr produz a peça já com a identidade da sua marca aplicada.</p>
+    </div>
+
+    <div class="tro-c">
+      <div class="ficha ficha--cols">
+        <div class="fi rv"><span class="fi-k label">Prazo de produção</span><span class="fi-v num">10 dias úteis</span><span class="fi-s body">a partir da aprovação da arte</span></div>
+        <div class="fi rv"><span class="fi-k label">Mínimo · DTF</span><span class="fi-v num">12</span><span class="fi-s body">peças por cor</span></div>
+        <div class="fi rv"><span class="fi-k label">Mínimo · bordado</span><span class="fi-v num">12</span><span class="fi-s body">peças por cor</span></div>
+        <div class="fi rv"><span class="fi-k label">Mínimo · alto relevo</span><span class="fi-v num">24</span><span class="fi-s body">peças por cor</span></div>
+      </div>
+    </div>
+    <p class="body tro-d rv">Vale para peça de pronta entrega personalizada com a sua marca. Coleção desenvolvida do zero, com tecido escolhido, modelagem própria e ficha técnica, segue outro caminho, e o prazo e o pedido mínimo dela são definidos no projeto.</p>
+
+    <div class="sec-act tro-act rv">
+      <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 · O CAMINHO ═════════════════════════════════════════════ -->
+<section class="sec wrap" id="caminho" data-fold="4">
+  <div class="g12">
+    <div class="cam-a">
+      <p class="eyebrow label rv"><span class="n">03</span><span>O caminho</span></p>
+      <h2 class="d2 rvl">O caminho até a peça <em>pronta</em></h2>
+    </div>
+    <p class="lead cam-b rv">Um prazo só, e você sabe de onde ele começa a contar antes de aprovar a arte.</p>
+
+    <!-- 11 · lista de passos: o passo ativo é escolhido pela posição
+             de scroll, não pelo ponteiro. Altura do bloco constante. -->
+    <div class="steps cam-cards rv" id="steps">
+      <article class="step on">
+        <div class="step-hd"><span class="step-n label">01</span><h3 class="step-t d2">Você escolhe o caminho</h3></div>
+        <div class="step-panel"><div class="step-in">
+          <span class="label">Duas vias</span>
+          <p class="body">São dois: personalizar peça de pronta entrega com a sua marca, ou desenvolver coleção do zero, com tecido, modelagem e ficha técnica.</p>
+        </div></div>
+      </article>
+      <article class="step">
+        <div class="step-hd"><span class="step-n label">02</span><h3 class="step-t d2">Você aprova a arte antes de a produção rodar</h3></div>
+        <div class="step-panel"><div class="step-in">
+          <span class="label">O ponto de virada</span>
+          <p class="body">Enquanto a arte não estiver aprovada, ela ainda pode mudar. Depois que ela é aprovada, a produção roda com o que foi aprovado, e é daqui que o prazo começa a contar.</p>
+        </div></div>
+      </article>
+      <article class="step">
+        <div class="step-hd"><span class="step-n label">03</span><h3 class="step-t d2">A produção roda na fábrica própria</h3></div>
+        <div class="step-panel"><div class="step-in">
+          <span class="label">40 mil peças por mês</span>
+          <p class="body">São 10 dias úteis de produção da peça de pronta entrega personalizada, contados da aprovação da arte. Produção, estampa e embalagem saem da mesma estrutura.</p>
+        </div></div>
+      </article>
+      <article class="step">
+        <div class="step-hd"><span class="step-n label">04</span><h3 class="step-t d2">A peça fica pronta</h3></div>
+        <div class="step-panel"><div class="step-in">
+          <span class="label">DTF, bordado, alto relevo</span>
+          <p class="body">O lote fica pronto com a identidade da sua marca aplicada, no acabamento que foi aprovado no passo dois.</p>
+        </div></div>
+      </article>
+    </div>
+
+    <figure class="fig cam-fig rv">
+      <div class="fig-in"><img loading="lazy" src="img/04-caminho.jpg" alt="Peça de inverno da linha 2026 em uso, sem marca aplicada." width="880" height="1100"></div>
+      <figcaption class="label">Coleção Inverno 2026</figcaption>
+    </figure>
+
+    <div class="cam-c">
+      <h3 class="d2 pull rvl">Quem lança antes, <em>vende antes</em>.</h3>
+      <p class="label rv">Linha de coleção · mr Inverno 2026</p>
+      <p class="body fecho rv">O que a mr faz está nomeado: tecido e modelagem, produção, estampa, embalagem e apoio de coleção. Esses são os entregáveis nomeados nesta página. O que não estiver aqui é conversa de projeto, não promessa.</p>
+    </div>
+
+    <div class="sec-act cam-act rv">
+      <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 04 · O GRUPO ═══════════════════════════════════════════════ -->
+<section class="sec wrap" id="grupo">
+  <div class="g12" data-fold="5">
+    <div class="gru-a">
+      <p class="eyebrow label rv"><span class="n">04</span><span>O grupo</span></p>
+      <h2 class="d2 rvl">O que tem <em>dentro</em> do grupo</h2>
+    </div>
+
+    <figure class="fig gru-fig rv">
+      <div class="fig-in"><img loading="lazy" src="img/05-grupo.jpg" alt="Peça de inverno da linha 2026, sem marca aplicada." width="880" height="1100"></div>
+      <figcaption class="label">Produção própria, Taquaritinga do Norte</figcaption>
+    </figure>
+
+    <div class="gru-b">
+      <div class="ficha ficha--stack">
+        <div class="fi rv"><span class="fi-k label">O que chega</span><span class="fi-v">Coleção nova com a condição dela junto. É acesso, não fila de atendimento.</span></div>
+        <div class="fi rv"><span class="fi-k label">Quem posta</span><span class="fi-v">Quem posta é a mr, a fábrica que produz a peça. Não é grupo de revenda repassando catálogo de outra marca.</span></div>
+        <div class="fi rv"><span class="fi-k label">Quem vê o seu número</span><span class="fi-v">Em grupo do WhatsApp, os outros participantes veem o seu número. É assim que o app funciona.</span></div>
+        <div class="fi rv"><span class="fi-k label">Como sair</span><span class="fi-v">Sair é um toque, a qualquer momento, sem falar com ninguém.</span></div>
+      </div>
+    </div>
+
+    <div class="sec-act gru-act rv">
+      <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+    </div>
+  </div>
+
+  <!-- zona 6 · o fecho. Última parada da jornada: Preto. -->
+  <div class="closing" data-fold="6">
+    <div class="close">
+      <!-- 12 · campo de marca, único — o desfecho. Vetor INTEIRO
+           (0 0 2110 790) com "meet": a palavra cabe toda no bloco. -->
+      <div class="field" aria-hidden="true">
+        <svg viewBox="0 0 2110 790" preserveAspectRatio="xMidYMid meet"><use href="#mrg"/></svg>
+      </div>
+      <div class="close-h">
+        <h2 class="d1 rvl">A próxima produção pode sair com a <em>sua marca</em>.</h2>
+      </div>
+      <div class="close-act rv">
+        <p class="lead">Comece pelo grupo. Produção em 10 dias úteis a partir da aprovação da arte, a partir de 12 peças por cor, na peça de pronta entrega com a sua marca.</p>
+        <a class="cta big js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+        <p class="note">É de lá que sai a condição de cada coleção, e é lá que a próxima produção começa.</p>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <p>Empresa aberta em 03/08/2021, com fábrica própria em Taquaritinga do Norte, Pernambuco.</p>
+      <p>Instagram: @mr.privatelabel · 80,3 mil seguidores</p>
+      <p>© 2026 MR Private Label</p>
+    </footer>
+  </div>
+</section>
+</main>
+
+<div class="mbar" id="mbar">
+  <a class="cta js-cta" style="width:100%;justify-content:space-between" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+</div>
+
+<script>
+/* ── ponto único de configuração ─────────────────────────────────── */
+const GRUPO_URL = "#PENDENTE-LINK-GRUPO";   /* trocar aqui quando o link do grupo chegar */
+document.querySelectorAll('.js-cta').forEach(a=>{a.href=GRUPO_URL;a.target="_blank";a.rel="noopener"});
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── 1 · A TELA INTEIRA É UMA COR SÓ ─────────────────────────────────
+   O fundo não pertence à seção: pertence ao momento do scroll.
+   `html` recebe uma cor chapada, recalculada a cada quadro. As seções
+   são transparentes, então não existe divisa visível entre elas.
+   Duas âncoras por zona (28% e 74% da altura): entre elas a cor é a
+   cor pura da zona; a travessia acontece de 74% de uma até 28% da
+   seguinte, com smoothstep.
+
+   TODA cor abaixo é membro da paleta do brandbook. Nenhum valor é
+   inventado: --rule é interpolação fundo→tinta a 28%, e tudo o mais
+   que o navegador vê é interpolação entre duas paradas desta tabela. */
+const STOPS = [
+/* 0 hero    */ {bg:'#F8FCFF', ink:'#071623', soft:'#2D4E71', acc:'#2D4E71', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
+/* 1 números */ {bg:'#DAE2EA', ink:'#071623', soft:'#2D4E71', acc:'#2D4E71', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
+/* 2 modelo  */ {bg:'#BBC8D4', ink:'#071623', soft:'#2D4E71', acc:'#2D4E71', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
+/* 3 troca   */ {bg:'#7E94AA', ink:'#071623', soft:'#071623', acc:'#071623', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
+/* 4 caminho */ {bg:'#56718D', ink:'#F8FCFF', soft:'#F8FCFF', acc:'#DAE2EA', on:'#071623', fld:'#2D4E71', dark:1},
+/* 5 grupo   */ {bg:'#2D4E71', ink:'#F8FCFF', soft:'#BBC8D4', acc:'#AABED6', on:'#071623', fld:'#2D4E71', dark:1},
+/* 6 fecho   */ {bg:'#071623', ink:'#F8FCFF', soft:'#BBC8D4', acc:'#AABED6', on:'#071623', fld:'#2D4E71', dark:1}
+];
+/* Paradas 3 e 4 são o fundo do poço da paleta: sobre Azul 60% só Preto
+   passa 4,5:1, e sobre Azul 80% só Branco. Nas duas o secundário
+   colapsa na tinta. Na 3 o acento colapsa junto (Azul mede 2,75:1 ali);
+   na 4 ele reabre em Azul 15% (3,87:1, e só texto grande e o CTA usam
+   acento). A hierarquia dessas duas dobras é forma + superfície.     */
+const TOK = ['ink','soft','acc','on','fld'];
+const hex = h => [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+const S = STOPS.map(s=>{const o={dark:s.dark,bg:hex(s.bg)};TOK.forEach(k=>o[k]=hex(s[k]));return o});
+const lerp=(a,b,t)=>[Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)];
+const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+const root = document.documentElement;
+
+/* ── O PONTO DE INVERSÃO ─────────────────────────────────────────────
+   Preto e Branco empatam sobre um fundo de luminância 0,2004 (4,07:1
+   para os dois). É o único lugar onde a tinta pode trocar de polaridade
+   com o menor prejuízo possível. Nenhuma interpolação atravessa esse
+   ponto: a tinta pula, e secundário e acento colapsam na tinta antes do
+   pulo e reabrem depois — assim nunca existe cor média sobre fundo
+   médio. Calculado uma vez, por bisseção, para cada segmento que
+   inverte a polaridade.                                              */
+const srgb=v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)};
+const lum=c=>0.2126*srgb(c[0])+0.7152*srgb(c[1])+0.0722*srgb(c[2]);
+const TIE=0.2004;
+/* ── SUPERFÍCIE RELATIVA (item 7) ────────────────────────────────────
+   --surf é o fundo do momento andando SURF_DL pontos de L* na direção
+   oposta à tinta. Medir o passo em L* (e não em % de RGB) é o que faz
+   o cartão ler igual sobre Azul 15% e sobre Azul: uma fração fixa de
+   RGB daria 2,9 de L* em cima e 10,7 no meio da rampa.
+   SURF_DL = 0 devolve a página chapada — reverter é um número.       */
+const SURF_DL = 5.5;
+const BRANCO=[248,252,255], PRETO=[7,22,35];
+const Lst = c=>{const y=lum(c); return y>0.008856 ? 116*Math.pow(y,1/3)-16 : 903.3*y};
+function surfOf(bg,inkLight,scale){
+  if(SURF_DL<=0 || scale<=0) return bg;
+  const tgt = inkLight ? PRETO : BRANCO;         /* sempre AFASTANDO da tinta */
+  const want = Lst(bg) + (inkLight ? -1 : 1)*SURF_DL*scale;
+  let lo=0,hi=1;                                  /* bisseção: L* é monótono no segmento */
+  for(let n=0;n<18;n++){
+    const m=(lo+hi)/2, l=Lst(lerp(bg,tgt,m));
+    if(inkLight ? l>want : l<want) lo=m; else hi=m;
+  }
+  return lerp(bg,tgt,(lo+hi)/2);
+}
+const FLIP = S.map((a,i)=>{
+  const b=S[i+1]; if(!b || a.dark===b.dark) return null;
+  let lo=0,hi=1;
+  for(let n=0;n<40;n++){const m=(lo+hi)/2; if(lum(lerp(a.bg,b.bg,m))>TIE) lo=m; else hi=m;}
+  return (lo+hi)/2;
+});
+
+let ANCHORS=[];
+function measure(){
+  ANCHORS=[];
+  document.querySelectorAll('[data-fold]').forEach(el=>{
+    const i=+el.dataset.fold, r=el.getBoundingClientRect(), top=r.top+scrollY;
+    ANCHORS.push({y:top+r.height*0.28,i});
+    ANCHORS.push({y:top+r.height*0.74,i});
+  });
+  ANCHORS.sort((a,b)=>a.y-b.y);
+}
+function paint(){
+  const ref = scrollY + innerHeight*0.45;
+  let k=0; while(k<ANCHORS.length-2 && ref>ANCHORS[k+1].y) k++;
+  const a=ANCHORS[k], b=ANCHORS[k+1];
+  let t=(ref-a.y)/Math.max(1,(b.y-a.y));
+  t=Math.max(0,Math.min(1,t));
+  let e=t*t*(3-2*t);                         /* smoothstep: sem quina */
+  const A=S[a.i], B=S[b.i];
+  const ft = a.i<b.i ? FLIP[a.i] : null;     /* null = sem inversão */
+  /* Na travessia que inverte a polaridade existe uma faixa em que
+     nenhuma das duas tintas chega a 4,5:1 — é matematicamente
+     inevitável com fundo contínuo. O TAMANHO da faixa não é: aqui o
+     fundo acelera ao passar pelo empate e desacelera ao assentar nas
+     duas pontas. Nenhuma cor muda de lugar; muda quanto scroll se
+     gasta dentro do vão. Encolhe de 17,0% para 9,1% da travessia.
+     O expoente fixa 0, ft e 1, então as pontas continuam encaixando
+     nos platôs sem quina. */
+  if(ft!=null){
+    const P=2.4;
+    e = e<ft ? ft*Math.pow(e/ft,P)
+             : ft + (1-ft)*(1-Math.pow((1-e)/(1-ft),P));
+  }
+  const bg=lerp(A.bg,B.bg,e);
+  let ink,soft,acc,on,fld,inkLight,sc;
+  if(ft===null||ft===undefined){
+    ink=lerp(A.ink,B.ink,e); soft=lerp(A.soft,B.soft,e);
+    acc=lerp(A.acc,B.acc,e); on=lerp(A.on,B.on,e); fld=lerp(A.fld,B.fld,e);
+    inkLight=A.dark; sc=1;
+  }else if(e<ft){                            /* antes: tudo converge na tinta clara-sobre-escura de A */
+    const u=e/ft;
+    ink=A.ink; on=A.on; fld=A.fld;
+    soft=lerp(A.soft,A.ink,u); acc=lerp(A.acc,A.ink,u);
+    /* a superfície fecha junto com secundário e acento: no ponto de
+       inversão o passo é zero, então ela não vira do avesso num quadro */
+    inkLight=A.dark; sc=1-u;
+  }else{                                     /* depois: reabre a partir da tinta de B */
+    const u=(e-ft)/(1-ft);
+    ink=B.ink; on=B.on; fld=B.fld;
+    soft=lerp(B.ink,B.soft,u); acc=lerp(B.ink,B.acc,u);
+    inkLight=B.dark; sc=u;
+  }
+  root.style.setProperty('--bg',    rgb(bg));
+  root.style.setProperty('--ink',   rgb(ink));
+  root.style.setProperty('--soft',  rgb(soft));
+  root.style.setProperty('--accent',rgb(acc));
+  root.style.setProperty('--onacc', rgb(on));
+  root.style.setProperty('--fld',   rgb(fld));
+  /* o fio é o fundo caminhando 28% em direção à tinta — interpolação
+     entre dois membros da paleta, como todo o resto */
+  root.style.setProperty('--rule',  rgb(lerp(bg,ink,0.28)));
+  /* 7 · a superfície é o fundo andando um degrau de L* no sentido
+     oposto ao da tinta: cartão, passe-partout e painel voltam a ter
+     preenchimento sem que nenhum texto perca contraste */
+  root.style.setProperty('--surf',  rgb(surfOf(bg,inkLight,sc)));
+}
+
+/* ── 11 · LISTA DE PASSOS DIRIGIDA POR SCROLL ────────────────────────
+   Um passo aberto por vez, escolhido pela posição de scroll. Todos os
+   painéis reservam a MESMA altura (a do painel mais alto), medida uma
+   vez; com exatamente um aberto, a altura do bloco nunca muda.       */
+const stepsEl=document.getElementById('steps');
+const stepEls=[...stepsEl.querySelectorAll('.step')];
+function sizeSteps(){
+  let m=0;
+  stepsEl.querySelectorAll('.step-in').forEach(el=>{
+    m=Math.max(m, el.getBoundingClientRect().height);
+  });
+  /* 24px = --s4, a folga entre o painel e a próxima linha de ficha */
+  stepsEl.style.setProperty('--panel-h', Math.ceil(m)+24+'px');
+}
+function steps(){
+  const r=stepsEl.getBoundingClientRect();
+  const p=(innerHeight*0.80 - r.top)/(r.height + innerHeight*0.55);
+  const i=Math.floor(Math.max(0,Math.min(.9999,p))*stepEls.length);
+  stepEls.forEach((el,k)=>el.classList.toggle('on', k===i));
+}
+
+/* ── loop de scroll ──────────────────────────────────────────────── */
+const hdr=document.getElementById('hdr'), mbar=document.getElementById('mbar');
+const closeEl=document.querySelector('.close');
+let ticking=false;
+function frame(){
+  paint();
+  steps();
+  hdr.classList.toggle('stuck', scrollY>60);
+  const cr=closeEl.getBoundingClientRect();
+  mbar.classList.toggle('on', scrollY>innerHeight*0.7 && cr.top>innerHeight*0.8);
+  ticking=false;
+}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(frame)}},{passive:true});
+addEventListener('resize',()=>{sizeSteps();measure();frame()});
+sizeSteps();measure();frame();
+addEventListener('load',()=>{sizeSteps();measure();frame()});
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{sizeSteps();measure();frame()});
+
+/* máscara de revelação: o conteúdo desliza dentro do título */
+document.querySelectorAll('.rvl').forEach(el=>{
+  const mk=document.createElement('span'); mk.className='mk';
+  while(el.firstChild) mk.appendChild(el.firstChild);
+  el.appendChild(mk);
+});
+
+/* ── revelação em cascata ────────────────────────────────────────── */
+const io=new IntersectionObserver((es)=>{
+  es.forEach(en=>{
+    if(!en.isIntersecting) return;
+    const el=en.target;
+    if(!el.style.getPropertyValue('--d')){
+      const sibs=[...(el.parentElement?.children||[])].filter(n=>n.classList.contains('rv')||n.classList.contains('rvl'));
+      const i=Math.max(0,sibs.indexOf(el));
+      el.style.transitionDelay=Math.min(i,6)*70+'ms';
+    }
+    el.classList.add('in');
+    io.unobserve(el);
+  });
+},{rootMargin:'0px 0px -12% 0px',threshold:0.06});
+document.querySelectorAll('.rv,.rvl').forEach(el=>io.observe(el));
+
+/* hero: revela no load, sem esperar scroll */
+addEventListener('load',()=>{
+  document.querySelectorAll('.hero .rv,.hero .rvl').forEach(el=>{
+    el.style.transitionDelay=el.style.getPropertyValue('--d')||'0ms';
+    el.classList.add('in');
+  });
+});
+
+/* ── ticker do header — motion aprovado ──────────────────────────── */
+const FATOS=[
+  'Fábrica própria em Taquaritinga do Norte, PE',
+  '40 mil peças por mês de produção própria',
+  'Mais de 1.500 marcas atendidas',
+  'Empresa em operação desde 2021'
+];
+const tick=document.getElementById('tick');
+let ti=0, cur=document.createElement('span');
+cur.textContent=FATOS[0]; tick.appendChild(cur);
+if(!reduce) setInterval(()=>{
+  ti=(ti+1)%FATOS.length;
+  const nx=document.createElement('span');
+  nx.textContent=FATOS[ti]; nx.dataset.st='in';
+  tick.appendChild(nx);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    cur.dataset.st='out'; nx.removeAttribute('data-st');
+  }));
+  const old=cur; cur=nx;
+  setTimeout(()=>old.remove(),900);
+},5200);
+</script>
+</body>
+</html>
