@@ -254,9 +254,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    que é o motivo de a mesma textura servir a jornada inteira de cor.
    O ladrilho fecha por stitchTiles, senão a emenda apareceria a cada
    160px. Trocar o slope do feFuncA é a única alavanca de dose.        */
-html{background-color:var(--bg);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.19'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23g%29'/%3E%3C/svg%3E");
-  background-size:160px 160px}
+:root{--grao:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.19'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23g%29'/%3E%3C/svg%3E")}
+html{background-color:var(--bg);background-image:var(--grao);background-size:160px 160px}
 body{
   background:transparent;
   color:var(--ink);
@@ -322,9 +321,26 @@ section{position:relative;z-index:1}
   transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease)}
 .hdr.stuck{background:var(--bg)}
 .hdr.stuck::after{transform:scaleX(1)}
-.ticker{height:34px;overflow:hidden;border-bottom:1px solid var(--rule);
-  transition:height .55s var(--ease),opacity .35s,border-color .5s}
-.hdr.stuck .ticker{height:0;opacity:0;border-color:transparent}
+/* A faixa é o único elemento que NÃO viaja na jornada de cor: ela é uma
+   banda fixa do azul do brandbook, com tinta branca. Pode ser fixa com
+   segurança porque só existe nos primeiros 60px de rolagem — passando
+   disso o header vira `stuck` e ela colapsa para altura zero, sempre
+   sobre a parada 0, que é clara. Nunca chega a encostar numa parada
+   escura, onde azul sobre azul sumiria.
+
+   Branco sobre o azul mede 8,34:1, e a própria banda salta 8,34:1
+   contra o fundo claro — que é o "chamar atenção" pedido. Leva o mesmo
+   grão do resto da página, senão seria a única superfície lisa da tela.
+   A regra de baixo do header sai: com a banda preenchida, o fio de 1px
+   vira sujeira. */
+.ticker{height:34px;overflow:hidden;
+  background-color:#2D4E71;background-image:var(--grao);background-size:160px 160px;
+  transition:height .55s var(--ease),opacity .35s}
+/* Precisa alcançar o .label: ele declara `color` no próprio elemento,
+   então herdar da faixa não bastava — o texto saía do mesmo azul do
+   fundo e sumia. */
+.ticker,.ticker .label{color:#F8FCFF}
+.hdr.stuck .ticker{height:0;opacity:0}
 .ticker .wrap{display:flex;align-items:center;justify-content:space-between;height:34px}
 .tick-slot{position:relative;height:34px;flex:1;overflow:hidden}
 .tick-slot span{position:absolute;inset:0;display:flex;align-items:center;
