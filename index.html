@@ -710,6 +710,45 @@ section{position:relative;z-index:1}
   .rvl .c{opacity:1;transform:none}
 }
 
+
+/* ── CARIMBO DE FÁBRICA ──────────────────────────────────────────────
+   Duas cópias do conteúdo, e o `gap` somado dentro do @keyframes: sem
+   ele o laço salta na virada, porque a segunda cópia entra deslocada da
+   largura de um vão. A faixa inteira é aria-hidden — a marca repetida
+   não acrescenta nada para quem ouve a página.
+
+   A máscara nas pontas evita o corte seco na borda da tela, que é o que
+   denuncia o truque. Sem movimento declarado, ela para: marquee é o
+   caso clássico de animação que atrapalha quem tem sensibilidade.    */
+.carimbo{--vao:clamp(40px,5vw,72px);
+  display:flex;gap:var(--vao);overflow:hidden;user-select:none;
+  padding-block:clamp(28px,3.5vw,44px);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.carimbo ul{flex-shrink:0;display:flex;align-items:center;gap:var(--vao);
+  min-width:100%;margin:0;padding:0;list-style:none;
+  animation:carimbo-anda 42s linear infinite}
+.carimbo li{display:flex;align-items:center}
+.carimbo svg{width:clamp(46px,4vw,62px);height:auto;display:block;
+  color:var(--ink);opacity:.26}
+.carimbo i{width:5px;height:5px;background:var(--accent);opacity:.4;rotate:45deg}
+@keyframes carimbo-anda{
+  from{transform:translateX(0)}
+  to{transform:translateX(calc(-100% - var(--vao)))}
+}
+@media (prefers-reduced-motion:reduce){.carimbo ul{animation:none}}
+
+/* ── GRADE DE FICHA TÉCNICA ──────────────────────────────────────────
+   Só na dobra do método, onde a própria copy promete "tecido escolhido,
+   modelagem própria e ficha técnica". É a mesa de corte por baixo do
+   texto. Dois gradientes lineares, zero imagem, e a cor sai do motor —
+   então a grade desbota junto com o resto no ponto de inversão.
+   Fora desta seção viraria papel quadriculado sem motivo.            */
+#caminho{background-image:
+    linear-gradient(color-mix(in srgb,var(--fio-forte) 30%,transparent) 1px,transparent 1px),
+    linear-gradient(90deg,color-mix(in srgb,var(--fio-forte) 30%,transparent) 1px,transparent 1px);
+  background-size:32px 32px;background-position:center}
+
 /* ══ RESPONSIVO ════════════════════════════════════════════════════ */
 @media (max-width:1120px){
   .hero-txt{grid-column:1/8}.hero-fig{grid-column:8/13}
@@ -835,6 +874,14 @@ section{position:relative;z-index:1}
 </section>
 
 <!-- ══ 01 · O MODELO ══════════════════════════════════════════════ -->
+  <!-- CARIMBO DE FÁBRICA — uma vez só na página, aqui, onde ela passa
+       de "quem somos" para "o que defendemos". Repetido em toda
+       divisória viraria papel de parede e perderia o sentido. -->
+  <div class="carimbo" aria-hidden="true">
+    <ul><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li></ul>
+    <ul><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li></ul>
+  </div>
+
 <section class="sec wrap" id="modelo" data-fold="2">
   <div class="g12">
     <div class="mod-a">
