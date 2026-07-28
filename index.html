@@ -311,21 +311,15 @@ section{position:relative;z-index:1}
 .tick-slot span[data-st="out"]{transform:translateY(-100%);opacity:0}
 .tick-slot span[data-st="in"]{transform:translateY(100%);opacity:0}
 .ticker .r{white-space:nowrap;padding-left:var(--s4)}
-.hdr-row{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+.hdr-row{display:flex;align-items:center;gap:var(--s4);
   padding-block:clamp(16px,1.8vw,24px);transition:padding .55s var(--ease)}
 .hdr.stuck .hdr-row{padding-block:12px}
-.hdr-nav{display:flex;gap:clamp(20px,2.2vw,32px);flex:1}
-.hdr-nav a{position:relative;padding-block:4px}
-.hdr-nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;
-  transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
-.hdr-nav a:hover::after{transform:scaleX(1);transform-origin:left}
 .brand{flex:0 0 auto;display:flex;align-items:flex-end;gap:clamp(7px,.8vw,11px);
-  transform-origin:center;transition:transform .55s var(--ease)}
+  transform-origin:left center;transition:transform .55s var(--ease)}
 .hdr.stuck .brand{transform:scale(.74)}
 .wordmark{width:clamp(58px,5.6vw,80px);height:auto;display:block}
 .brand-sub{font-size:.5rem;font-variation-settings:'wght' 620;letter-spacing:.26em;
   text-transform:uppercase;line-height:1.5;padding-bottom:.3em;white-space:nowrap}
-.hdr-end{flex:1;display:flex;justify-content:flex-end;align-items:center}
 
 /* ══ 10 · CTA — o único hover da página, motion aprovado ═══════════
 
@@ -443,11 +437,19 @@ section{position:relative;z-index:1}
 /* hero */
 .hero{padding-top:clamp(112px,9vw,152px);padding-bottom:var(--sec)}
 .hero-row{position:relative}
-.hero-txt{grid-column:1/8;padding-top:var(--s5)}
-.hero h1{margin-bottom:var(--s5)}
-.hero-sub{max-width:34ch;margin-bottom:var(--s6)}
+/* A coluna de texto centra contra a figura. Antes ela era ancorada no
+   topo e sobrava um vão morto de ~200px sob o botão, que fazia a dobra
+   parecer inacabada. */
+.hero-txt{grid-column:1/8;align-self:center}
+/* Hierarquia por AGRUPAMENTO, não por tamanho: título e subtítulo ficam
+   perto (s4) e lêem como um bloco só, a mensagem; o pedido fica longe
+   (s7) e lê como o segundo tempo. O passo tipográfico entre eles já é de
+   2,9x, aumentar não resolveria — o que faltava era distância. */
+.hero h1{margin-bottom:var(--s4)}
+.hero-sub{max-width:34ch;margin-bottom:var(--s7)}
 .hero-act{display:flex;align-items:center;gap:var(--s5);flex-wrap:wrap}
-.hero-act .note{max-width:26ch;font-size:1.0625rem;line-height:1.55;color:var(--soft)}
+/* a nota desce um degrau para o botão liderar sozinho */
+.hero-act .note{max-width:24ch;font-size:1rem;line-height:1.5;color:var(--soft)}
 .hero-fig{grid-column:8/13}
 .hero-num{margin-top:var(--s8)}
 .hero-num .cap{margin-bottom:var(--s5);max-width:46ch}
@@ -552,8 +554,6 @@ section{position:relative;z-index:1}
 }
 @media (max-width:860px){
   :root{--sec:96px;--gap:24px}
-  .hdr-nav{display:none}
-  .brand{order:-1}.hdr-end{flex:0 0 auto}
   .ticker{display:none}
   .hero{padding-top:104px}
   .hero-txt{padding-top:0}
@@ -616,18 +616,13 @@ section{position:relative;z-index:1}
       <div class="r label">10 dias úteis de produção</div>
     </div>
   </div>
+  <!-- Só a marca. As três âncoras e o botão duplicado saíram: em tráfego
+       pago âncora é vazamento, e o botão do header disputava a mesma tela
+       com o do hero — dois pedidos de conversão visíveis ao mesmo tempo. -->
   <div class="wrap hdr-row">
-    <nav class="hdr-nav label" aria-label="Seções">
-      <a href="#modelo">O modelo</a>
-      <a href="#caminho">O caminho</a>
-      <a href="#grupo">O grupo</a>
-    </nav>
     <a class="brand" href="#topo" aria-label="MR Private Label">
       <svg class="wordmark" viewBox="0 0 2110 790" fill="currentColor" aria-hidden="true"><use href="#mrg"/></svg><span class="brand-sub" aria-hidden="true">Private<br>Label</span>
     </a>
-    <div class="hdr-end">
-      <a class="cta sm js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
-    </div>
   </div>
 </header>
 
@@ -646,12 +641,15 @@ section{position:relative;z-index:1}
       <p class="lead hero-sub rv" style="--d:280ms">Produção própria de roupa masculina para o lojista que quer vender marca própria, não o mesmo produto do vizinho.</p>
       <div class="hero-act rv" style="--d:380ms">
         <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
-        <p class="note">Coleção nova com a condição dela junto. Sair é um toque, a qualquer momento.</p>
+        <p class="note">Coleção nova com a condição dela junto, direto de quem produz.</p>
       </div>
     </div>
 
     <figure class="fig hero-fig rv" style="--d:200ms">
-      <div class="fig-in"><img src="img/01-hero.jpg" alt="Peça de malha da linha Inverno 2026 em uso, sem marca aplicada." width="880" height="1100"></div>
+      <div class="fig-in"><picture>
+        <source srcset="img/01-hero.webp" type="image/webp">
+        <img src="img/01-hero.jpg" alt="Peça de malha da linha Inverno 2026 em uso, sem marca aplicada." width="560" height="700" fetchpriority="high" decoding="async">
+      </picture></div>
       <figcaption class="label">Linha Inverno 2026</figcaption>
     </figure>
   </div>
