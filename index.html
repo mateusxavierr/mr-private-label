@@ -521,26 +521,31 @@ section{position:relative;z-index:1}
 .rv{opacity:0;transform:translateY(20px);
   transition:opacity .9s var(--ease) var(--d,0ms),transform .9s var(--ease) var(--d,0ms)}
 .rv.in{opacity:1;transform:none}
-/* o invólucro não anima nada: quem desliza é o .mk lá dentro. Declarar
-   `none` aqui é o que impede a cor de ser capturada de novo. */
-.rvl{overflow:hidden;padding:0 .16em .22em .16em;transition:none}
-.rvl>.mk{display:block;margin:0 -.16em -.22em -.16em;
-  transform:translateY(115%);transition:transform 1.05s var(--ease) var(--d,0ms)}
-.rvl.in>.mk{transform:none}
-/* O recorte só serve ENQUANTO o texto desliza. Terminada a revelação ele
-   sai, e é isso que devolve as descendentes.
+/* ── TÍTULO: REVELAÇÃO POR LETRA, ESCALONADA POR PALAVRA ─────────────
+   A PALAVRA é a unidade do escalonamento. Cada palavra parte um pouco
+   depois da anterior, e dentro dela as letras entram em sequência curta.
+   O atraso de uma letra é (palavra × 80ms) + (letra na palavra × 24ms),
+   e não um contador corrido pela frase inteira: num título de 45 letras
+   um contador corrido levaria mais de um segundo só para chegar ao fim
+   da primeira linha, e o olho leria como texto sendo digitado.
 
-   Por que faltava folga: o padding de .22em do invólucro era cancelado
-   exatamente pela margem de -.22em do .mk, então a borda de corte caía
-   em cima da caixa de linha, sem sobra nenhuma. E a Playfair Display,
-   com line-height 1,08, desce ~0,13em ABAIXO dessa caixa. Resultado: a
-   cedilha do ç, a perna do p e do g e a barriga do itálico decepadas em
-   toda headline do site. O mesmo valia na horizontal, com os .16em. */
-.rvl.done{overflow:visible}
+   O invólucro não recorta mais nada. A máscara antiga vivia de
+   `overflow:hidden`, e era ela que decepava a cedilha do ç e a perna do
+   p e do g. Sem recorte, o defeito não tem como voltar.
+
+   Custo assumido: letra em caixa própria não faz par de kerning com a
+   vizinha. Num display serif isso é visível em pares como "Vá" e "To".
+   É inerente a animar letra por letra; não há contorno. */
+.rvl{overflow:visible}
+.rvl .w{display:inline-block;white-space:nowrap}   /* a palavra quebra linha inteira */
+.rvl .c{display:inline-block;opacity:0;transform:translateY(.5em);
+  transition:opacity .72s var(--ease) var(--cd,0ms),
+             transform .95s var(--ease) var(--cd,0ms)}
+.rvl.in .c{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
   .rv,.rvl{opacity:1;transform:none}
-  .rvl>.mk{transform:none}
+  .rvl .c{opacity:1;transform:none}
 }
 
 /* ══ RESPONSIVO ════════════════════════════════════════════════════ */
@@ -1067,27 +1072,50 @@ sizeSteps();measure();frame();
 addEventListener('load',()=>{sizeSteps();measure();frame()});
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{sizeSteps();measure();frame()});
 
-/* máscara de revelação: o conteúdo desliza dentro do título */
+/* ── FATIAR O TÍTULO EM PALAVRAS E LETRAS ────────────────────────────
+   Anda pela árvore em vez de reescrever innerHTML: sete dos nove
+   títulos têm um <em> dentro (a palavra em itálico), e reescrever o
+   HTML mataria esse markup. Cada nó de texto vira palavras; cada
+   palavra vira letras; o <em> continua sendo <em>, com as letras dele
+   dentro e no mesmo contador.
+
+   Acessibilidade: o texto corrido vai para o aria-label do título, e as
+   palavras fatiadas saem da árvore de acessibilidade. Sem isso o leitor
+   de tela pode soletrar. O aria-label é lido ANTES de fatiar, senão
+   pegaria o texto já picado. Copiar e colar continua funcionando: os
+   espaços entre palavras seguem sendo nós de texto de verdade.        */
+const PASSO_PALAVRA=110, PASSO_LETRA=34;
 document.querySelectorAll('.rvl').forEach(el=>{
-  const mk=document.createElement('span'); mk.className='mk';
-  while(el.firstChild) mk.appendChild(el.firstChild);
-  el.appendChild(mk);
+  const dono=el.closest('h1,h2,h3,h4,h5,h6')||el;
+  if(!dono.hasAttribute('aria-label'))
+    dono.setAttribute('aria-label',dono.textContent.replace(/\s+/g,' ').trim());
+  let pi=0, li=0;                       /* palavra na frase, letra na palavra */
+  (function anda(no){
+    [...no.childNodes].forEach(f=>{
+      if(f.nodeType===3){
+        const frag=document.createDocumentFragment();
+        f.nodeValue.split(/(\s+)/).forEach(pedaco=>{
+          if(!pedaco) return;
+          if(/^\s+$/.test(pedaco)){ frag.appendChild(document.createTextNode(' ')); return; }
+          const w=document.createElement('span');
+          w.className='w'; w.setAttribute('aria-hidden','true');
+          for(const ch of pedaco){
+            const c=document.createElement('span'); c.className='c';
+            c.style.setProperty('--cd',(pi*PASSO_PALAVRA+li*PASSO_LETRA)+'ms');
+            c.textContent=ch; li++; w.appendChild(c);
+          }
+          frag.appendChild(w); pi++; li=0;
+        });
+        no.replaceChild(frag,f);
+      } else if(f.nodeType===1) anda(f);
+    });
+  })(el);
 });
 
 /* ── revelação em cascata ────────────────────────────────────────── */
-/* Revela e, terminada a animação, tira o recorte do invólucro. Enquanto
-   o .mk desliza o `overflow:hidden` é o efeito; parado, ele só decepa
-   descendente. O prazo de segurança cobre o caso de o transitionend não
-   chegar — aba oculta, transição suprimida, elemento já em posição. */
-function revelar(el){
-  el.classList.add('in');
-  if(!el.classList.contains('rvl')) return;
-  const mk=el.querySelector('.mk'); if(!mk) return;
-  const solta=()=>el.classList.add('done');
-  if(reduce) return solta();
-  mk.addEventListener('transitionend',solta,{once:true});
-  setTimeout(solta,1600);
-}
+/* Não há mais recorte para soltar: a revelação por letra não usa
+   máscara, então revelar é só ligar a classe. */
+const revelar=el=>el.classList.add('in');
 const io=new IntersectionObserver((es)=>{
   es.forEach(en=>{
     if(!en.isIntersecting) return;
