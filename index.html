@@ -508,14 +508,23 @@ section{position:relative;z-index:1}
 .mbar.on{transform:none}
 
 /* ══ MOTION ════════════════════════════════════════════════════════ */
+/* O atraso da cascata vive em --d e entra DENTRO da transição de cada
+   elemento, nunca como `transition-delay` solto. Motivo, aprendido do
+   defeito: `transition-delay` isolado se aplica ao `transition-property`
+   vigente, e quem não declara um fica com o `all` inicial. Aí a COR
+   entrava na transição — e uma transição de duração zero COM atraso
+   segura o valor antigo pelo tempo do atraso e só então salta. O título
+   com máscara trocava de cor depois do resto da página, porque era o
+   único elemento com atraso inline e sem transition-property próprio. */
 .rv{opacity:0;transform:translateY(20px);
-  transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  transition:opacity .9s var(--ease) var(--d,0ms),transform .9s var(--ease) var(--d,0ms)}
 .rv.in{opacity:1;transform:none}
-.rvl{overflow:hidden;padding:0 .16em .22em .16em}
+/* o invólucro não anima nada: quem desliza é o .mk lá dentro. Declarar
+   `none` aqui é o que impede a cor de ser capturada de novo. */
+.rvl{overflow:hidden;padding:0 .16em .22em .16em;transition:none}
 .rvl>.mk{display:block;margin:0 -.16em -.22em -.16em;
-  transform:translateY(115%);transition:transform 1.05s var(--ease)}
+  transform:translateY(115%);transition:transform 1.05s var(--ease) var(--d,0ms)}
 .rvl.in>.mk{transform:none}
-.hero .rvl,.hero .rv{transition-delay:var(--d,0ms)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
   .rv,.rvl{opacity:1;transform:none}
@@ -1065,7 +1074,9 @@ const io=new IntersectionObserver((es)=>{
     if(!el.style.getPropertyValue('--d')){
       const sibs=[...(el.parentElement?.children||[])].filter(n=>n.classList.contains('rv')||n.classList.contains('rvl'));
       const i=Math.max(0,sibs.indexOf(el));
-      el.style.transitionDelay=Math.min(i,6)*70+'ms';
+      /* --d, e não transitionDelay: o atraso precisa entrar na transição
+         declarada de cada elemento, senão pega o `all` inicial junto */
+      el.style.setProperty('--d',Math.min(i,6)*70+'ms');
     }
     el.classList.add('in');
     io.unobserve(el);
@@ -1075,10 +1086,8 @@ document.querySelectorAll('.rv,.rvl').forEach(el=>io.observe(el));
 
 /* hero: revela no load, sem esperar scroll */
 addEventListener('load',()=>{
-  document.querySelectorAll('.hero .rv,.hero .rvl').forEach(el=>{
-    el.style.transitionDelay=el.style.getPropertyValue('--d')||'0ms';
-    el.classList.add('in');
-  });
+  /* o --d do hero já vem no markup; a transição declarada o consome */
+  document.querySelectorAll('.hero .rv,.hero .rvl').forEach(el=>el.classList.add('in'));
 });
 
 /* ── ticker do header — motion aprovado ──────────────────────────── */
