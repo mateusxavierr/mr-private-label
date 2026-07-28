@@ -525,6 +525,16 @@ section{position:relative;z-index:1}
 .rvl>.mk{display:block;margin:0 -.16em -.22em -.16em;
   transform:translateY(115%);transition:transform 1.05s var(--ease) var(--d,0ms)}
 .rvl.in>.mk{transform:none}
+/* O recorte só serve ENQUANTO o texto desliza. Terminada a revelação ele
+   sai, e é isso que devolve as descendentes.
+
+   Por que faltava folga: o padding de .22em do invólucro era cancelado
+   exatamente pela margem de -.22em do .mk, então a borda de corte caía
+   em cima da caixa de linha, sem sobra nenhuma. E a Playfair Display,
+   com line-height 1,08, desce ~0,13em ABAIXO dessa caixa. Resultado: a
+   cedilha do ç, a perna do p e do g e a barriga do itálico decepadas em
+   toda headline do site. O mesmo valia na horizontal, com os .16em. */
+.rvl.done{overflow:visible}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
   .rv,.rvl{opacity:1;transform:none}
@@ -1067,6 +1077,19 @@ document.querySelectorAll('.rvl').forEach(el=>{
 });
 
 /* ── revelação em cascata ────────────────────────────────────────── */
+/* Revela e, terminada a animação, tira o recorte do invólucro. Enquanto
+   o .mk desliza o `overflow:hidden` é o efeito; parado, ele só decepa
+   descendente. O prazo de segurança cobre o caso de o transitionend não
+   chegar — aba oculta, transição suprimida, elemento já em posição. */
+function revelar(el){
+  el.classList.add('in');
+  if(!el.classList.contains('rvl')) return;
+  const mk=el.querySelector('.mk'); if(!mk) return;
+  const solta=()=>el.classList.add('done');
+  if(reduce) return solta();
+  mk.addEventListener('transitionend',solta,{once:true});
+  setTimeout(solta,1600);
+}
 const io=new IntersectionObserver((es)=>{
   es.forEach(en=>{
     if(!en.isIntersecting) return;
@@ -1078,7 +1101,7 @@ const io=new IntersectionObserver((es)=>{
          declarada de cada elemento, senão pega o `all` inicial junto */
       el.style.setProperty('--d',Math.min(i,6)*70+'ms');
     }
-    el.classList.add('in');
+    revelar(el);
     io.unobserve(el);
   });
 },{rootMargin:'0px 0px -12% 0px',threshold:0.06});
@@ -1087,7 +1110,7 @@ document.querySelectorAll('.rv,.rvl').forEach(el=>io.observe(el));
 /* hero: revela no load, sem esperar scroll */
 addEventListener('load',()=>{
   /* o --d do hero já vem no markup; a transição declarada o consome */
-  document.querySelectorAll('.hero .rv,.hero .rvl').forEach(el=>el.classList.add('in'));
+  document.querySelectorAll('.hero .rv,.hero .rvl').forEach(revelar);
 });
 
 /* ── ticker do header — motion aprovado ──────────────────────────── */
