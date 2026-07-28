@@ -434,18 +434,39 @@ section{position:relative;z-index:1}
   background-color:var(--fio-forte);
   -webkit-mask:var(--costura) repeat-x left center/26px 3px;
           mask:var(--costura) repeat-x left center/26px 3px}
-.fi{position:relative;padding-top:calc(var(--s4) + 3px);padding-bottom:var(--s5)}
-.fi::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+/* ── ETIQUETA TECIDA ─────────────────────────────────────────────────
+   O que a MR vende é literalmente pôr a etiqueta do lojista na peça.
+   Então o par rótulo/valor deixa de ser texto solto e vira a etiqueta:
+   um retângulo de tecido costurado nas duas bordas, com a marca tecida
+   dentro. É o dispositivo mais fiel ao negócio na página inteira.
+
+   O "tecido" é a superfície da jornada com o mesmo grão do fundo, o que
+   dá trama sem imagem nenhuma. As duas costuras, em cima e embaixo, são
+   onde a etiqueta é pregada — por isso o respiro lateral: ponto que vai
+   até a borda lê como moldura, não como etiqueta pregada.             */
+.fi{position:relative;padding:calc(var(--s4) + 6px) var(--s4) var(--s5);
+  background-color:var(--surf);background-image:var(--grao);background-size:160px 160px}
+.fi::after{content:"";position:absolute;bottom:6px;left:var(--s4);right:var(--s4);height:3px;
   background-color:var(--fio-forte);
   -webkit-mask:var(--costura) repeat-x left center/26px 3px;
           mask:var(--costura) repeat-x left center/26px 3px}
-.ficha--stack .fi:last-child{padding-bottom:0}
+/* a marca tecida: pequena, no canto, como num rótulo de gola */
+.fi-mr{position:absolute;top:calc(var(--s4) - 2px);right:var(--s4);
+  width:34px;height:auto;display:block;color:var(--soft);opacity:.55}
+.fi::before{content:"";position:absolute;top:6px;left:var(--s4);right:var(--s4);height:3px;
+  background-color:var(--fio-forte);
+  -webkit-mask:var(--costura) repeat-x left center/26px 3px;
+          mask:var(--costura) repeat-x left center/26px 3px}
+.ficha--stack .fi:last-child{padding-bottom:var(--s4)}
 .fi-k{display:block;margin-bottom:var(--s3)}
 .fi-v{display:block}
 /* em colunas, o valor reserva duas linhas: os complementos das quatro
    colunas assentam sempre na mesma altura, mesmo com valores de
    comprimentos diferentes */
-.ficha--cols .fi-v{min-height:2.08em}
+/* o min-height existia para alinhar o valor entre colunas quando o
+   numero quebrava. Com a etiqueta, o grid ja iguala a altura das
+   quatro e o reservado virava buraco dentro do retangulo. */
+.ficha--cols .fi-v{min-height:0}
 .fi-s{display:block;margin-top:var(--s2);max-width:34ch}
 .ficha--stack .fi{display:grid;grid-template-columns:minmax(150px,.42fr) 1fr;
   column-gap:var(--gap);align-items:baseline}
@@ -746,10 +767,10 @@ section{position:relative;z-index:1}
   <div class="hero-num" data-fold="1">
     <p class="body cap rv">Quem vai produzir a sua peça é esta fábrica, e estes são os números dela.</p>
     <div class="ficha ficha--cols">
-      <div class="fi rv"><span class="fi-k label">Produção própria</span><span class="fi-v num">40 mil</span><span class="fi-s body">peças por mês</span></div>
-      <div class="fi rv"><span class="fi-k label">Carteira</span><span class="fi-v num">+1.500</span><span class="fi-s body">marcas atendidas</span></div>
-      <div class="fi rv"><span class="fi-k label">Instagram</span><span class="fi-v num">80,3 mil</span><span class="fi-s body">seguidores</span></div>
-      <div class="fi rv"><span class="fi-k label">Em operação</span><span class="fi-v num">2021</span><span class="fi-s body">empresa aberta em 03/08/2021</span></div>
+      <div class="fi rv"><svg class="fi-mr" viewBox="0 0 2110 790" fill="currentColor" aria-hidden="true"><use href="#mrg"/></svg><span class="fi-k label">Produção própria</span><span class="fi-v num">40 mil</span><span class="fi-s body">peças por mês</span></div>
+      <div class="fi rv"><svg class="fi-mr" viewBox="0 0 2110 790" fill="currentColor" aria-hidden="true"><use href="#mrg"/></svg><span class="fi-k label">Carteira</span><span class="fi-v num">+1.500</span><span class="fi-s body">marcas atendidas</span></div>
+      <div class="fi rv"><svg class="fi-mr" viewBox="0 0 2110 790" fill="currentColor" aria-hidden="true"><use href="#mrg"/></svg><span class="fi-k label">Instagram</span><span class="fi-v num">80,3 mil</span><span class="fi-s body">seguidores</span></div>
+      <div class="fi rv"><svg class="fi-mr" viewBox="0 0 2110 790" fill="currentColor" aria-hidden="true"><use href="#mrg"/></svg><span class="fi-k label">Em operação</span><span class="fi-v num">2021</span><span class="fi-s body">empresa aberta em 03/08/2021</span></div>
     </div>
   </div>
 </section>
