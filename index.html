@@ -255,6 +255,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    O ladrilho fecha por stitchTiles, senão a emenda apareceria a cada
    160px. Trocar o slope do feFuncA é a única alavanca de dose.        */
 :root{--grao:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.19'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23g%29'/%3E%3C/svg%3E")}
+/* ── COSTURA ─────────────────────────────────────────────────────────
+   A divisoria da pagina deixa de ser um traco e vira um ponto de
+   maquina. Nao e um tracejado de CSS: e uma MASCARA em SVG com
+   stroke-linecap round, e a cor vem do background-color por baixo —
+   por isso o ponto continua andando na jornada de cor, o que um
+   data URI colorido nao faria.
+
+   O ladrilho de 26px vale exatamente dois pontos de (9 + 4). A ponta
+   redonda estica o traco meio stroke para cada lado: os 9 viram ~10,8
+   e o vao de 4 vira ~2,2. E essa proporcao — traco longo, vao curto,
+   ponta arredondada — que faz o olho ler linha de costura em vez de
+   linha pontilhada.                                                 */
+:root{--costura:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='3'%3E%3Cline x1='0' y1='1.5' x2='26' y2='1.5' stroke='black' stroke-width='1.8' stroke-dasharray='9 4' stroke-linecap='round'/%3E%3C/svg%3E")}
 html{background-color:var(--bg);background-image:var(--grao);background-size:160px 160px}
 body{
   background:transparent;
@@ -416,7 +429,16 @@ section{position:relative;z-index:1}
 .ficha{display:grid}
 .ficha--cols{grid-template-columns:repeat(4,1fr);column-gap:var(--gap)}
 .ficha--stack{grid-template-columns:1fr}
-.fi{border-top:1px solid var(--rule);padding-top:var(--s4);padding-bottom:var(--s5)}
+.costurado{position:relative}
+.costurado::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background-color:var(--fio-forte);
+  -webkit-mask:var(--costura) repeat-x left center/26px 3px;
+          mask:var(--costura) repeat-x left center/26px 3px}
+.fi{position:relative;padding-top:calc(var(--s4) + 3px);padding-bottom:var(--s5)}
+.fi::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background-color:var(--fio-forte);
+  -webkit-mask:var(--costura) repeat-x left center/26px 3px;
+          mask:var(--costura) repeat-x left center/26px 3px}
 .ficha--stack .fi:last-child{padding-bottom:0}
 .fi-k{display:block;margin-bottom:var(--s3)}
 .fi-v{display:block}
@@ -437,7 +459,11 @@ section{position:relative;z-index:1}
    A altura do bloco é constante — sempre há exatamente um painel
    aberto, e todos reservam a mesma altura (--panel-h, medida por JS). */
 .steps{--panel-h:184px}
-.step{border-top:1px solid var(--rule)}
+.step{position:relative}
+.step::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background-color:var(--fio-forte);
+  -webkit-mask:var(--costura) repeat-x left center/26px 3px;
+          mask:var(--costura) repeat-x left center/26px 3px}
 /* A recessão do passo fechado deixou de ser opacidade e passou a ser
    cor: fechado = secundário, aberto = tinta. Opacidade compunha tinta
    com fundo e derrubava o rótulo de 12px para baixo de AA; o par
@@ -1085,6 +1111,11 @@ function paint(){
   /* o fio é o fundo caminhando 28% em direção à tinta — interpolação
      entre dois membros da paleta, como todo o resto */
   root.style.setProperty('--rule',  rgb(lerp(bg,ink,0.28),fade));
+  /* o ponto de costura precisa ler como linha, não como sombra de linha:
+     mesma interpolação do fio, puxada de 28% para 50% em direção à tinta.
+     Sai do motor, e não de uma cor solta, para continuar andando na
+     jornada e desvanecer junto no ponto de inversão. */
+  root.style.setProperty('--fio-forte', rgb(lerp(bg,ink,0.50),fade));
   /* 7 · a superfície é o fundo andando um degrau de L* no sentido
      oposto ao da tinta: cartão, passe-partout e painel voltam a ter
      preenchimento sem que nenhum texto perca contraste */
