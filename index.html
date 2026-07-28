@@ -266,8 +266,13 @@ body{
 .field svg{display:block;width:100%;height:100%;fill:var(--fld)}
 
 /* ══ 2 · TIPOGRAFIA — os seis papéis ═══════════════════════════════ */
+/* O H1 cresceu de 4,2vw para 5,4vw (54px para 69px a 1280). Motivo
+   medido no teste de desfoque: a Playfair e uma didone de haste fina e
+   depositava pouca tinta — o titulo saia com 31 de peso optico contra
+   192 do botao, ou seja, a mensagem era o quarto elemento mais forte da
+   tela. Tamanho e a unica alavanca disponivel sem trocar a fonte. */
 .d1{font-family:var(--serif);font-variation-settings:'wght' 500;
-  font-size:clamp(2.75rem,4.2vw,3.9rem);line-height:1.08;letter-spacing:-.021em}
+  font-size:clamp(3rem,5.4vw,4.9rem);line-height:1.06;letter-spacing:-.024em}
 .d2{font-family:var(--serif);font-variation-settings:'wght' 520;
   font-size:clamp(2.15rem,3.4vw,3.05rem);line-height:1.11;letter-spacing:-.017em}
 .num{font-family:var(--serif);font-variation-settings:'wght' 560;
@@ -443,17 +448,25 @@ section{position:relative;z-index:1}
 /* A coluna de texto centra contra a figura. Antes ela era ancorada no
    topo e sobrava um vão morto de ~200px sob o botão, que fazia a dobra
    parecer inacabada. */
-.hero-txt{grid-column:1/8;align-self:center}
+/* A coluna de texto ganha uma coluna da figura, de 7 para 8. Serve as
+   duas coisas de uma vez: da respiro para o H1 maior e encolhe a foto,
+   que passa a render em menos area — os mesmos 560px de fonte cobrindo
+   uma caixa menor sobem a densidade de 1,34 para ~1,7 pixel por pixel
+   de tela. Nitidez de graca, sem pixel novo. */
+.hero-txt{grid-column:1/9;align-self:center}
 /* Hierarquia por AGRUPAMENTO, não por tamanho: título e subtítulo ficam
    perto (s4) e lêem como um bloco só, a mensagem; o pedido fica longe
    (s7) e lê como o segundo tempo. O passo tipográfico entre eles já é de
    2,9x, aumentar não resolveria — o que faltava era distância. */
 .hero h1{margin-bottom:var(--s4)}
 .hero-sub{max-width:34ch;margin-bottom:var(--s7)}
-.hero-act{display:flex;align-items:center;gap:var(--s5);flex-wrap:wrap}
-/* a nota desce um degrau para o botão liderar sozinho */
-.hero-act .note{max-width:24ch;font-size:1rem;line-height:1.5;color:var(--soft)}
-.hero-fig{grid-column:8/13}
+/* A nota desce para baixo do botão. Lado a lado, as duas dividiam a
+   mesma linha óptica e o olho não sabia qual vinha primeiro; empilhadas,
+   a ordem de leitura fica declarada. O respiro de s3 as mantém no mesmo
+   grupo — é menos que o s7 que separa o pedido do subtítulo. */
+.hero-act{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s3)}
+.hero-act .note{max-width:34ch;font-size:1rem;line-height:1.5;color:var(--soft)}
+.hero-fig{grid-column:9/13}
 .hero-num{margin-top:var(--s8)}
 .hero-num .cap{margin-bottom:var(--s5);max-width:46ch}
 
@@ -561,7 +574,7 @@ section{position:relative;z-index:1}
 
 /* ══ RESPONSIVO ════════════════════════════════════════════════════ */
 @media (max-width:1120px){
-  .hero-txt{grid-column:1/7}.hero-fig{grid-column:7/13}
+  .hero-txt{grid-column:1/8}.hero-fig{grid-column:8/13}
   .mod-fig{grid-column:1/6}.mod-c{grid-column:7/13}
   .tro-a,.tro-fig{grid-column:1/6}.tro-b{grid-column:7/13}
   .cam-b{grid-column:8/13}.cam-fig{grid-column:1/6}.cam-c{grid-column:7/13}
@@ -666,7 +679,7 @@ section{position:relative;z-index:1}
     <figure class="fig hero-fig rv" style="--d:200ms">
       <div class="fig-in"><picture>
         <source srcset="img/01-hero.webp" type="image/webp">
-        <img src="img/01-hero.jpg" alt="Camiseta de tecido waffle da linha Inverno 2026 em uso, sem marca aplicada." width="400" height="500" fetchpriority="high" decoding="async">
+        <img src="img/01-hero.jpg" alt="Peça de malha da linha Inverno 2026 em uso, sem marca aplicada." width="560" height="700" fetchpriority="high" decoding="async">
       </picture></div>
       <figcaption class="label">Linha Inverno 2026</figcaption>
     </figure>
