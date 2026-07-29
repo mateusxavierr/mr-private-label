@@ -1026,19 +1026,27 @@ section{position:relative;z-index:1}
    A máscara nas pontas evita o corte seco na borda da tela, que é o que
    denuncia o truque. Sem movimento declarado, ela para: marquee é o
    caso clássico de animação que atrapalha quem tem sensibilidade.    */
-/* Ele não flutua no meio do vão entre duas dobras: fica colado na de
-   baixo, e é dela que ele é o cabeçalho. O respiro grande fica em cima,
-   o curto embaixo — é a mesma regra de agrupamento do hero, longe do
-   que veio antes e perto do que ele abre. A margem negativa puxa a
-   seção seguinte para junto; sem ela o padding da dobra reabriria o
-   vão inteiro. */
+/* A faixa fica CENTRADA entre as duas dobras: o mesmo --sec em cima e
+   embaixo.
+
+   Antes o respiro era assimétrico de propósito — grande em cima, curto
+   embaixo —, para ela ler como cabeçalho da dobra que abre, pela mesma
+   regra de agrupamento do hero. Decisão de Mateus: simétrico. Ela passa
+   a ler como divisória entre as duas, e não como pertencente a uma.  */
 .carimbo{--vao:clamp(26px,3.2vw,46px);
   display:flex;gap:var(--vao);overflow:hidden;user-select:none;
   padding-block:clamp(12px,1.5vw,18px);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
           mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+/* O bloco é medido pelo CONTEÚDO, nunca esticado. `min-width:100%`
+   forçava cada um à largura da tela: com sete marcas somando ~857px
+   numa tela de 1440, sobravam ~580px de vão VAZIO dentro do próprio
+   bloco, e era esse buraco que passava rodando. Em tela estreita o
+   conteúdo já enchia os 100% e o defeito não aparecia — por isso ele
+   só se mostrou agora. Quantas cópias são precisas para cobrir a tela
+   é conta de largura, e quem faz é o JS. */
 .carimbo ul{flex-shrink:0;display:flex;align-items:center;gap:var(--vao);
-  min-width:100%;margin:0;padding:0;list-style:none;
+  margin:0;padding:0;list-style:none;
   animation:carimbo-anda 42s linear infinite}
 .carimbo li{display:flex;align-items:center}
 .carimbo svg{width:clamp(28px,2.3vw,38px);height:auto;display:block;
@@ -1049,10 +1057,6 @@ section{position:relative;z-index:1}
   to{transform:translateX(calc(-100% - var(--vao)))}
 }
 @media (prefers-reduced-motion:reduce){.carimbo ul{animation:none}}
-/* Encurtar o respiro da dobra seguinte, em vez de puxá-la com margem
-   negativa: a margem funcionava, mas fazia a caixa da seção invadir a
-   faixa, e caixa sobreposta cobra depois. */
-.carimbo + section{padding-top:var(--s6)}
 
 /* ── GRADE DE FICHA TÉCNICA ──────────────────────────────────────────
    Só na dobra do método, onde a própria copy promete "tecido escolhido,
@@ -1952,6 +1956,34 @@ const RODA = 3200;
       arma(quadros[i++]).then(()=>requestAnimationFrame(proxima));
     })();
   });
+})();
+
+/* ══ A FITA DO CARIMBO ══════════════════════════════════════════════
+   Quantas cópias do bloco cabem é conta de largura, não de chute — e a
+   largura muda com a tela, porque tanto o glifo quanto o vão são clamp
+   sobre vw. Duas cópias vêm no markup para a primeira pintura já sair
+   correta; daqui para frente o número é ajustado.
+
+   A conta: cada cópia anda um CICLO (a própria largura mais um vão).
+   Para nunca aparecer buraco, o que sobra depois de descontar um ciclo
+   ainda precisa cobrir a tela — daí `teto(tela ÷ ciclo) + 1`.        */
+(()=>{
+  const fita=document.querySelector('.carimbo');
+  const molde=fita&&fita.querySelector('ul');
+  if(!molde) return;
+  const ajusta=()=>{
+    const vao=parseFloat(getComputedStyle(fita).columnGap)||0;
+    const ciclo=molde.offsetWidth+vao;
+    if(ciclo<=vao) return;                    /* fontes ainda não vieram */
+    const alvo=Math.max(2,Math.ceil(fita.offsetWidth/ciclo)+1);
+    while(fita.children.length<alvo) fita.appendChild(molde.cloneNode(true));
+    while(fita.children.length>alvo) fita.lastElementChild.remove();
+  };
+  ajusta();
+  addEventListener('resize',ajusta);
+  /* o glifo é SVG, mas o vão vem de clamp sobre vw e a caixa só assenta
+     depois do layout final — remedir no load evita cópia a menos */
+  addEventListener('load',ajusta);
 })();
 
 /* ── ticker do header — motion aprovado ──────────────────────────── */
