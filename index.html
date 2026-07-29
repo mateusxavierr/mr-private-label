@@ -1241,12 +1241,11 @@ section{position:relative;z-index:1}
   </div>
 
   <div class="hero-num wrap" data-fold="1">
-    <p class="body cap rv">Quem vai produzir a sua peça é esta fábrica, e estes são os números dela.</p>
     <div class="ficha ficha--cols">
       <div class="fi rv"><span class="fi-k label">Produção própria</span><span class="fi-v num">40 mil</span><span class="fi-s body">peças por mês</span></div>
       <div class="fi rv"><span class="fi-k label">Carteira</span><span class="fi-v num">+1.500</span><span class="fi-s body">marcas atendidas</span></div>
       <div class="fi rv"><span class="fi-k label">Instagram</span><span class="fi-v num">80,3 mil</span><span class="fi-s body">seguidores</span></div>
-      <div class="fi rv"><span class="fi-k label">Em operação</span><span class="fi-v num">2021</span><span class="fi-s body">empresa aberta em 03/08/2021</span></div>
+      <div class="fi rv"><span class="fi-k label">Em operação</span><span class="fi-v num" id="idade">4 anos</span><span class="fi-s body">desde 2021</span></div>
     </div>
   </div>
 </section>
@@ -1956,6 +1955,23 @@ const RODA = 3200;
       arma(quadros[i++]).then(()=>requestAnimationFrame(proxima));
     })();
   });
+})();
+
+/* ══ A IDADE DA FÁBRICA ═════════════════════════════════════════════
+   Número de tempo escrito à mão em landing envelhece calado: "5 anos"
+   cravado no HTML vira mentira em agosto de 2027 e ninguém percebe,
+   porque nada quebra. Aqui ele se conta sozinho a partir da data de
+   abertura, que essa sim é fixa e verificável (CNPJ 42.965.811/0001-77,
+   03/08/2021). O valor no markup é o de hoje, para a fonte nunca dizer
+   algo diferente do que a tela mostra.                                */
+(()=>{
+  const el=document.getElementById('idade');
+  if(!el) return;
+  const abertura=new Date(2021,7,3), hoje=new Date();
+  let anos=hoje.getFullYear()-abertura.getFullYear();
+  const meses=hoje.getMonth()-abertura.getMonth();
+  if(meses<0||(meses===0&&hoje.getDate()<abertura.getDate())) anos--;
+  el.textContent=anos+(anos===1?' ano':' anos');
 })();
 
 /* ══ A FITA DO CARIMBO ══════════════════════════════════════════════
