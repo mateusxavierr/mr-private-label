@@ -450,12 +450,6 @@ section{position:relative;z-index:1}
 .cta.sm{padding:12px 20px}
 .cta.big{padding:26px 32px;width:100%;justify-content:space-between}
 
-/* Ação de seção: o botão fecha cada dobra, em linha própria e largura
-   total do grid. A colocação é explícita por seção porque as dobras
-   posicionam os blocos por grid-row nomeado — item sem linha declarada
-   cairia num buraco de linha anterior. */
-.sec-act{grid-column:1/13;margin-top:var(--s7)}
-.gru-act{grid-row:3}
 
 /* ══ RÓTULO DE DOBRA — o único eyebrow, uma vez por dobra numerada,
       sempre imediatamente acima do H2. Nunca no hero, nunca em
@@ -572,8 +566,27 @@ section{position:relative;z-index:1}
    A margem de baixo continua em --s4 de propósito: é exatamente a folga
    que sizeSteps() soma ao medir o painel mais alto. Mudar uma sem a
    outra descasa a altura reservada do bloco. */
+/* O FUNDO DO PAINEL É OPACO, E A MISTURA É COM --onacc. As duas coisas
+   têm motivo medido.
+
+   Opaco porque translúcido deixava a malha quadriculada da dobra passar
+   por trás do texto, e linha atravessando letra come legibilidade. Um
+   desfoque de fundo suavizaria a malha, mas não resolve o segundo
+   problema — e com o fundo opaco ele não teria o que desfocar.
+
+   A mistura é com --onacc, e não com --ink, porque --onacc é sempre o
+   OPOSTO da tinta do texto na jornada. Misturar com --ink aproximava o
+   painel da cor das letras: numa dobra escura ele clareava e o texto
+   branco caía para 3,8:1, abaixo dos 4,5:1 de AA. Com --onacc o painel
+   sempre se afasta da tinta, e aqui fica em 5,9:1.
+
+   O que o painel NÃO faz mais é o defeito antigo: ele não usa --surf,
+   que nesta parada é mais escuro que o fundo e sem borda alguma lia como
+   poço. A diferença é a dose — 15% afasta o suficiente para o texto e
+   pouco o bastante para não abrir buraco — mais o fio de acento à
+   esquerda, que amarra o painel ao trilho em vez de emoldurá-lo. */
 .step-in{padding:var(--s5) var(--s6);margin:0 0 var(--s4) 62px;
-  background:color-mix(in srgb,var(--ink) 12%,transparent);
+  background:color-mix(in srgb,var(--onacc) 15%,var(--bg));
   border-left:2px solid var(--accent);
   display:grid;grid-template-columns:minmax(150px,.42fr) 1fr;
   column-gap:var(--gap);align-items:baseline}
@@ -1209,10 +1222,24 @@ section{position:relative;z-index:1}
 .cam-c .cta{margin-top:var(--s6)}
 .cam-c .note{margin-top:var(--s3);font-size:1rem;line-height:1.5}
 
-/* 04 · o grupo */
-.gru-a{grid-column:1/6;grid-row:1}
-.gru-fig{grid-column:1/6;grid-row:2;margin-top:var(--s6)}
-.gru-b{grid-column:7/13;grid-row:1/3}
+/* 04 · o grupo
+   O título dividia a linha com a ficha inteira: cinco colunas de título
+   contra uma tabela de quatro linhas começando na MESMA altura. Não
+   faltava corpo ao H2 — faltava linha própria. Agora ele abre a dobra
+   sozinho, e a ficha e a peça dividem a linha de baixo.
+   Isso conserta de quebra o vazio: antes a ficha ocupava a linha 1/3
+   inteira e acabava ~270px antes do pé da Polaroid. */
+.gru-a{grid-column:1/10;grid-row:1}
+.gru-a h2{max-width:15ch}
+/* align-self:start, e não o `stretch` que a grade dá de graça: sem ele a
+   figura estica até a altura da linha e a base branca da Polaroid cresce
+   sozinha embaixo da legenda. É o mesmo defeito que a 01 tinha. */
+.gru-fig{grid-column:1/5;grid-row:2;margin-top:var(--s8);align-self:start}
+.gru-b{grid-column:6/13;grid-row:2;margin-top:var(--s8)}
+/* o botão fecha a coluna da ficha, em barra — é o último CTA solto da
+   página em linha de 12 colunas */
+.gru-b .cta{margin-top:var(--s6)}
+.gru-b .note{margin-top:var(--s3);font-size:1rem;line-height:1.5}
 .close{position:relative;margin-top:var(--s8);display:grid;
   grid-template-columns:repeat(12,1fr);column-gap:var(--gap);align-items:end;
   padding-block:var(--s6)}          /* o campo respira além do texto */
@@ -1366,7 +1393,7 @@ section{position:relative;z-index:1}
   .hero-txt,.hero-act{grid-column:1/6}
   .hero-diz{grid-column:8/13}
   .cam-b{grid-column:8/13}.cam-fig{grid-column:1/6}.cam-c{grid-column:7/13}
-  .gru-a,.gru-fig{grid-column:1/6}.gru-b{grid-column:7/13}
+  .gru-a{grid-column:1/11}.gru-fig{grid-column:1/6}.gru-b{grid-column:7/13}
   .close-h{grid-column:1/7}.close-act{grid-column:7/13}
 }
 @media (max-width:860px){
@@ -1459,7 +1486,6 @@ section{position:relative;z-index:1}
   .tro-pe{display:block;margin-top:var(--s7)}
   .tro-pe .it+.it{margin-top:var(--s6)}
   .tro-pe .act{margin-top:var(--s6)}
-  .gru-b{margin-top:var(--s7)}
   .close{margin-top:var(--s7);display:block}
   .close-act{margin-top:var(--s6)}
   .foot{margin-top:var(--s7);display:block}
@@ -1788,14 +1814,12 @@ section{position:relative;z-index:1}
     <div class="gru-b">
       <div class="ficha ficha--stack">
         <div class="fi rv"><span class="fi-k label">O que chega</span><span class="fi-v">Coleção nova com a condição dela junto. É acesso, não fila de atendimento.</span></div>
-        <div class="fi rv"><span class="fi-k label">Quem posta</span><span class="fi-v">Quem posta é a mr, a fábrica que produz a peça. Não é grupo de revenda repassando catálogo de outra marca.</span></div>
+        <div class="fi rv"><span class="fi-k label">Quem posta</span><span class="fi-v">Quem posta é a MR, a fábrica que produz a peça. Não é grupo de revenda repassando catálogo de outra marca.</span></div>
         <div class="fi rv"><span class="fi-k label">Quem vê o seu número</span><span class="fi-v">Em grupo do WhatsApp, os outros participantes veem o seu número. É assim que o app funciona.</span></div>
         <div class="fi rv"><span class="fi-k label">Como sair</span><span class="fi-v">Sair é um toque, a qualquer momento, sem falar com ninguém.</span></div>
       </div>
-    </div>
-
-    <div class="sec-act gru-act rv">
-      <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+      <a class="cta big js-cta rv" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+      <p class="note rv">Mais de 1.500 marcas já produziram nesta fábrica.</p>
     </div>
   </div>
 
