@@ -584,9 +584,27 @@ section{position:relative;z-index:1}
    que nesta parada é mais escuro que o fundo e sem borda alguma lia como
    poço. A diferença é a dose — 15% afasta o suficiente para o texto e
    pouco o bastante para não abrir buraco — mais o fio de acento à
-   esquerda, que amarra o painel ao trilho em vez de emoldurá-lo. */
+   esquerda, que amarra o painel ao trilho em vez de emoldurá-lo.
+
+   ── A TRANSLUCIDEZ, E POR QUE 80% ────────────────────────────────────
+   O painel não é chapado: é essa MESMA cor aplicada a 68% de alfa. A
+   conta é o que torna isso seguro. O que atravessa é apenas 32% da
+   diferença entre o fundo e a linha da malha, e o desfoque espalha esse
+   resto — o olho lê textura, não linha cortando letra. Foi linha
+   cortando letra o defeito apontado.
+
+   O contraste não é o gargalo aqui, e é por isso que dá para descer
+   tanto: a base é uma mistura com --onacc, que AFASTA da tinta. A
+   tentativa anterior misturava com --ink e por isso quebrava a 3,8:1
+   com muito menos translucidez. Quem mexer nesta dose mede de novo.
+
+   Agora o desfoque de fundo tem função: ele espalha os 20% que ainda
+   atravessam, e a malha vira lavagem em vez de grade. */
 .step-in{padding:var(--s5) var(--s6);margin:0 0 var(--s4) 62px;
-  background:color-mix(in srgb,var(--onacc) 15%,var(--bg));
+  background:color-mix(in srgb,
+    color-mix(in srgb,var(--onacc) 19%,var(--bg)) 68%, transparent);
+  -webkit-backdrop-filter:blur(7px);
+          backdrop-filter:blur(7px);
   border-left:2px solid var(--accent);
   display:grid;grid-template-columns:minmax(150px,.42fr) 1fr;
   column-gap:var(--gap);align-items:baseline}
