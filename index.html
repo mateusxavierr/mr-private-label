@@ -567,7 +567,12 @@ section{position:relative;z-index:1}
 
    A revelação, essa fica: é a assinatura de movimento da página e é o
    que faz a troca de peça parecer tecido, não slide.                  */
-.hero{padding-bottom:var(--sec)}
+/* O respiro até a fita não é --s8 cheio: a última linha da ficha já
+   entrega --s5 de padding próprio, e ele conta na distância que o olho
+   mede. Descontando, a folga ÓPTICA acima da fita fica igual à de
+   baixo. Sem isso eram 178 em cima contra 146 embaixo — os paddings
+   estruturais estavam simétricos, quem quebrava era o rodapé do card. */
+.hero{padding-bottom:calc(var(--s8) - var(--s5))}
 
 /* O palco sangra para fora do wrap. O campo de marca precisa da largura
    inteira para ler como pôster, e a figura precisa de uma borda de baixo
@@ -1089,6 +1094,10 @@ section{position:relative;z-index:1}
   to{transform:translateX(calc(-100% - var(--vao)))}
 }
 @media (prefers-reduced-motion:reduce){.carimbo ul{animation:none}}
+/* A dobra seguinte encurta o respiro de --sec para --s8, e o hero
+   desconta o rodapé do card do lado dele: as duas folgas ópticas em
+   torno da fita passam a medir o mesmo, e menos que antes. */
+.carimbo + section{padding-top:var(--s8)}
 
 /* ── GRADE DE FICHA TÉCNICA ──────────────────────────────────────────
    Só na dobra do método, onde a própria copy promete "tecido escolhido,
@@ -1180,6 +1189,9 @@ section{position:relative;z-index:1}
   .ficha--cols{grid-template-columns:1fr}
   .ficha--cols .fi-v{min-height:0}
   .ficha--cols .fi{padding-bottom:var(--s4)}
+  /* o rodapé do card encolhe aqui, então o desconto do hero encolhe
+     junto — senão as duas folgas em torno da fita saem 8px diferentes */
+  .hero{padding-bottom:calc(var(--s8) - var(--s4))}
   .hero-act{gap:var(--s4)}
   .hero-act .cta{width:100%;justify-content:space-between}
   .hero-act .note{max-width:none}
