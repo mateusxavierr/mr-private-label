@@ -356,8 +356,14 @@ section{position:relative;z-index:1}
 .hdr.stuck .ticker{height:0;opacity:0}
 .ticker .wrap{display:flex;align-items:center;justify-content:space-between;height:34px}
 .tick-slot{position:relative;height:34px;flex:1;overflow:hidden}
+/* Os dois estados existem. Faltava o de ENTRADA: o JS marcava o texto
+   novo com data-st="in" esperando que ele nascesse fora de vista, mas
+   a regra nunca foi escrita — ele nascia no lugar, por cima do que
+   ainda estava saindo, e os dois ficavam legíveis ao mesmo tempo.
+   O fato sobe: entra por baixo, sai por cima. */
 .tick-slot span{position:absolute;inset:0;display:flex;align-items:center;
   transition:transform .7s var(--ease),opacity .5s var(--ease)}
+.tick-slot span[data-st="in"]{transform:translateY(100%);opacity:0}
 .tick-slot span[data-st="out"]{transform:translateY(-100%);opacity:0}
 .tick-slot span[data-st="in"]{transform:translateY(100%);opacity:0}
 .ticker .r{white-space:nowrap;padding-left:var(--s4)}
@@ -2014,12 +2020,30 @@ let ti=0, cur=document.createElement('span');
 cur.textContent=FATOS[0]; tick.appendChild(cur);
 if(!reduce) setInterval(()=>{
   ti=(ti+1)%FATOS.length;
+  /* varre sobra antes de qualquer coisa: se uma troca anterior não
+     chegou ao fim, o quadro dela ainda está no slot e a nova entraria
+     em cima de dois */
+  [...tick.children].forEach(s=>{ if(s!==cur) s.remove() });
   const nx=document.createElement('span');
-  nx.textContent=FATOS[ti]; nx.dataset.st='in';
+  nx.textContent=FATOS[ti];
+
+  /* EM ABA OCULTA A TROCA É SECA. A versão anterior pendurava a virada
+     em dois requestAnimationFrame, e rAF não roda em aba de fundo: quem
+     abria o link numa aba atrás e voltava depois encontrava os dois
+     textos parados um sobre o outro, para sempre. Transição é enfeite
+     do estado; onde ela não pode rodar, o estado troca sozinho. */
+  if(document.hidden){
+    cur.remove(); tick.appendChild(nx); cur=nx; return;
+  }
+
+  nx.dataset.st='in';
   tick.appendChild(nx);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    cur.dataset.st='out'; nx.removeAttribute('data-st');
-  }));
+  /* uma leitura de layout crava o estado de entrada antes de soltá-lo.
+     É síncrono e não depende de quadro nenhum — ao contrário do rAF,
+     funciona mesmo se o navegador estiver engasgado. */
+  void nx.offsetHeight;
+  cur.dataset.st='out'; nx.removeAttribute('data-st');
+
   const old=cur; cur=nx;
   setTimeout(()=>old.remove(),900);
 },5200);
