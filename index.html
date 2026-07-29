@@ -1395,7 +1395,7 @@ section{position:relative;z-index:1}
    O repouso é declarado AQUI, com `bottom` e `env()`, e não calculado no
    JS: a folga da barra de gestos do aparelho só o CSS sabe medir. O JS
    lê essa posição uma vez e trabalha em deslocamento a partir dela. */
-.mcta{display:none}
+.mcta,.mcta-sonda{display:none}
 .mcta .cta{width:100%;justify-content:space-between}
 
 /* ══ MOTION ════════════════════════════════════════════════════════ */
@@ -1733,20 +1733,40 @@ section{position:relative;z-index:1}
   main .cta.js-cta .lbl,.mcta .cta .lbl{font-size:.75rem;letter-spacing:.16em}
   main .cta.js-cta .arw,.mcta .cta .arw{font-size:1rem}
 
-  /* ── O VIAJANTE ───────────────────────────────────────────────────
-     Duas camadas, e elas existem por motivos opostos. A de FORA é a
-     posição, escrita pelo JS a cada quadro e SEM transição — ela precisa
-     acompanhar a rolagem no mesmo quadro, e transição aqui viraria
-     arrasto. A de DENTRO é a entrada e a saída, e essa é toda transição:
-     é ela que faz o botão deslizar para fora quando precisa saltar de um
-     lugar para outro, e voltar deslizando no lugar novo.
+  /* ── O VIAJANTE: DOIS ESTADOS, DOIS `position` ────────────────────
+     A primeira versão era `fixed` sempre, com o JS escrevendo um
+     `translateY` a cada quadro para acompanhar a doca. NADAVA. No
+     celular a rolagem corre no compositor e o evento de scroll chega
+     depois, então um elemento fixo movido por JS anda sempre um pouco
+     atrás do dedo — ele "desliza" em cima da página em vez de estar
+     grudado nela. Nenhum ajuste de tempo conserta: o problema é a
+     arquitetura, não o número.
 
-     Sem as duas camadas o salto seria teletransporte, e com transição na
-     de fora o botão nunca alcançaria a doca. */
+     Agora quem posiciona é o navegador, nos dois estados:
+
+       SOLTO      `position:fixed`, `bottom` — pregado na tela, como o
+                  do Ritma. Zero JS.
+       ANCORADO   `position:absolute`, `top` em coordenada de DOCUMENTO
+                  — rola junto com a página nativamente. Zero JS.
+
+     O JS só escreve na TROCA de estado, não por quadro. E a troca é
+     invisível porque acontece exatamente onde as duas posições
+     coincidem: é a mesma propriedade da fórmula que já garantia a
+     continuidade, agora valendo também para o mecanismo.
+
+     A camada de dentro continua sendo só entrada e saída — essa é toda
+     transição, e é o que faz o salto não ser teletransporte. */
   .mcta{display:block;position:fixed;z-index:45;
     left:var(--pad);right:var(--pad);
-    bottom:calc(var(--s3) + env(safe-area-inset-bottom));
-    transform:translate3d(0,var(--dy,0px),0)}
+    bottom:calc(var(--s3) + env(safe-area-inset-bottom))}
+  .mcta.ancorado{position:absolute;top:var(--ancora,0px);bottom:auto}
+  /* Sonda de altura zero, no mesmo `bottom` do botão. Ela existe para o
+     JS saber onde é o repouso sem depender de cache: `env()` só o CSS
+     resolve, e o `offsetTop` do botão deixa de servir assim que ele
+     vira `absolute` — passa a ser coordenada de documento. A sonda
+     nunca sai de `fixed`, então sempre responde em coordenada de tela. */
+  .mcta-sonda{display:block;position:fixed;left:0;width:0;height:0;
+    pointer-events:none;bottom:calc(var(--s3) + env(safe-area-inset-bottom))}
   .mcta-in{transition:transform .42s var(--ease)}
   /* A SAÍDA VAI PARA A BORDA MAIS PERTO. Ela era sempre para baixo, e
      no salto que acontece com o botão já subindo pela borda de cima
@@ -2146,6 +2166,7 @@ section{position:relative;z-index:1}
     <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
   </div>
 </div>
+<i class="mcta-sonda" id="mcta-sonda" aria-hidden="true"></i>
 
 <script>
 /* ── ponto único de configuração ─────────────────────────────────── */
@@ -2391,46 +2412,56 @@ let ticking=false;
    O que caracteriza o salto é a IDENTIDADE da doca mudar. Enquanto for
    a mesma, qualquer distância é rolagem e o botão só acompanha.
 
-   ── A LINHA DE REPOUSO SAI DE `offsetTop` ─────────────────────────
-   Ela é declarada no CSS com `bottom` + `env(safe-area-inset-bottom)`,
-   porque a folga da barra de gestos do aparelho só o CSS sabe resolver.
-   O JS precisa dela como número, e `offsetTop` a entrega de graça: num
-   elemento `fixed` ele é a posição de LAYOUT em relação à tela, e —
-   isto é o que importa — ele IGNORA TRANSFORM. Ou seja, ele diz onde o
-   botão estaria em repouso mesmo enquanto ele está deslocado.
+   ── O JS NÃO POSICIONA NADA POR QUADRO ────────────────────────────
+   Ele só decide ENTRE QUAIS DOIS ESTADOS o botão está, e quem posiciona
+   é o navegador: `fixed` com `bottom` quando solto, `absolute` com um
+   `top` de documento quando ancorado. Ver o bloco de CSS `.mcta`.
 
-   A primeira versão guardava esse número num cache, medido zerando o
-   deslocamento e lendo o rect. Quebrou: bastou uma medição num momento
-   ruim para a linha ficar errada e o botão parar de pousar em QUALQUER
-   doca, sem erro no console — o pior tipo de defeito, o que falha
-   calado. `offsetTop` é lido a cada quadro e não tem como envelhecer.
-   Custa um flush de layout que a função já paga nos rects das docas. */
+   A versão anterior era `fixed` sempre, com um `translateY` reescrito a
+   cada quadro. NADAVA no celular: a rolagem corre no compositor e o
+   evento de scroll chega depois, então o botão andava atrás do dedo.
+   Não era erro de cálculo — era pedir ao JS uma coisa que só o
+   navegador faz na hora certa.
+
+   ── A LINHA DE REPOUSO SAI DA SONDA ───────────────────────────────
+   `env(safe-area-inset-bottom)` só o CSS resolve, e o `offsetTop` do
+   próprio botão deixa de servir no instante em que ele vira `absolute`
+   — ali ele passa a ser coordenada de documento. Então quem responde é
+   uma sonda de altura zero, fixa no mesmo `bottom`, que nunca troca de
+   estado. Lida por quadro, sem cache: guardar esse número num cache já
+   quebrou antes, e o defeito era mudo — o botão parava de pousar em
+   qualquer doca e nada aparecia no console.                          */
 const mcta=document.getElementById('mcta');
+const sonda=document.getElementById('mcta-sonda');
 const docas=[...document.querySelectorAll('main .js-cta')];
 const celular=matchMedia('(max-width:860px)');
-let dyAnt=0, docaAnt=null, travado=false, travadoEm=0, tSalto=0, primeiroPouso=true;
+let docaAnt=null, ancoradoAnt=false, travado=false, travadoEm=0, tSalto=0, primeiro=true;
 const SAIDA=200;
 
-function alvoDoViajante(){
-  const linha=mcta.offsetTop;
+/* topo do botão em repouso, em coordenada de TELA */
+const linhaRepouso=()=>sonda.offsetTop-mcta.offsetHeight;
+
+function estadoDoViajante(){
+  const linha=linhaRepouso();
   for(const d of docas){
     const r=d.getBoundingClientRect();
-    if(r.bottom>0) return {dy:Math.min(0,r.top-linha), doca:d};
+    if(r.bottom>0) return {ancora:r.top<linha ? r.top+scrollY : null, doca:d};
   }
-  return {dy:0, doca:null};                 /* passou da última: volta à barra */
+  return {ancora:null, doca:null};          /* passou da última: volta à barra */
 }
 
-function pousa(a){
-  dyAnt=a.dy; docaAnt=a.doca;
-  mcta.style.setProperty('--dy',a.dy+'px');
+function aplica(e){
+  docaAnt=e.doca; ancoradoAnt=e.ancora!==null;
+  if(e.ancora!==null) mcta.style.setProperty('--ancora',e.ancora+'px');
+  mcta.classList.toggle('ancorado', e.ancora!==null);
 }
 
 function viajante(){
   if(!celular.matches) return;
-  const a=alvoDoViajante();
+  const e=estadoDoViajante();
   /* a inversão acompanha a doca, não o salto: ela precisa já estar certa
      quando o botão reaparece */
-  mcta.classList.toggle('inv', !!a.doca && a.doca.classList.contains('close-cta'));
+  mcta.classList.toggle('inv', !!e.doca && e.doca.classList.contains('close-cta'));
   /* A TRAVA SE CURA SOZINHA. Ela liberava só pelo temporizador, e
      temporizador em aba de fundo é achatado para ~1s pelo navegador —
      o botão ficava fora de cena até ele vir. Agora quem manda é o
@@ -2440,9 +2471,14 @@ function viajante(){
     if(performance.now()-travadoEm < SAIDA) return;
     travado=false; mcta.classList.remove('fora');
   }
-  /* trocou de doca E o lugar novo é longe: sai de cena para reaparecer
-     lá. Mesma doca, qualquer distância, é rolagem — só acompanha. */
-  if(!primeiroPouso && !reduce && a.doca!==docaAnt && Math.abs(a.dy-dyAnt)>72){
+  /* O SALTO É TROCA DE DOCA, e só quando ela vem acompanhada de troca de
+     estado: sair da âncora para a barra, ou o contrário. Trocar de doca
+     continuando solto não move nada, e animar ali seria piscada à toa.
+     (A versão anterior disparava por distância percorrida, e ancorado a
+     distância é a própria rolagem — gesto rápido tirava o botão de cena
+     no meio de uma rolagem comum.) */
+  const trocou = e.doca!==docaAnt && (e.ancora!==null)!==ancoradoAnt;
+  if(!primeiro && !reduce && trocou){
     travado=true; travadoEm=performance.now();
     /* sai pela borda que está mais perto de onde ele parou */
     mcta.classList.toggle('pcima', mcta.getBoundingClientRect().top < innerHeight*.5);
@@ -2453,13 +2489,13 @@ function viajante(){
     tSalto=setTimeout(()=>{
       if(!travado) return;
       travado=false;
-      pousa(alvoDoViajante());
+      aplica(estadoDoViajante());
       mcta.classList.remove('fora');
     },SAIDA+20);
     return;
   }
-  primeiroPouso=false;
-  pousa(a);
+  primeiro=false;
+  aplica(e);
 }
 /* ── A SAÍDA DA FIGURA ───────────────────────────────────────────────
    Rolando o hero, a figura desfoca e apaga: o palco não é cortado, ele
