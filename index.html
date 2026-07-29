@@ -1310,8 +1310,12 @@ section{position:relative;z-index:1}
    o botão preto do resto da página sumiria dentro dele. Ele inverte
    para Azul claro com rótulo Preto — 9,8:1 nos dois sentidos. É a única
    vez que o botão troca de cor, e é justamente onde ele deve. */
-.close-cta{grid-column:1/13;grid-row:2;margin-top:var(--s7);
-  background:#AABED6;color:#071623;padding:34px 40px}
+/* Ele fica DEBAIXO da frase, na mesma coluna dela, e não atravessando as
+   doze — decisão de Mateus. Perde a largura como sinal de "aqui acaba",
+   então o sinal passa a ser só a cor e o corpo: é o único botão claro da
+   página e o único com rótulo acima de 12px. */
+.close-cta{margin-top:var(--s6);
+  background:#AABED6;color:#071623;padding:30px 34px}
 .close-cta .lbl{font-size:.94rem;letter-spacing:.2em}
 .close-cta .arw{font-size:1.5rem}
 .close-cta::before{background:color-mix(in srgb,#AABED6 62%,#071623)}
@@ -1921,8 +1925,8 @@ section{position:relative;z-index:1}
       </div>
       <div class="close-act rv">
         <p class="lead">Comece pelo grupo. É de lá que sai a coleção nova, com a condição dela junto.</p>
+        <a class="cta big close-cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
       </div>
-      <a class="cta big close-cta js-cta rv" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
     </div>
 
     <footer class="foot">
