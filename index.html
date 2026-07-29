@@ -455,7 +455,6 @@ section{position:relative;z-index:1}
    posicionam os blocos por grid-row nomeado — item sem linha declarada
    cairia num buraco de linha anterior. */
 .sec-act{grid-column:1/13;margin-top:var(--s7)}
-.tro-act{grid-row:5}
 .cam-act{grid-row:4}
 .gru-act{grid-row:3}
 
@@ -577,7 +576,6 @@ section{position:relative;z-index:1}
 .fig.rv.in{transform:rotate(var(--gir,-1.5deg))}
 .fig.rv.in:hover,.fig.rv.in:focus-within{transform:rotate(0deg) translateY(-5px);
   box-shadow:0 2px 4px rgba(7,22,35,.18), 0 26px 46px -16px rgba(7,22,35,.38)}
-.tro-fig{--gir:-2.2deg}
 .cam-fig{--gir:1.4deg}
 .gru-fig{--gir:-1.7deg}
 
@@ -1081,14 +1079,86 @@ section{position:relative;z-index:1}
    fechamento vêm com a qualificação certa da aprovação da arte. */
 .mod-vira .note{margin-top:var(--s3);font-size:1rem;line-height:1.5;color:var(--soft)}
 
-/* 02 · a troca */
-.tro-a{grid-column:1/6;grid-row:1}
-.tro-a .lead{margin-top:var(--s4);max-width:26ch}
-.tro-fig{grid-column:1/6;grid-row:2;margin-top:var(--s6)}
-.tro-b{grid-column:7/13;grid-row:1/3}
-.tro-b .fecho{margin-top:var(--s6);max-width:48ch}
-.tro-c{grid-column:1/13;grid-row:3;margin-top:var(--s8)}
-.tro-d{grid-column:1/10;grid-row:4;margin-top:var(--s5);font-size:1.0625rem;line-height:1.62}
+/* 02 · a troca — A PEÇA NO MEIO
+   A dobra se chama "a troca" e não mostrava troca nenhuma: tinha uma
+   Polaroid só, do lado "antes", e o contraste vivia enterrado no miolo
+   das frases da ficha ("X, em vez de Y") — que é a posição onde menos
+   se lê. Junto disso, a ficha acabava 390px antes do fim da linha da
+   grade e sobrava coluna morta à direita.
+
+   Agora a dobra é uma TABELA de três linhas com a peça plantada no meio
+   dela: à esquerda o que ela é hoje, à direita o que ela vira. A mesma
+   peça nos dois lados — muda o que vai nela. É isso que o argumento diz,
+   e por isso a estrutura não depende de uma foto do "depois", que não
+   existe no projeto.
+
+   Os fios das linhas atravessam a largura toda e passam POR TRÁS da
+   peça. São eles que costuram o par esquerda/direita por cima da
+   distância que a foto abre entre os dois; sem eles, seriam duas listas
+   soltas em vez de uma comparação. */
+.tro-a{grid-column:1/8;grid-row:1}
+.tro-a .lead{margin-top:var(--s4);max-width:32ch}
+
+.tro-tab{grid-column:1/13;grid-row:2;margin-top:var(--s8);position:relative}
+.tro-cab{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap);
+  padding-bottom:var(--s3);border-bottom:1px solid var(--rule)}
+.tro-cab .e{grid-column:1/5}
+.tro-cab .d{grid-column:9/13}
+.tro-cab .d .label{color:var(--ink)}
+/* min-height, e não altura fixa: a linha precisa caber a frase mais
+   longa em qualquer largura, e a peça é dimensionada pela coluna */
+.tro-l{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap);
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 55%,transparent);
+  min-height:172px;align-items:start;padding-block:var(--s5)}
+.tro-l .e{grid-column:1/5}
+.tro-l .d{grid-column:9/13}
+.tro-l .k{display:block;margin-bottom:var(--s2)}
+.tro-l p{font-size:1.13rem;line-height:1.55}
+/* o estado que se quer deixar recua de tinta; o que se quer é tinta
+   cheia. A diferença de peso é o que dá direção à leitura da linha. */
+.tro-l .e p{color:var(--soft)}
+.tro-l .d p{color:var(--ink);font-variation-settings:'wght' 500}
+/* O rótulo abre o par, à esquerda. À direita ele continua no markup
+   para quem lê por leitor de tela — sem ele a célula da direita ficaria
+   órfã da linha — mas sai da tinta, senão vira eco a 30px de distância. */
+.tro-l .d .k{position:absolute;width:1px;height:1px;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap}
+/* O marcador de estado ("Hoje" / "Com a MR") só existe em coluna única.
+   Lado a lado ele seria redundante — os dois cabeçalhos no topo já
+   dizem qual coluna é qual, e repetir isso em cada linha põe seis
+   rótulos na tela para dizer duas coisas. */
+.tro-l .est{display:none}
+
+/* A PEÇA fica por cima da tabela, na faixa central das três linhas.
+   A conta do `left` é a mesma da grade de 12: quatro colunas de
+   deslocamento mais meia calha, e a largura é de quatro colunas menos
+   uma calha. Assim ela ocupa exatamente as colunas 5 a 8, que é a faixa
+   que as duas colunas de texto deixam livre. */
+.tro-peca{position:absolute;left:calc(100%/12*4 + var(--gap)/2);
+  width:calc(100%/12*4 - var(--gap));
+  top:var(--s7);z-index:2;--gir:-1.4deg}
+.tro-peca figcaption{font-size:1.06rem;padding:13px 8px 16px}
+
+/* o pé: as duas condições que o lojista comparando fornecedor procura,
+   e o botão fechando a linha */
+.tro-pe{grid-column:1/13;grid-row:3;margin-top:var(--s8);
+  display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap);
+  align-items:start}
+.tro-pe .it{border-top:1px solid var(--rule);padding-top:var(--s3)}
+.tro-pe .it:nth-child(1){grid-column:1/5}
+.tro-pe .it:nth-child(2){grid-column:5/9}
+.tro-pe .cifra{font-family:var(--serif);font-variation-settings:'wght' 560;
+  font-size:clamp(2.4rem,3.6vw,3.2rem);line-height:1.04;letter-spacing:-.022em;
+  margin:var(--s2) 0;font-feature-settings:"lnum" 1,"onum" 0}
+.tro-pe .s{font-size:1.02rem;line-height:1.5;color:var(--soft);max-width:24ch}
+/* o mínimo de alto relevo é VARIAÇÃO do mínimo, não um número novo:
+   entra como linha secundária da mesma célula. Como coluna própria ele
+   ficava ao lado de dois outros "12" e a régua lia como repetição. */
+.tro-pe .alt{margin-top:var(--s3);font-size:1rem;line-height:1.45;color:var(--soft)}
+.tro-pe .alt b{font-variation-settings:'wght' 620;color:var(--ink)}
+.tro-pe .act{grid-column:9/13}
+.tro-pe .act .note{margin-top:var(--s3);font-size:1rem;line-height:1.5;color:var(--soft)}
+.tro-d{grid-column:1/9;grid-row:4;margin-top:var(--s6);font-size:1.0625rem;line-height:1.62}
 
 /* 03 · o caminho */
 .cam-a{grid-column:1/8;grid-row:1}
@@ -1255,7 +1325,6 @@ section{position:relative;z-index:1}
 @media (max-width:1120px){
   .hero-txt,.hero-act{grid-column:1/6}
   .hero-diz{grid-column:8/13}
-  .tro-a,.tro-fig{grid-column:1/6}.tro-b{grid-column:7/13}
   .cam-b{grid-column:8/13}.cam-fig{grid-column:1/6}.cam-c{grid-column:7/13}
   .gru-a,.gru-fig{grid-column:1/6}.gru-b{grid-column:7/13}
   .close-h{grid-column:1/7}.close-act{grid-column:7/13}
@@ -1300,7 +1369,7 @@ section{position:relative;z-index:1}
     flex-direction:column-reverse;align-items:flex-start}
   .hero-act{margin-top:var(--s5)}
   .hero-sub{max-width:38ch}
-  .cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
+  .cam-cards,.cam-fig,.cam-c,.hero-num{margin-top:var(--s7)}
   /* Em coluna única a pilha sai do posicionamento absoluto e volta ao
      fluxo — `position:absolute` num pai sem altura própria colapsaria a
      dobra. O gesto sobrevive por margem negativa: cartas em zigue-zague,
@@ -1320,7 +1389,36 @@ section{position:relative;z-index:1}
   .mod-folio{display:none}
   .mod-a .eyebrow .n{position:static;width:auto;height:auto;clip-path:none}
   .mod-vira{margin-top:var(--s7)}
-  .tro-b{margin-top:var(--s7)}
+  /* ── 02 EM COLUNA ÚNICA ─────────────────────────────────────────────
+     A comparação lado a lado não sobrevive a 375px: duas colunas de
+     texto viram duas colunas de uma palavra. Então a tabela desmonta e
+     cada linha vira um PAR EMPILHADO — o estado de hoje em cima, o da
+     MR embaixo, com o rótulo abrindo os dois. O contraste passa a ser
+     vertical, e o recuo de tinta continua fazendo o trabalho de dizer
+     qual dos dois é o que se quer.
+     A peça sai do posicionamento absoluto e sobe para o topo do bloco:
+     ela deixa de ser eixo (não há eixo em coluna única) e volta a ser
+     abertura, que é o papel que sobra para ela aqui. */
+  .tro-tab{display:flex;flex-direction:column;margin-top:var(--s6)}
+  .tro-cab{display:none}
+  .tro-l{display:block;min-height:0;padding-block:var(--s5);
+    border-bottom:1px solid color-mix(in srgb,var(--rule) 55%,transparent)}
+  .tro-l .d{margin-top:var(--s4);padding-top:var(--s4);
+    border-top:1px solid color-mix(in srgb,var(--rule) 40%,transparent)}
+  /* Empilhados, os dois lados ficam com o MESMO rótulo de categoria um
+     embaixo do outro — e aí o par lê como repetição, não como troca. A
+     categoria passa a abrir a linha uma vez só, do lado de cima, e quem
+     diz de qual estado se trata é o marcador. */
+  .tro-l .d .k{display:none}
+  .tro-l .est{display:block;margin-bottom:var(--s1);
+    font-size:.68rem;letter-spacing:.14em}
+  .tro-l .e .est{color:color-mix(in srgb,var(--soft) 70%,var(--bg))}
+  .tro-l .d .est{color:var(--ink)}
+  .tro-peca{position:static;width:min(74vw,300px);order:-1;
+    align-self:center;margin-bottom:var(--s6)}
+  .tro-pe{display:block;margin-top:var(--s7)}
+  .tro-pe .it+.it{margin-top:var(--s6)}
+  .tro-pe .act{margin-top:var(--s6)}
   .gru-b{margin-top:var(--s7)}
   .close{margin-top:var(--s7);display:block}
   .close-act{margin-top:var(--s6)}
@@ -1511,33 +1609,53 @@ section{position:relative;z-index:1}
       <p class="lead rv">Quando a marca é sua, a reputação da peça também é.</p>
     </div>
 
-    <figure class="fig tro-fig fita rv">
-      <div class="fig-in"><img loading="lazy" src="img/03-troca.jpg" alt="Peça de malha da linha Inverno 2026 em uso, sem marca aplicada." width="880" height="1100"></div>
-      <figcaption class="label">Peça de pronta entrega, sem marca</figcaption>
-    </figure>
-
-    <div class="tro-b">
-      <div class="ficha ficha--stack">
-        <div class="fi rv"><span class="fi-k label">Produto</span><span class="fi-v">A peça passa a sair com a sua marca aplicada, em vez de chegar com a marca de outra empresa.</span></div>
-        <div class="fi rv"><span class="fi-k label">Preço</span><span class="fi-v">Você define quanto ela vale, em vez de receber a sugestão de preço junto com a mercadoria.</span></div>
-        <div class="fi rv"><span class="fi-k label">Cliente</span><span class="fi-v">Quem gostou volta procurando a sua marca, e não a marca de quem fabricou.</span></div>
+    <!-- A comparação é uma tabela de três linhas com a peça no meio. As
+         frases dos dois lados são deliberadamente PARALELAS: quanto mais
+         idênticas, mais forte fica a única palavra que muda. -->
+    <div class="tro-tab">
+      <div class="tro-cab rv">
+        <div class="e"><p class="label">Como ela chega hoje</p></div>
+        <div class="d"><p class="label">Como ela sai da MR</p></div>
       </div>
-      <p class="body fecho rv">A mr produz a peça já com a identidade da sua marca aplicada.</p>
+
+      <div class="tro-l rv">
+        <div class="e"><span class="k label">Produto</span><span class="est label" aria-hidden="true">Hoje</span><p>Chega com a marca de outra empresa.</p></div>
+        <div class="d"><span class="k label">Produto</span><span class="est label" aria-hidden="true">Com a MR</span><p>Sai com a sua marca.</p></div>
+      </div>
+      <div class="tro-l rv">
+        <div class="e"><span class="k label">Preço</span><span class="est label" aria-hidden="true">Hoje</span><p>O preço vem sugerido junto da mercadoria.</p></div>
+        <div class="d"><span class="k label">Preço</span><span class="est label" aria-hidden="true">Com a MR</span><p>O preço é você quem define.</p></div>
+      </div>
+      <div class="tro-l rv">
+        <div class="e"><span class="k label">Cliente</span><span class="est label" aria-hidden="true">Hoje</span><p>Quem gostou procura a marca de quem fabricou.</p></div>
+        <div class="d"><span class="k label">Cliente</span><span class="est label" aria-hidden="true">Com a MR</span><p>Quem gostou procura a sua marca.</p></div>
+      </div>
+
+      <figure class="fig tro-peca rv">
+        <div class="fig-in"><img loading="lazy" decoding="async" src="img/03-troca.jpg" alt="Peça de malha de produção própria em uso, sem marca aplicada." width="880" height="1100"></div>
+        <figcaption class="label">A mesma peça. Muda o que vai nela.</figcaption>
+      </figure>
     </div>
 
-    <div class="tro-c">
-      <div class="ficha ficha--cols">
-        <div class="fi rv"><span class="fi-k label">Prazo de produção</span><span class="fi-v num">10 dias úteis</span><span class="fi-s body">a partir da aprovação da arte</span></div>
-        <div class="fi rv"><span class="fi-k label">Mínimo · DTF</span><span class="fi-v num">12</span><span class="fi-s body">peças por cor</span></div>
-        <div class="fi rv"><span class="fi-k label">Mínimo · bordado</span><span class="fi-v num">12</span><span class="fi-s body">peças por cor</span></div>
-        <div class="fi rv"><span class="fi-k label">Mínimo · alto relevo</span><span class="fi-v num">24</span><span class="fi-s body">peças por cor</span></div>
+    <div class="tro-pe">
+      <div class="it rv">
+        <p class="label">Prazo de produção</p>
+        <p class="cifra">10 dias</p>
+        <p class="s">úteis, a partir da aprovação da arte</p>
+      </div>
+      <div class="it rv">
+        <p class="label">Pedido mínimo</p>
+        <p class="cifra">12 peças</p>
+        <p class="s">por cor, em DTF ou bordado</p>
+        <p class="alt"><b>24 por cor</b> quando a aplicação é em alto relevo</p>
+      </div>
+      <div class="act rv">
+        <a class="cta big js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+        <p class="note">Mais de 1.500 marcas já produziram nesta fábrica.</p>
       </div>
     </div>
+
     <p class="body tro-d rv">Vale para peça de pronta entrega personalizada com a sua marca. Coleção desenvolvida do zero, com tecido escolhido, modelagem própria e ficha técnica, segue outro caminho, e o prazo e o pedido mínimo dela são definidos no projeto.</p>
-
-    <div class="sec-act tro-act rv">
-      <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
-    </div>
   </div>
 </section>
 
