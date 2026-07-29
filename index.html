@@ -1032,7 +1032,16 @@ section{position:relative;z-index:1}
   padding-top:var(--s6);border-top:1px solid var(--rule)}
 .mod-vira h3{font-size:clamp(1.55rem,2.1vw,1.95rem);margin-bottom:var(--s3);max-width:17ch}
 .mod-vira .lead{font-size:1.13rem;line-height:1.55;max-width:34ch}
+/* O botão ocupa a coluna inteira, rótulo à esquerda e seta na ponta: numa
+   coluna de 438px é o alvo mais fácil e o pico visual mais claro da
+   dobra, sem precisar de cor nova. O formato já existe na página, no
+   bloco de fechamento — aqui ele não é invenção, é reuso. */
 .mod-vira .cta{margin-top:var(--s5)}
+/* A nota é PROVA, não tranquilização: no instante do clique o que falta
+   responder é "isso funciona?", e o número responde. Não repete a
+   condição (hero e fechamento já usam) nem os 10 dias úteis, que no
+   fechamento vêm com a qualificação certa da aprovação da arte. */
+.mod-vira .note{margin-top:var(--s3);font-size:1rem;line-height:1.5;color:var(--soft)}
 
 /* 02 · a troca */
 .tro-a{grid-column:1/6;grid-row:1}
@@ -1449,7 +1458,8 @@ section{position:relative;z-index:1}
     <div class="mod-vira rv">
       <h3 class="d2">Marca <em>própria</em> tira a sua loja dessa foto.</h3>
       <p class="lead">Com a sua marca na peça, preço, margem e cliente deixam de depender de fornecedor.</p>
-      <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+      <a class="cta big js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+      <p class="note">Mais de 1.500 marcas já produziram nesta fábrica.</p>
     </div>
   </div>
 </section>
