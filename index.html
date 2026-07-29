@@ -1066,7 +1066,7 @@ section{position:relative;z-index:1}
 .hero-num{margin-top:var(--s8)}
 .hero-num .fi{border-top:0;padding-top:0}
 
-/* ── O HEADER NO TOPO É SÓ O TICKER ──────────────────────────────────
+/* ── O HEADER NO TOPO ESTÁ VAZIO ─────────────────────────────────────
    A logo pequena sai de cena enquanto a gigante está na tela — duas
    vezes a mesma marca em tamanhos opostos não é hierarquia, é repetição.
 
@@ -1074,18 +1074,22 @@ section{position:relative;z-index:1}
    com o CTA do hero, que é o MESMO pedido, a dois palmos de distância.
    Dois botões idênticos na mesma tela dividem o clique em vez de somar.
    Rolou a página, o CTA do hero saiu de vista e o do header passa a ser
-   o único — aí ele tem função. É o que `stuck` já marcava.           */
+   o único — aí ele tem função. É o que `stuck` já marcava.
+
+   No desktop sobra o ticker; no celular ele já não existe e o header
+   fica vazio de propósito, sem nada disputando o topo com a trava de
+   marca. É isso que libera o palco a subir (ver o bloco RESPONSIVO).
+
+   A regra valia só em ≥861px enquanto o CTA do hero ficava ABAIXO da
+   dobra no celular: esconder o do header deixaria a primeira tela sem
+   pedido nenhum, porque a barra fixa de rodapé só entra a 70% de
+   rolagem. Com o palco cabendo inteiro em 100svh, o CTA do hero está
+   na primeira tela em qualquer aparelho — a exceção perdeu a causa e
+   a regra passa a valer em toda largura.                             */
 .hdr:not(.stuck) .brand{opacity:0;pointer-events:none}
 .brand{transition:transform .55s var(--ease),opacity .45s var(--ease)}
 .hdr-end{transition:opacity .45s var(--ease)}
-/* O botão só some no desktop. Em coluna única o CTA do hero fica abaixo
-   da dobra e a barra fixa de rodapé só entra depois de 70% de rolagem —
-   esconder o do header deixaria a primeira tela do celular sem pedido
-   nenhum. A regra existe porque os dois competiam na MESMA tela; onde
-   não competem, ela não se aplica. */
-@media (min-width:861px){
-  .hdr:not(.stuck) .hdr-end{opacity:0;pointer-events:none}
-}
+.hdr:not(.stuck) .hdr-end{opacity:0;pointer-events:none}
 
 @media (prefers-reduced-motion:reduce){
   .vt.on.anima,.vt.sai.anima,.luz.anima,.vitrine.entra{animation:none}
@@ -1477,7 +1481,7 @@ section{position:relative;z-index:1}
   .g12>*,.close>*{grid-column:1/13!important;grid-row:auto!important}
   .g12{row-gap:0}
   /* ── O PALCO EM COLUNA ÚNICA ──────────────────────────────────────
-     Três mudanças, cada uma por um motivo diferente.
+     Quatro mudanças, cada uma por um motivo diferente.
 
      1. A trava sai de trás da figura e vai para cima dela. O truque de
         pôster depende de a marca ser MAIS LARGA que o corpo, para
@@ -1488,26 +1492,70 @@ section{position:relative;z-index:1}
         sorteado — e é exatamente o que a página se recusa a fazer.
      3. A sangria deixa de vir da borda do palco e passa a vir do corte
         da própria caixa: `cover` ancorado no topo, numa caixa mais
-        baixa que a foto. O gesto é o mesmo, o mecanismo é outro.     */
-  .palco{height:auto;min-height:0;overflow:visible;padding-top:clamp(88px,14vh,120px)}
-  .marcona{position:static;margin:0 var(--pad) var(--s5)}
+        baixa que a foto. O gesto é o mesmo, o mecanismo é outro.
+     4. O PALCO CABE INTEIRO NA PRIMEIRA TELA, e é a figura que paga.
+
+     ── POR QUE FLEX, E NÃO ALTURA FIXA NA FOTO ────────────────────────
+     A versão anterior empilhava alturas fixas — 120px de desvio do
+     header, trava, foto em min(52svh,420px), texto — e somava 1082px
+     num aparelho de 844. O hero nascia cortado no meio da foto: quem
+     entrava via marca e ombro, e o pedido ficava a uma rolagem de
+     distância. Aumentar o clamp não resolve, porque a soma muda com o
+     tamanho da fonte, com o número de linhas do H1 e com cada aparelho.
+
+     Agora o palco é COLUNA FLEX de 100svh e a conta se inverte: o que é
+     texto tem a altura que precisa, e a figura recebe a SOBRA
+     (`flex:1`). Ela estica em tela alta e encolhe em tela baixa, sempre
+     cortada pelo topo — a cabeça está cravada no mesmo pixel nas treze
+     peças, então o que o corte come é bainha, nunca rosto. O piso de
+     150px é onde a peça ainda lê como peça (gola, ombro e peito).
+
+     É `min-height`, não `height`, e o palco NÃO esconde o que passa.
+     Com altura travada e `overflow:hidden`, um aparelho curto demais
+     cortava o CTA e o deixava sem clique — em 375×667 ele caía 132px
+     abaixo da borda e sumia. Com min-height o palco cede e volta a
+     rolar: cabe inteiro onde dá, e onde não dá continua alcançável.
+
+     ── OS RESPIROS ANDAM COM A ALTURA DA TELA ─────────────────────────
+     Todo vão desta dobra é `clamp(piso, Nsvh, teto)`. Espaço fixo em
+     pixel é o que fazia a soma estourar: os mesmos 32px que respiram
+     numa tela de 900 são o que falta para a figura existir numa de 667.
+     Atrelados a svh, os vãos encolhem juntos e a foto para de pagar a
+     conta sozinha.
+
+     O padding de cima cai de 120px para ~24: ele existia para desviar
+     do header, e no celular o header agora está VAZIO no topo — sem
+     ticker, sem logo pequena e sem botão. A trava sobe para o lugar
+     que o botão ocupava.                                             */
+  .palco{display:flex;flex-direction:column;
+    min-height:100svh;height:auto;overflow:visible;
+    padding-top:clamp(16px,3svh,32px);padding-bottom:clamp(16px,2.4svh,24px)}
+  .marcona{position:static;flex:0 0 auto;
+    margin:0 var(--pad) clamp(12px,2.4svh,24px)}
   .marcona-in{font-size:min(56cqw,42svh)}
   .vitrine{position:relative;left:auto;top:auto;transform:none;--cx:0px;
-    aspect-ratio:auto;width:min(78vw,320px);height:min(52svh,420px);
+    aspect-ratio:auto;width:min(78vw,320px);height:auto;
+    flex:1 1 auto;min-height:150px;
     margin-inline:auto;overflow:hidden}
   .vt{object-fit:cover;object-position:top center}
   /* em pilha o texto volta a ser uma coluna só, na ordem do documento.
      O respiro de cima era para separar o título da trava de marca; aqui
      a figura inteira já está entre os dois. */
-  .palco-grade{height:auto;padding-top:0;padding-bottom:0;margin-top:var(--s5)}
+  .palco-grade{flex:0 0 auto;height:auto;padding-top:0;padding-bottom:0;
+    margin-top:clamp(12px,2.4svh,24px)}
+  /* O H1 passa a ser medido pela LARGURA do aparelho. Travado em 40px
+     ele quebrava em três linhas abaixo de 380px — e a terceira linha
+     custa 42px, que é um terço da figura. Em 40px de tela ele volta ao
+     teto de sempre. */
+  .hero h1{font-size:clamp(2.125rem,9.6vw,2.5rem)}
   /* --colE e --colD medem a sobra AO LADO da figura, e em coluna única
      não existe lado nenhum: a conta dá negativo e zerava as caixas. */
   .hero-txt,.hero-act,.hero-diz{max-width:none}
   /* o indicador sobe para debaixo da figura, que é o que ele controla;
      embaixo do subtítulo ele ficava órfão entre a explicação e o pedido */
-  .hero-diz{margin-top:var(--s4);gap:var(--s5);
+  .hero-diz{margin-top:clamp(12px,2.2svh,24px);gap:clamp(12px,2.2svh,32px);
     flex-direction:column-reverse;align-items:flex-start}
-  .hero-act{margin-top:var(--s5)}
+  .hero-act{margin-top:clamp(16px,3svh,32px)}
   .hero-sub{max-width:38ch}
   .cam-cards,.cam-fig,.cam-c,.hero-num{margin-top:var(--s7)}
   /* Em coluna única a pilha sai do posicionamento absoluto e volta ao
@@ -1593,7 +1641,7 @@ section{position:relative;z-index:1}
   /* o rodapé do card encolhe aqui, então o desconto do hero encolhe
      junto — senão as duas folgas em torno da fita saem 8px diferentes */
   .hero{padding-bottom:calc(var(--s8) - var(--s4))}
-  .hero-act{gap:var(--s4)}
+  .hero-act{gap:clamp(10px,1.8svh,24px)}
   .hero-act .cta{width:100%;justify-content:space-between}
   .hero-act .note{max-width:none}
 }
