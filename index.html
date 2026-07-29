@@ -1807,8 +1807,20 @@ section{position:relative;z-index:1}
     </div>
 
     <figure class="fig gru-fig fita rv">
-      <div class="fig-in"><img loading="lazy" src="img/05-grupo.jpg" alt="Peça de inverno da linha 2026, sem marca aplicada." width="880" height="1100"></div>
-      <figcaption class="label">Produção própria, Taquaritinga do Norte</figcaption>
+      <!-- Arquivo montado para ESTA moldura, e não recortado por CSS. As
+           fotos da vitrine são recorte com fundo transparente e o topo da
+           cabeça mora a 2,9% do topo do arquivo: em `cover` a 4/5 não há
+           folga nenhuma acima dela, e o rosto encosta na borda. Aqui a
+           figura foi reposicionada 50px para baixo dentro de uma tela
+           880×1100, que é a folga que faltava. O cinza continua vindo do
+           fundo de .fig-in, porque o PNG é vazado. -->
+      <div class="fig-in"><img loading="lazy" decoding="async"
+        src="img/05-grupo.webp"
+        srcset="img/05-grupo-560.webp 560w, img/05-grupo.webp 880w"
+        sizes="(max-width:860px) 74vw, 300px"
+        alt="Polo listrada de produção própria, vestida de frente, sem marca aplicada."
+        width="880" height="1100"></div>
+      <figcaption class="label">Coleção nova. É isso que chega no grupo.</figcaption>
     </figure>
 
     <div class="gru-b">
