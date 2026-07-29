@@ -1045,7 +1045,7 @@ section{position:relative;z-index:1}
          declara: role="img" com rótulo reescrito a cada peça. As treze
          camadas ficam fora da árvore de acessibilidade. -->
     <div class="vitrine abre" id="vitrine" role="img" aria-label="Modelo vestindo peça produzida pela MR">
-      <img class="vt on" src="img/vitrine/01-900.webp" srcset="img/vitrine/01-560.webp 560w, img/vitrine/01-900.webp 900w, img/vitrine/01-1400.webp 1400w" sizes="(max-width:860px) 78vw, 540px" alt="" width="1350" height="1971" fetchpriority="high" decoding="async">
+      <img class="vt on" src="img/vitrine/01-900.webp" srcset="img/vitrine/01-560.webp 560w, img/vitrine/01-900.webp 900w, img/vitrine/01-1120.webp 1120w" sizes="(max-width:860px) 78vw, 540px" alt="" width="1350" height="1971" fetchpriority="high" decoding="async">
     </div>
 
     <div class="wrap g12 palco-grade">
@@ -1621,7 +1621,7 @@ const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
     const i=+im.dataset.i; delete im.dataset.i;   /* dataset é texto: sem
        o `+`, o índice 7 vira "71" no nome do arquivo */
     im.sizes='(max-width:860px) 78vw, 540px';
-    im.srcset=`${src(i)}-560.webp 560w, ${src(i)}-900.webp 900w, ${src(i)}-1400.webp 1400w`;
+    im.srcset=`${src(i)}-560.webp 560w, ${src(i)}-900.webp 900w, ${src(i)}-1120.webp 1120w`;
     im.src=`${src(i)}-900.webp`;
     return im.decode().catch(()=>{});
   };
