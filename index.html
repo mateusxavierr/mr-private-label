@@ -573,8 +573,27 @@ section{position:relative;z-index:1}
    acontecer NA BORDA DA TELA: cortada dentro de uma caixa, com faixa
    branca embaixo, ela lê como foto dentro de um quadro; cortada pela
    tela, lê como corpo que continua fora dela.                        */
+/* ── O CHÃO ──────────────────────────────────────────────────────────
+   O recorte não tem sombra de contato: ele é cortado pela borda da tela,
+   então não existe piso onde a sombra cairia. Sem nada, porém, ele lê
+   como colado — um corpo iluminado sobre branco chapado, sem dizer de
+   onde vem a luz.
+
+   O que substitui a sombra é a SALA: uma elipse baixa e larga onde ele
+   pisa, e um degradê que fecha a base do quadro. Os dois em --fld, o
+   Azul 30% do brandbook, e em token — andam na jornada de cor junto com
+   o resto. Nenhuma cor nova entrou.
+
+   Vive no `background` do próprio palco: nenhum elemento novo, nenhum
+   nó a mais na árvore, e o grão do `html` continua passando por baixo
+   porque as duas camadas são quase todas transparentes.              */
 .palco{position:relative;overflow:hidden;isolation:isolate;
-  height:100svh;min-height:620px}
+  height:100svh;min-height:620px;
+  background:
+    radial-gradient(56% 40% at 50% 96%,
+      color-mix(in srgb,var(--fld) 46%,transparent), transparent 72%),
+    linear-gradient(to top,
+      color-mix(in srgb,var(--fld) 26%,transparent), transparent 42%)}
 
 /* ── O CAMPO DE MARCA ────────────────────────────────────────────────
    A logo completa, na trava oficial do brandbook: o "mr" e o par
@@ -623,9 +642,36 @@ section{position:relative;z-index:1}
    passa de 100% transborda por baixo e a borda da tela faz o corte.
    114% deixa ver até ~83% do arquivo, que é meio da coxa: a bainha da
    peça aparece inteira e ainda sobra um pedaço de calça embaixo dela. */
-.vitrine{position:absolute;z-index:2;
-  left:50%;transform:translateX(-50%);
+/* --cx guarda a centralização para que a animação de entrada possa
+   compor com ela sem reescrevê-la: em coluna única a figura não é
+   centrada por transform, e um keyframe com -50% fixo a jogaria para
+   fora da tela. */
+.vitrine{position:absolute;z-index:2;--cx:-50%;
+  left:50%;transform:translateX(var(--cx));
   top:clamp(38px,5.2vh,58px);height:114%;aspect-ratio:1350/1971}
+
+/* ── A ENTRADA DA FIGURA ─────────────────────────────────────────────
+   Ela sobe para o lugar 180ms depois da marca. É o que separa "abriu"
+   de "carregou": a trava pousa, o corpo entra nela, o texto assenta.
+   Só o deslocamento anima — a opacidade continua sendo assunto da
+   revelação lavada, que é a assinatura da página, e o repouso segue
+   visível sem depender de nada disso. */
+@keyframes sobe{
+  from{transform:translateX(var(--cx)) translateY(32px)}
+  to  {transform:translateX(var(--cx))}}
+.vitrine.entra{animation:sobe 1.1s var(--ease) .18s both}
+
+/* ── A SAÍDA DA FIGURA ───────────────────────────────────────────────
+   Rolando, ela desfoca e apaga. Duas coisas de uma vez: fecha a dobra
+   como um palco do qual se desce, em vez de um corte seco, e entrega a
+   atenção para a dobra dos números sem disputa.
+
+   O filtro é escrito por JS no laço de rolagem que já existe, com o
+   valor quantizado de meio em meio pixel: desfoque é o filtro mais caro
+   que existe e repintar a cada pixel de scroll derrubaria a taxa de
+   quadros. Fica no CONTÊINER, não nas catorze camadas — uma passada de
+   composição, não catorze. */
+.vitrine{transition:none}
 /* O REPOUSO NÃO DEPENDE DA ANIMAÇÃO. Navegador congela animação de aba
    em segundo plano, e a versão anterior deixava a peça atual presa no
    quadro zero de `veste` — que é opacidade zero. Quem abrisse a landing
@@ -845,7 +891,7 @@ section{position:relative;z-index:1}
 }
 
 @media (prefers-reduced-motion:reduce){
-  .vt.on.anima,.vt.sai.anima,.luz.anima{animation:none}
+  .vt.on.anima,.vt.sai.anima,.luz.anima,.vitrine.entra{animation:none}
   .luz{display:none}
 }
 
@@ -952,11 +998,17 @@ section{position:relative;z-index:1}
 /* A letra também chega desfocada, e em `em`: o borrão precisa ser
    proporcional ao corpo da fonte, senão some num H1 de 62px e vira
    mancha num rótulo de 12. */
+/* O atraso da letra é a SOMA de dois: --d, que é quando o título inteiro
+   entra na coreografia da dobra, e --cd, que é a posição da letra dentro
+   da cascata. Antes só --cd era lido, e o --d escrito no markup do H1
+   não fazia nada — o título entrava sempre no instante zero, junto com
+   tudo o mais. */
 .rvl .c{display:inline-block;opacity:0;transform:translateY(.5em);
   filter:blur(.14em);
-  transition:opacity .72s var(--ease) var(--cd,0ms),
-             transform .95s var(--ease) var(--cd,0ms),
-             filter .58s var(--ease) var(--cd,0ms)}
+  --atraso:calc(var(--d,0ms) + var(--cd,0ms));
+  transition:opacity .72s var(--ease) var(--atraso),
+             transform .95s var(--ease) var(--atraso),
+             filter .58s var(--ease) var(--atraso)}
 .rvl.in .c{opacity:1;transform:none;filter:none}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
@@ -1046,7 +1098,7 @@ section{position:relative;z-index:1}
   .palco{height:auto;min-height:0;overflow:visible;padding-top:clamp(88px,14vh,120px)}
   .marcona{position:static;margin:0 var(--pad) var(--s5)}
   .marcona-in{font-size:min(56cqw,42svh)}
-  .vitrine{position:relative;left:auto;top:auto;transform:none;
+  .vitrine{position:relative;left:auto;top:auto;transform:none;--cx:0px;
     aspect-ratio:auto;width:min(78vw,320px);height:min(52svh,420px);
     margin-inline:auto;overflow:hidden}
   .vt{object-fit:cover;object-position:top center}
@@ -1141,7 +1193,7 @@ section{position:relative;z-index:1}
          cima do "r"; sem moldura e com a figura recortada, o corpo cobre
          o meio da trava e as duas pontas continuam legíveis — que é
          exatamente o efeito procurado. -->
-    <div class="marcona" aria-hidden="true">
+    <div class="marcona rv" style="--d:0ms" aria-hidden="true">
       <div class="marcona-in">
         <svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg>
         <span class="marcona-sub">Private<br>Label</span>
@@ -1161,23 +1213,23 @@ section{position:relative;z-index:1}
            pedido —; a grade é que os espalha. -->
       <div class="hero-txt">
         <h1 class="d1">
-          <span class="rvl" style="--d:0ms;display:block">Nossa fábrica.</span>
-          <span class="rvl" style="--d:120ms;display:block"><em>Sua marca</em> na peça.</span>
+          <span class="rvl" style="--d:420ms;display:block">Nossa fábrica.</span>
+          <span class="rvl" style="--d:530ms;display:block"><em>Sua marca</em> na peça.</span>
         </h1>
       </div>
 
       <div class="hero-diz">
-        <p class="lead hero-sub rv" style="--d:280ms">Produção própria de roupa masculina para o lojista que quer vender marca própria, não o mesmo produto do vizinho.</p>
+        <p class="lead hero-sub rv" style="--d:680ms">Produção própria de roupa masculina para o lojista que quer vender marca própria, não o mesmo produto do vizinho.</p>
         <!-- Nome e cor da peça saíram: quem chega aqui não está escolhendo
              produto, está decidindo se fala com a fábrica. O indicador só
              precisa dizer que existe mais coisa e onde ela está. -->
-        <div class="hero-marcador rv" style="--d:520ms">
+        <div class="hero-marcador rv" style="--d:920ms">
           <div class="pontos" id="pontos" role="group" aria-label="Trocar a peça da vitrine"></div>
           <span class="conta label" aria-hidden="true"><b id="peca-i">01</b><i>/</i>13</span>
         </div>
       </div>
 
-      <div class="hero-act rv" style="--d:380ms">
+      <div class="hero-act rv" style="--d:780ms">
         <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
         <p class="note">Coleção nova com a condição dela junto, direto de quem produz.</p>
       </div>
@@ -1596,9 +1648,43 @@ function steps(){
 const hdr=document.getElementById('hdr'), mbar=document.getElementById('mbar');
 const closeEl=document.querySelector('.close');
 let ticking=false;
+/* ── A SAÍDA DA FIGURA ───────────────────────────────────────────────
+   Rolando o hero, a figura desfoca e apaga: o palco não é cortado, ele
+   é deixado. O progresso vai ao quadrado para o efeito quase não
+   acontecer nos primeiros pixels — quem só encosta na roda não vê nada
+   mudar, e quem decide descer vê a dobra se despedir.
+
+   Meio pixel é o passo mínimo de repintura. Desfoque é o filtro mais
+   caro que existe; escrever um valor novo a cada pixel de rolagem
+   repintaria uma área de 700x1030 dezenas de vezes por segundo. Com a
+   quantização são ~32 repinturas ao longo de toda a saída.           */
+const palcoEl=document.querySelector('.palco'), figura=document.getElementById('vitrine');
+/* Só onde o palco É a tela. Em coluna única ele tem altura automática,
+   a conta perde a referência, e a figura já sai de quadro sozinha no
+   fluxo — desfocar ali seria filtro caro pagando por nada. */
+const palcoDeTela=matchMedia('(min-width:861px)');
+let ultimoDesfoque=-1;
+function saida(){
+  if(!figura||!palcoEl) return;
+  /* movimento atado à rolagem ainda é movimento: quem pediu menos,
+     recebe menos */
+  if(reduce||!palcoDeTela.matches){
+    if(ultimoDesfoque!==0){ultimoDesfoque=0;figura.style.filter='';figura.style.opacity=''}
+    return;
+  }
+  const t=Math.min(1,Math.max(0,scrollY/(palcoEl.offsetHeight*.72)));
+  const e=t*t;
+  const b=Math.round(e*17*2)/2;
+  if(b===ultimoDesfoque) return;
+  ultimoDesfoque=b;
+  figura.style.filter=b?`blur(${b}px)`:'';
+  figura.style.opacity=b?(1-e*.85).toFixed(3):'';
+}
+
 function frame(){
   paint();
   steps();
+  saida();
   hdr.classList.toggle('stuck', scrollY>60);
   const cr=closeEl.getBoundingClientRect();
   mbar.classList.toggle('on', scrollY>innerHeight*0.7 && cr.top>innerHeight*0.8);
@@ -1831,12 +1917,14 @@ const RODA = 3200;
      assume o repouso, que é visível por definição. Melhor perder a
      animação do que devolver um hero em branco. */
   addEventListener('visibilitychange',()=>{
-    if(!document.hidden) palco.querySelectorAll('.anima')
-      .forEach(q=>q.classList.remove('anima'));
+    if(document.hidden) return;
+    palco.querySelectorAll('.anima').forEach(q=>q.classList.remove('anima'));
+    palco.classList.remove('entra');
   });
   /* terminou o gesto, a máscara sai de cena: fora da troca ela não tem
      função e só acumula risco */
   palco.addEventListener('animationend',e=>{
+    if(e.animationName==='sobe'){ palco.classList.remove('entra'); return; }
     if(e.animationName==='veste'||e.animationName==='despe'||e.animationName==='fio')
       e.target.classList.remove('anima');
   });
@@ -1855,6 +1943,9 @@ const RODA = 3200;
      pronta antes de a vez dela chegar. */
   addEventListener('load',()=>{
     gesto(quadros[0]);          /* a chegada da primeira peça */
+    /* a subida entra pela mesma porta do resto: só com alguém vendo, e
+       descartada ao terminar, para o repouso nunca depender dela */
+    if(!reduce && !document.hidden) palco.classList.add('entra');
     let i=1;
     (function proxima(){
       if(i>=quadros.length) return;
