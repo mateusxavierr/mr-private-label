@@ -417,7 +417,7 @@ section{position:relative;z-index:1}
    posicionam os blocos por grid-row nomeado — item sem linha declarada
    cairia num buraco de linha anterior. */
 .sec-act{grid-column:1/13;margin-top:var(--s7)}
-.mod-act{grid-row:3}
+.mod-act{grid-row:4}
 .tro-act{grid-row:5}
 .cam-act{grid-row:4}
 .gru-act{grid-row:3}
@@ -540,7 +540,6 @@ section{position:relative;z-index:1}
 .fig.rv.in{transform:rotate(var(--gir,-1.5deg))}
 .fig.rv.in:hover,.fig.rv.in:focus-within{transform:rotate(0deg) translateY(-5px);
   box-shadow:0 2px 4px rgba(7,22,35,.18), 0 26px 46px -16px rgba(7,22,35,.38)}
-.mod-fig{--gir:1.9deg}
 .tro-fig{--gir:-2.2deg}
 .cam-fig{--gir:1.4deg}
 .gru-fig{--gir:-1.7deg}
@@ -959,31 +958,29 @@ section{position:relative;z-index:1}
   .luz{display:none}
 }
 
-/* 01 · o modelo */
+/* 01 · o modelo — A VITRINE REPETIDA
+   A dobra deixou de CONTAR o argumento para MOSTRÁ-LO: a mesma
+   fotografia impressa três vezes, cada cópia com o nome de uma loja na
+   legenda. A repetição é a tese — se a peça é a mesma em toda vitrine,
+   nenhuma delas é de alguém. A terceira legenda ("A sua loja") põe o
+   leitor dentro do problema; a virada, logo abaixo, o tira. */
 .mod-a{grid-column:1/8;grid-row:1}
-/* A explicação começa no ALTO, junto com o rótulo da dobra. Ancorada
-   embaixo, ela terminava 73px depois do título — a linha de cima ficava
-   com a base rasgada e a virada para a segunda metade saía frouxa. No
-   topo as duas colunas acabam quase juntas, porque têm massa parecida. */
 .mod-b{grid-column:8/13;grid-row:1;align-self:start}
 .mod-b p+p{margin-top:var(--s4)}
-/* A FOTO CRESCE de 4 para 6 colunas — de 33% para 49% da dobra. Ela é a
-   prova do argumento: se a tese é que produto igual só disputa desconto,
-   malha e acabamento são o que diferencia, e a 359px ninguém julga
-   textura. É a mesma regra do hero, onde a imagem É a dobra. */
-.mod-fig{grid-column:1/7;grid-row:2;margin-top:var(--s8)}
-/* Ancorado no ALTO, não centrado. Centrar funcionava com a foto pequena;
-   com ela ocupando metade da dobra, o bloco curto de texto ia parar no
-   meio de 700px de altura e abria 363px de vazio entre o parágrafo de
-   cima e a virada — um buraco dentro de uma coluna só. No topo, a
-   virada encosta na foto e a folga volta a ser a mesma do outro lado. */
-.mod-c{grid-column:8/13;grid-row:2;align-self:start;margin-top:var(--s8)}
-/* O segundo título desce de escala. Ele e o H2 mediam os mesmos 48,8px,
-   e dois picos de mesma altura na mesma dobra deixam o olho sem saber
-   qual é o argumento. São coisas diferentes: o H2 é o diagnóstico, este
-   é a virada. A virada ganha peso pela POSIÇÃO — encostada na foto, com
-   o lead embaixo — e não por tamanho. */
-.mod-c h3{font-size:clamp(1.7rem,2.5vw,2.25rem);margin-bottom:var(--s4);max-width:16ch}
+/* As três cópias NÃO se alinham: fotos iguais pousadas na mesa, cada
+   uma com seu ângulo e sua altura. Em régua leriam como galeria de
+   produtos diferentes — o desalinho é o que diz "é a mesma foto". */
+.mod-trio{grid-column:1/13;grid-row:2;margin-top:var(--s8);
+  display:grid;grid-template-columns:repeat(3,1fr);column-gap:var(--gap)}
+.mod-trio .fig:nth-child(1){--gir:-2.2deg}
+.mod-trio .fig:nth-child(2){--gir:1.7deg;margin-top:var(--s6)}
+.mod-trio .fig:nth-child(3){--gir:-1.2deg;margin-top:var(--s3)}
+/* A virada fica fora do eixo, à direita: depois de uma fileira que
+   ocupa a largura toda, o bloco deslocado devolve movimento à leitura.
+   E desce de escala — o H2 é o diagnóstico, este é a saída; dois picos
+   iguais na mesma dobra deixam o olho sem saber qual é o argumento. */
+.mod-c{grid-column:7/13;grid-row:3;margin-top:var(--s8)}
+.mod-c h3{font-size:clamp(1.7rem,2.5vw,2.25rem);margin-bottom:var(--s4);max-width:18ch}
 
 /* 02 · a troca */
 .tro-a{grid-column:1/6;grid-row:1}
@@ -1205,7 +1202,16 @@ section{position:relative;z-index:1}
     flex-direction:column-reverse;align-items:flex-start}
   .hero-act{margin-top:var(--s5)}
   .hero-sub{max-width:38ch}
-  .mod-fig,.mod-c,.cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
+  .mod-c,.cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
+  /* a pilha vira PILHA de verdade: cartas em zigue-zague, cada uma
+     sobrepondo um pedaço da DE BAIXO. O z-index decresce para que a
+     foto de cima cubra só imagem da seguinte, nunca legenda — a
+     legenda é onde mora o argumento. */
+  .mod-trio{grid-template-columns:1fr;margin-top:var(--s7)}
+  .mod-trio .fig{width:min(74vw,300px)}
+  .mod-trio .fig:nth-child(1){z-index:3;justify-self:start;margin-top:0}
+  .mod-trio .fig:nth-child(2){z-index:2;justify-self:end;margin-top:calc(-1*var(--s6))}
+  .mod-trio .fig:nth-child(3){z-index:1;justify-self:center;margin-top:calc(-1*var(--s6))}
   .tro-b{margin-top:var(--s7)}
   .gru-b{margin-top:var(--s7)}
   .close{margin-top:var(--s7);display:block}
@@ -1352,22 +1358,36 @@ section{position:relative;z-index:1}
   <div class="g12">
     <div class="mod-a">
       <p class="eyebrow label rv"><span class="n">01</span><span>O modelo</span></p>
-      <h2 class="d2 rvl">Quem revende recebe o preço <em>sugerido</em> junto com a peça.</h2>
+      <h2 class="d2 rvl">A peça da sua vitrine também está na vitrine <em>do vizinho</em>.</h2>
     </div>
 
     <div class="mod-b body rv">
-      <p>É assim que o modelo funciona: a peça chega pronta, com a marca de outra empresa, e a margem já vem calculada por quem vendeu. O lojista da rua de trás compra a mesma peça, pelo mesmo caminho, com a mesma sugestão de preço.</p>
+      <p>É assim que o modelo de revenda funciona: a peça chega pronta, com a marca de outra empresa e o preço sugerido junto. O caminho que trouxe essa peça até a sua loja é o mesmo que a leva para todas as outras.</p>
       <p>Quando o produto é igual, o que sobra para disputar é desconto.</p>
     </div>
 
-    <figure class="fig mod-fig rv">
-      <div class="fig-in"><img loading="lazy" src="img/02-modelo.jpg" alt="Detalhe de malha e acabamento de peça da linha Inverno 2026." width="880" height="1100"></div>
-      <figcaption class="label">Malha, acabamento, textura</figcaption>
-    </figure>
+    <!-- A prova visual: a MESMA imagem três vezes, de propósito. As
+         legendas fazem o trabalho do argumento; as imagens repetidas
+         são decorativas para o leitor de tela, que recebe a tese
+         inteira no rótulo do grupo. -->
+    <div class="mod-trio" role="group" aria-label="A mesma fotografia de peça repetida três vezes: a peça é igual na loja do centro, na loja da rua de trás e na sua loja.">
+      <figure class="fig rv">
+        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
+        <figcaption class="label">Loja do centro</figcaption>
+      </figure>
+      <figure class="fig rv">
+        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
+        <figcaption class="label">Loja da rua de trás</figcaption>
+      </figure>
+      <figure class="fig rv">
+        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
+        <figcaption class="label">A sua loja</figcaption>
+      </figure>
+    </div>
 
     <div class="mod-c">
-      <h3 class="d2 rvl">Marca <em>própria</em> tira a peça dessa disputa.</h3>
-      <p class="lead rv">Controle, margem e nome no mercado param de depender de fornecedor.</p>
+      <h3 class="d2 rvl">Marca <em>própria</em> tira a sua loja dessa foto.</h3>
+      <p class="lead rv">Com a sua marca na peça, preço, margem e cliente deixam de depender de fornecedor.</p>
     </div>
 
     <div class="sec-act mod-act rv">
