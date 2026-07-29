@@ -77,10 +77,31 @@ async function draw(peca){
  g.fillStyle=FLD; g.fill(new Path2D(P1)); g.fill(new Path2D(P2));
  g.restore();
 
+ // ── O GRAO ────────────────────────────────────────────────────────
+ // Entra AQUI, entre a trava e a figura, e nao no fim. Passado por cima
+ // de tudo ele caia tambem sobre a foto, e ali ele nao le como papel:
+ // le como ruido de camera numa peca preta ou azul escura, que e
+ // exatamente o defeito que uma foto de produto nao pode ter.
+ // Na pagina a textura e o fundo do `html` — ela fica ATRAS de tudo, e
+ // nenhuma figura recebe grao por cima. Aqui a ordem e a mesma: a
+ // superficie e a trava ganham papel, a peca fica limpa.
+ for(const src of [GRAO_GROSSO,GRAO_FINO]){
+   const t=await load(src);
+   g.fillStyle=g.createPattern(t,'repeat'); g.fillRect(0,0,W,H);
+ }
+
  // ── A FIGURA ATRAVESSA A TRAVA ────────────────────────────────────
- // Recortada num canvas proprio para dissolver nas TRES bordas livres:
- // embaixo, onde a bainha sai de cena, e nos dois lados, onde o fundo de
- // estudio da foto encostaria no fundo do cartao com um tom de diferenca.
+ // SO A BAINHA DISSOLVE. As treze fotos ja vem com FUNDO TRANSPARENTE
+ // (conferido: o pixel de fundo do 13-1120.webp le 0,0,0,0), entao a
+ // silhueta entra recortada por conta propria — o grao e o degradê
+ // correm por tras do corpo e a trava de marca reaparece em volta dele,
+ // sem nada a fazer.
+ //
+ // Havia rampa nas duas laterais tambem, escrita para esconder a borda
+ // de uma caixa branca que NAO EXISTE. Sem caixa para esconder, o que
+ // ela escondia era a peca: a manga entrava nos 40px da rampa e virava
+ // uma cunha cinza esmaecida, com o corte reto no fim do degradê. O
+ // defeito era a correcao.
  const FW=436, FH=600, fx=W-PAD-FW-16, fy=24;
  const off=document.createElement('canvas'); off.width=FW; off.height=FH;
  const o=off.getContext('2d');
@@ -90,9 +111,7 @@ async function draw(peca){
  o.globalCompositeOperation='destination-out';
  const ramp=(x0,y0,x1,y1)=>{const q=o.createLinearGradient(x0,y0,x1,y1);
    EASE.forEach(([p,a])=>q.addColorStop(p,`rgba(0,0,0,${1-a})`)); return q};
- o.fillStyle=ramp(0,FH*.72,0,FH); o.fillRect(0,FH*.72,FW,FH*.28);
- o.fillStyle=ramp(FW,0,FW-40,0);  o.fillRect(FW-40,0,40,FH);
- o.fillStyle=ramp(0,0,40,0);      o.fillRect(0,0,40,FH);
+ o.fillStyle=ramp(0,FH*.70,0,FH); o.fillRect(0,FH*.70,FW,FH*.30);
  g.drawImage(off,fx,fy);
 
  // ── A MENSAGEM ────────────────────────────────────────────────────
@@ -116,15 +135,13 @@ async function draw(peca){
  });
  g.letterSpacing='0px';
 
- // ── O GRAO POR CIMA DE TUDO ───────────────────────────────────────
- for(const src of [GRAO_GROSSO,GRAO_FINO]){
-   const t=await load(src);
-   g.fillStyle=g.createPattern(t,'repeat'); g.fillRect(0,0,W,H);
- }
  return cv.toDataURL('image/jpeg',.92).split(',')[1];
 }
 
-const peca=new URLSearchParams(location.search).get('p')||'08';
+// 13 e a azul escura OVERSIZED — a unica peca boxy do conjunto, de ombro
+// caido. A 11 tambem e azul escura e e camisa de botao de verdade, mas
+// justa; 03 e 04 sao justas tambem.
+const peca=new URLSearchParams(location.search).get('p')||'13';
 document.fonts.load("600 74px 'Playfair Display'")
  .then(()=>document.fonts.load("italic 600 74px 'Playfair Display'"))
  .then(()=>document.fonts.load("620 16px 'Instrument Sans'"))
