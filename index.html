@@ -455,7 +455,6 @@ section{position:relative;z-index:1}
    posicionam os blocos por grid-row nomeado — item sem linha declarada
    cairia num buraco de linha anterior. */
 .sec-act{grid-column:1/13;margin-top:var(--s7)}
-.cam-act{grid-row:4}
 .gru-act{grid-row:3}
 
 /* ══ RÓTULO DE DOBRA — o único eyebrow, uma vez por dobra numerada,
@@ -517,12 +516,29 @@ section{position:relative;z-index:1}
    O cartão existe uma vez: é o painel do passo ativo.
    A altura do bloco é constante — sempre há exatamente um painel
    aberto, e todos reservam a mesma altura (--panel-h, medida por JS). */
-.steps{--panel-h:184px}
-.step{position:relative}
-.step::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
-  background-color:var(--fio-forte);
-  -webkit-mask:var(--costura) repeat-x left center/26px 3px;
-          mask:var(--costura) repeat-x left center/26px 3px}
+/* A COSTURA SAIU DAQUI. Ela é uma máscara de ponto de máquina em 3px, e
+   atravessando a largura inteira do bloco ela não lia como bainha: lia
+   como tracejado grosso. Divisória de lista quer fio contínuo e fino —
+   a costura fica onde o traço é curto e o gesto se reconhece.
+
+   No lugar dela, a lista virou LINHA DO TEMPO: um trilho contínuo de 1px
+   à esquerda, com o passo ativo marcado nele. O trilho dá a única coisa
+   que a lista não tinha — noção de onde você está dentro dos quatro. */
+.steps{--panel-h:184px;position:relative;padding-left:44px;
+  border-top:1px solid var(--rule)}
+.steps::before{content:"";position:absolute;left:11px;top:var(--s5);bottom:var(--s5);
+  width:1px;background:color-mix(in srgb,var(--rule) 70%,transparent)}
+.step{position:relative;
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 62%,transparent)}
+/* o marcador do passo no trilho. O `top` acompanha o padding do
+   cabeçalho mais meia altura de linha, para o ponto nascer na altura da
+   primeira linha do título, e não no topo da caixa. */
+.step::before{content:"";position:absolute;left:-38px;top:calc(var(--s4) + .55em);
+  width:9px;height:9px;border-radius:50%;
+  background:var(--bg);box-shadow:0 0 0 1px var(--rule);
+  transition:background-color .5s var(--ease),box-shadow .5s var(--ease)}
+.step.on::before{background:var(--accent);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 28%,transparent)}
 /* A recessão do passo fechado deixou de ser opacidade e passou a ser
    cor: fechado = secundário, aberto = tinta. Opacidade compunha tinta
    com fundo e derrubava o rótulo de 12px para baixo de AA; o par
@@ -542,11 +558,26 @@ section{position:relative;z-index:1}
 .step.on .step-t{font-variation-settings:'wght' 620}
 .step-panel{height:0;overflow:hidden;transition:height .62s var(--ease)}
 .step.on .step-panel{height:var(--panel-h)}
-.step-in{padding:var(--s5);margin-bottom:var(--s4);
-  background:var(--surf);border:1px solid var(--rule);
+/* O PAINEL DEIXOU DE SER BURACO. Ele era pintado com --surf, e nesta
+   parada da jornada --surf (#4A637D) é MAIS ESCURO que o fundo
+   (#56718D): o estado "aberto", que deveria ser revelação, era pintado
+   como um poço, ainda por cima emoldurado por um traço em volta.
+
+   Agora o fundo é uma diluição de --ink, e é essa a razão de não ser uma
+   cor fixa: em parada escura --ink é Branco e o painel CLAREIA; em
+   parada clara --ink é Preto e ele escurece de leve. Nos dois casos ele
+   se destaca do fundo em vez de afundar nele. A borda some, menos a da
+   esquerda, que é o que amarra o painel ao trilho.
+
+   A margem de baixo continua em --s4 de propósito: é exatamente a folga
+   que sizeSteps() soma ao medir o painel mais alto. Mudar uma sem a
+   outra descasa a altura reservada do bloco. */
+.step-in{padding:var(--s5) var(--s6);margin:0 0 var(--s4) 62px;
+  background:color-mix(in srgb,var(--ink) 12%,transparent);
+  border-left:2px solid var(--accent);
   display:grid;grid-template-columns:minmax(150px,.42fr) 1fr;
   column-gap:var(--gap);align-items:baseline}
-.step-in .body{color:var(--ink);max-width:56ch}
+.step-in .body{color:var(--ink);max-width:52ch}
 
 /* ══ 8 · FOTO — uma moldura, uma proporção, uma legenda ════════════ */
 /* o passe-partout é opaco, na superfície relativa do item 7: um degrau
@@ -1137,6 +1168,11 @@ section{position:relative;z-index:1}
 .tro-peca{position:absolute;left:calc(100%/12*4 + var(--gap)/2);
   width:calc(100%/12*4 - var(--gap));
   top:var(--s7);z-index:2;--gir:-1.4deg}
+/* A foto da vitrine é 1350×1971 (0,685) e a moldura é 4/5 (0,8): o
+   `cover` sobra ~14% de altura e, centrado, corta 7% em cima e 7%
+   embaixo — o que decepava a testa. Ancorado no topo, o corte inteiro
+   vai para baixo, onde só há barra da camiseta. */
+.tro-peca img{object-position:50% 0}
 .tro-peca figcaption{font-size:1.06rem;padding:13px 8px 16px}
 
 /* o pé: as duas condições que o lojista comparando fornecedor procura,
@@ -1168,6 +1204,10 @@ section{position:relative;z-index:1}
 .cam-c{grid-column:6/13;grid-row:3;margin-top:var(--s8);align-self:center}
 .cam-c .pull{margin-bottom:var(--s4);max-width:15ch}
 .cam-c .fecho{margin-top:var(--s6);max-width:52ch}
+/* o botão fecha a coluna, em barra, como na 01 e na 02 — sai a última
+   linha de 12 colunas com um botão pequeno sozinho dentro */
+.cam-c .cta{margin-top:var(--s6)}
+.cam-c .note{margin-top:var(--s3);font-size:1rem;line-height:1.5}
 
 /* 04 · o grupo */
 .gru-a{grid-column:1/6;grid-row:1}
@@ -1427,7 +1467,12 @@ section{position:relative;z-index:1}
   .ficha--cols{grid-template-columns:repeat(2,1fr)}
   .ficha--stack .fi{grid-template-columns:1fr;row-gap:var(--s2)}
   .ficha--stack .fi-k{padding-top:0}
-  .step-in{grid-template-columns:1fr;row-gap:var(--s3)}
+  /* o trilho encolhe: 44px de recuo em 375 comem 12% da largura útil */
+  .steps{padding-left:26px}
+  .steps::before{left:5px}
+  .step::before{left:-26px;width:7px;height:7px}
+  .step-in{grid-template-columns:1fr;row-gap:var(--s3);
+    margin-left:0;padding:var(--s4) var(--s4)}
   .step-hd{gap:var(--s3);padding-block:var(--s3)}
   /* na pilha, cada bloco recebe a mesma folga de 32 */
   .cam-b,.tro-a .lead{margin-top:var(--s5)}
@@ -1632,7 +1677,18 @@ section{position:relative;z-index:1}
       </div>
 
       <figure class="fig tro-peca rv">
-        <div class="fig-in"><img loading="lazy" decoding="async" src="img/03-troca.jpg" alt="Peça de malha de produção própria em uso, sem marca aplicada." width="880" height="1100"></div>
+        <!-- A foto tem um trabalho específico aqui: mostrar o PEITO VAZIO
+             da peça, que é onde a marca vai. A anterior era um retrato de
+             três quartos contra uma escada de madeira — o olho ia para a
+             madeira e para o rosto, e a peça, que é o assunto, ficava em
+             terceiro. Esta é de frente, fundo de estúdio, peito inteiro e
+             sem nada nele. -->
+        <div class="fig-in"><img loading="lazy" decoding="async"
+          src="img/vitrine/13-900.webp"
+          srcset="img/vitrine/13-560.webp 560w, img/vitrine/13-900.webp 900w, img/vitrine/13-1120.webp 1120w"
+          sizes="(max-width:860px) 74vw, 300px"
+          alt="Camiseta de malha lisa de produção própria, vestida de frente, sem nenhuma marca aplicada no peito."
+          width="880" height="1100"></div>
         <figcaption class="label">A mesma peça. Muda o que vai nela.</figcaption>
       </figure>
     </div>
@@ -1709,11 +1765,9 @@ section{position:relative;z-index:1}
     <div class="cam-c">
       <h3 class="d2 pull rvl">Quem lança antes, <em>vende antes</em>.</h3>
       <p class="label rv">Linha de coleção · mr Inverno 2026</p>
-      <p class="body fecho rv">O que a mr faz está nomeado: tecido e modelagem, produção, estampa, embalagem e apoio de coleção. Esses são os entregáveis nomeados nesta página. O que não estiver aqui é conversa de projeto, não promessa.</p>
-    </div>
-
-    <div class="sec-act cam-act rv">
-      <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+      <p class="body fecho rv">O que a MR faz está nomeado: tecido e modelagem, produção, estampa, embalagem e apoio de coleção. Esses são os entregáveis nomeados nesta página. O que não estiver aqui é conversa de projeto, não promessa.</p>
+      <a class="cta big js-cta rv" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+      <p class="note rv">Mais de 1.500 marcas já produziram nesta fábrica.</p>
     </div>
   </div>
 </section>
