@@ -1698,22 +1698,50 @@ const palcoEl=document.querySelector('.palco'), figura=document.getElementById('
    a conta perde a referência, e a figura já sai de quadro sozinha no
    fluxo — desfocar ali seria filtro caro pagando por nada. */
 const palcoDeTela=matchMedia('(min-width:861px)');
-let ultimoDesfoque=-1;
+let ultimaChave='';
+const limpaSaida=()=>{
+  figura.style.filter=''; figura.style.opacity='';
+  figura.style.webkitMaskImage=''; figura.style.maskImage='';
+};
 function saida(){
   if(!figura||!palcoEl) return;
   /* movimento atado à rolagem ainda é movimento: quem pediu menos,
      recebe menos */
   if(reduce||!palcoDeTela.matches){
-    if(ultimoDesfoque!==0){ultimoDesfoque=0;figura.style.filter='';figura.style.opacity=''}
+    if(ultimaChave!==''){ultimaChave='';limpaSaida()}
     return;
   }
   const t=Math.min(1,Math.max(0,scrollY/(palcoEl.offsetHeight*.72)));
   const e=t*t;
   const b=Math.round(e*17*2)/2;
-  if(b===ultimoDesfoque) return;
-  ultimoDesfoque=b;
+
+  /* ── A BAINHA ──────────────────────────────────────────────────────
+     Quem corta a figura é o overflow do PALCO, não ela — por isso o
+     desfoque de saída não resolvia essa borda: ele é aplicado antes do
+     corte e a aresta continua dura. A bainha é uma máscara na própria
+     figura, que dissolve o pé dela.
+
+     E ela NASCE COM A ROLAGEM. Parada, apagaria o pé da figura em cima
+     da borda da tela e o "termina no final da tela" iria junto. Rolando,
+     a aresta ia aparecer — e é aí que a bainha aparece no lugar dela.
+     Cresce em t×4 porque a borda fica visível já nos primeiros pixels;
+     o desfoque pode demorar, isto não pode.
+
+     O ponto do corte é medido, não chutado: é onde a altura visível do
+     palco cai dentro da caixa da figura. */
+  const corte=(palcoEl.offsetHeight-figura.offsetTop)/figura.offsetHeight*100;
+  const bainha=Math.min(1,t*4);
+
+  const chave=b+'|'+Math.round(bainha*20);
+  if(chave===ultimaChave) return;
+  ultimaChave=chave;
+
   figura.style.filter=b?`blur(${b}px)`:'';
   figura.style.opacity=b?(1-e*.85).toFixed(3):'';
+  const m=bainha>.02
+    ? `linear-gradient(to bottom,#000 ${(corte-16*bainha).toFixed(1)}%,transparent ${corte.toFixed(1)}%)`
+    : '';
+  figura.style.webkitMaskImage=m; figura.style.maskImage=m;
 }
 
 function frame(){
