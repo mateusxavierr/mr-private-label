@@ -709,16 +709,16 @@ section{position:relative;z-index:1}
 /* `.anima` é ligada pelo JS só quando a aba está à frente e o visitante
    não pediu menos movimento — o gesto é enfeite do estado, nunca o
    dono dele */
-.vt.on.anima{animation:veste 1.15s var(--ease) both,
-                       varre 1.15s cubic-bezier(.45,.05,.2,1) both}
+.vt.on.anima{animation:veste .95s var(--ease) both,
+                       varre .95s cubic-bezier(.45,.05,.2,1) both}
 /* a mesma varredura, no mesmo tempo e na mesma curva: é a linha de
    costura das duas máscaras, e ela só fecha se as duas andarem juntas */
-.vt.sai.anima{animation:despe 1.15s cubic-bezier(.55,0,1,.45) both,
-                        varre 1.15s cubic-bezier(.45,.05,.2,1) both}
+.vt.sai.anima{animation:despe .95s cubic-bezier(.55,0,1,.45) both,
+                        varre .95s cubic-bezier(.45,.05,.2,1) both}
 
 /* O FIO. Fora da troca ele não existe — nem pinta, nem ocupa camada. */
 .luz{opacity:0;z-index:4;pointer-events:none}
-.luz.anima{animation:fio 1.15s cubic-bezier(.45,.05,.2,1) both;
+.luz.anima{animation:fio .95s cubic-bezier(.45,.05,.2,1) both;
   filter:brightness(2.1) saturate(.3) contrast(.75);
   -webkit-mask-image:linear-gradient(to bottom,transparent calc(var(--rev) - 1.8%),#000 var(--rev),transparent calc(var(--rev) + 1.8%));
   mask-image:linear-gradient(to bottom,transparent calc(var(--rev) - 1.8%),#000 var(--rev),transparent calc(var(--rev) + 1.8%))}
@@ -744,24 +744,39 @@ section{position:relative;z-index:1}
    acompanham a tela, com teto largo o bastante para não esparramar em
    monitor gigante. É a mesma sangria que a trava de marca já usa: no
    hero o quadro é a tela, não o container.                           */
-.palco-grade{position:relative;z-index:4;height:100%;
+/* ── A MEDIDA VEM DA SILHUETA, NÃO DO GOSTO ──────────────────────────
+   A figura tem 114% da altura do palco e proporção 0,6849, logo mede
+   78,1svh de largura. A união das treze silhuetas começa a 10% da
+   caixa e termina a 91,2%. Daí sai, em conta fechada, quanto sobra de
+   coluna limpa de cada lado — e é isso que as duas variáveis abaixo
+   dizem. Muda a altura da tela, muda a largura do corpo, muda a medida
+   do texto no mesmo quadro. Nenhum valor precisa ser reajustado à mão.
+
+     esquerda: 50vw − 0,4·78,1svh − recuo
+     direita:  50vw − 0,412·78,1svh − recuo
+
+   Os 34px no fim são o respiro entre a última letra e o braço dele. */
+.palco-grade{--recuo:max(var(--pad),calc((100vw - 1720px)/2 + var(--pad)));
+  --colE:calc(50vw - 31.24svh - var(--recuo) - 34px);
+  --colD:calc(50vw - 32.18svh - var(--recuo) - 34px);
+  position:relative;z-index:4;height:100%;
   width:100%;max-width:1720px;margin-inline:auto;padding-inline:var(--pad);
-  grid-template-rows:auto 1fr auto;
+  grid-template-rows:1fr auto auto;row-gap:clamp(20px,3.2vh,38px);
   padding-top:clamp(88px,12.5vh,146px);padding-bottom:clamp(28px,4.5vh,52px);
   pointer-events:none}
 .palco-grade>*{pointer-events:auto}
-/* O TÍTULO SOBE PARA A FAIXA DA CABEÇA. Ali a silhueta mede 27% da
-   caixa e sobram 436px de coluna limpa; da cintura para baixo sobram
-   272px, e nenhuma linha do H1 cabe nisso. Ele divide a faixa com a
-   trava de marca, que é Preto sobre Azul 30% — 11:1, o mesmo arranjo
-   que já funcionava antes da figura crescer. */
-.hero-txt{grid-column:1/6;grid-row:1}
-.hero-act{grid-column:1/6;grid-row:3;align-self:end}
+/* O TÍTULO DESCE PARA CIMA DO BOTÃO. Mensagem e pedido encostados lêem
+   como uma frase só — "é isto, e é aqui que se pede". Separados, o alto
+   da tela virava enfeite e o botão chegava sem argumento.
+   O que sobe no lugar dele é nada: a faixa de cima fica só com a marca
+   e a cabeça, que é a leitura de pôster que a dobra procura.         */
+.hero-txt{grid-column:1/7;grid-row:2;max-width:var(--colE)}
+.hero-act{grid-column:1/7;grid-row:3;align-self:end;max-width:var(--colE)}
 /* encostado na direita: a coluna limpa daquele lado começa onde a mão
    dele acaba, e é ela que dita a medida destes dois blocos */
-.hero-diz{grid-column:8/13;grid-row:3;align-self:end;justify-self:end;
+.hero-diz{grid-column:7/13;grid-row:3;align-self:end;justify-self:end;
   display:flex;flex-direction:column;align-items:flex-end;gap:var(--s5);
-  max-width:248px}
+  max-width:min(var(--colD),300px)}
 /* Hierarquia por AGRUPAMENTO, não por tamanho: título e subtítulo ficam
    perto (s4) e lêem como um bloco só, a mensagem; o pedido fica longe
    (s5) e lê como o segundo tempo. */
@@ -772,22 +787,17 @@ section{position:relative;z-index:1}
    figura de corpo inteiro, e a conta dá outro número. Os H2 das outras
    dobras não mudam. O que o tamanho menor compra é a banda de baixo
    caber inteira em 900px de tela sem invadir a trava.                 */
-/* 4,3vw e não 4,6: a linha mais longa ("Nossa fábrica.") precisa caber
-   nos 436px que a cabeça dele deixa livre. Meia unidade a mais e ela
-   encosta no ombro. */
-.hero h1{font-size:clamp(2.7rem,4.3vw,3.9rem);margin-bottom:0}
-.hero-sub{max-width:24ch;margin-bottom:0;font-size:1.0625rem;line-height:1.55}
+/* O H1 não é mais limitado por vw e sim pela coluna que o corpo deixa:
+   a caixa vem de --colE, e o tamanho só precisa garantir que a linha
+   mais longa quebre dentro dela em vez de vazar. */
+.hero h1{font-size:clamp(2.5rem,3.7vw,3.5rem);margin-bottom:0}
+.hero-sub{max-width:none;margin-bottom:0;font-size:1.0625rem;line-height:1.55}
 /* A nota desce para baixo do botão. Lado a lado, as duas dividiam a
    mesma linha óptica e o olho não sabia qual vinha primeiro; empilhadas,
    a ordem de leitura fica declarada. */
 .hero-act{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s3)}
-.hero-act .note{max-width:26ch;font-size:1rem;line-height:1.5;color:var(--soft)}
+.hero-act .note{max-width:none;font-size:1rem;line-height:1.5;color:var(--soft)}
 
-/* ── A CARTELA ───────────────────────────────────────────────────────
-   O controle da vitrine não é seta nem bolinha: é a cartela de cores
-   que a fábrica manda para o lojista escolher. Cada quadrinho é a cor
-   média do peito daquela peça, medida do arquivo — nenhuma inventada.
-   Sendo o objeto real do ofício, ela explica sozinha o que faz.      */
 /* ── O INDICADOR ─────────────────────────────────────────────────────
    Era uma cartela de cores. Saiu: cartela promete escolha de produto, e
    nesta dobra ninguém está escolhendo produto — está decidindo se fala
@@ -903,8 +913,24 @@ section{position:relative;z-index:1}
    segura o valor antigo pelo tempo do atraso e só então salta. O título
    com máscara trocava de cor depois do resto da página, porque era o
    único elemento com atraso inline e sem transition-property próprio. */
+/* ── O DESFOQUE DA ENTRADA ───────────────────────────────────────────
+   Tudo que entra na página entra FORA DE FOCO e ganha nitidez. É a
+   mesma ideia da revelação da Polaroid, aplicada à tipografia: a
+   palavra não aparece pronta, ela se resolve.
+
+   O desfoque some ANTES do deslocamento acabar (.62s contra .9s). Se
+   os dois terminassem juntos, a última fração do movimento aconteceria
+   com o texto já nítido e o olho leria como escorregão; terminando
+   antes, o movimento se apaga dentro do foco.
+
+   Fora das figuras: a Polaroid já tem a revelação dela no `filter` da
+   imagem, e um segundo filtro no invólucro empilharia os dois.       */
+.rv:not(.fig){filter:blur(9px)}
+.rv.in:not(.fig){filter:none}
 .rv{opacity:0;transform:translateY(20px);
-  transition:opacity .9s var(--ease) var(--d,0ms),transform .9s var(--ease) var(--d,0ms)}
+  transition:opacity .9s var(--ease) var(--d,0ms),
+             transform .9s var(--ease) var(--d,0ms),
+             filter .62s var(--ease) var(--d,0ms)}
 .rv.in{opacity:1;transform:none}
 /* ── TÍTULO: REVELAÇÃO POR LETRA, ESCALONADA POR PALAVRA ─────────────
    A PALAVRA é a unidade do escalonamento. Cada palavra parte um pouco
@@ -923,14 +949,19 @@ section{position:relative;z-index:1}
    É inerente a animar letra por letra; não há contorno. */
 .rvl{overflow:visible}
 .rvl .w{display:inline-block;white-space:nowrap}   /* a palavra quebra linha inteira */
+/* A letra também chega desfocada, e em `em`: o borrão precisa ser
+   proporcional ao corpo da fonte, senão some num H1 de 62px e vira
+   mancha num rótulo de 12. */
 .rvl .c{display:inline-block;opacity:0;transform:translateY(.5em);
+  filter:blur(.14em);
   transition:opacity .72s var(--ease) var(--cd,0ms),
-             transform .95s var(--ease) var(--cd,0ms)}
-.rvl.in .c{opacity:1;transform:none}
+             transform .95s var(--ease) var(--cd,0ms),
+             filter .58s var(--ease) var(--cd,0ms)}
+.rvl.in .c{opacity:1;transform:none;filter:none}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
-  .rv,.rvl{opacity:1;transform:none}
-  .rvl .c{opacity:1;transform:none}
+  .rv,.rvl{opacity:1;transform:none;filter:none}
+  .rvl .c{opacity:1;transform:none;filter:none}
 }
 
 
@@ -1023,7 +1054,13 @@ section{position:relative;z-index:1}
      O respiro de cima era para separar o título da trava de marca; aqui
      a figura inteira já está entre os dois. */
   .palco-grade{height:auto;padding-top:0;padding-bottom:0;margin-top:var(--s5)}
-  .hero-diz{margin-top:var(--s5);gap:var(--s5)}
+  /* --colE e --colD medem a sobra AO LADO da figura, e em coluna única
+     não existe lado nenhum: a conta dá negativo e zerava as caixas. */
+  .hero-txt,.hero-act,.hero-diz{max-width:none}
+  /* o indicador sobe para debaixo da figura, que é o que ele controla;
+     embaixo do subtítulo ele ficava órfão entre a explicação e o pedido */
+  .hero-diz{margin-top:var(--s4);gap:var(--s5);
+    flex-direction:column-reverse;align-items:flex-start}
   .hero-act{margin-top:var(--s5)}
   .hero-sub{max-width:38ch}
   .mod-fig,.mod-c,.cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
@@ -1664,7 +1701,11 @@ const PECAS=[
   'Polo verde',
   'Camiseta gola alta marinho'
 ];
-const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
+/* 3,2s de parada e 0,95s de gesto. Antes eram 4,6 e 1,15: a peça ficava
+   tempo demais parada e a dobra perdia o efeito de coleção passando.
+   Não dá para descer muito mais — abaixo de ~3s a troca deixa de ser
+   uma peça nova e vira piscada, e o olho para de contar quantas são. */
+const RODA = 3200;
 
 (()=>{
   const palco=document.getElementById('vitrine');
