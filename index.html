@@ -1362,40 +1362,16 @@ section{position:relative;z-index:1}
 .foot p:nth-child(3){grid-column:10/13}
 
 /* barra fixa mobile */
-/* ══ O BOTÃO VIAJANTE — um só, e só no celular ═════════════════════
-   Antes eram DOIS objetos: os seis botões de dobra, no fluxo, e uma
-   barra fixa que aparecia quando nenhum deles estava na tela. Dois
-   objetos com o mesmo rótulo, o mesmo destino e a mesma cor, aparecendo
-   e sumindo um no lugar do outro — o olho lê como falha de renderização,
-   não como sistema.
+/* ══ A BARRA DE CONVERSÃO DO CELULAR ═══════════════════════════════
+   Todo botão do desktop existe também no celular, e a barra é quem se
+   ajusta: ela aparece só quando NENHUM botão de conversão está na tela.
+   Resultado, que é a regra inteira: sempre há exatamente um pedido
+   visível — o da dobra, ou ela.
 
-   Agora é UM. Os seis botões de dentro do <main> viram DOCAS: a caixa
-   continua reservada no lugar exato onde o botão estava, e o botão em si
-   sai de cena. Quem viaja entre as docas é este.
-
-   ── POR QUE `visibility` E NÃO `display` ────────────────────────────
-   A doca precisa guardar a caixa: é ela que diz onde o viajante pousa,
-   e é ela que segura o respiro que a dobra foi construída para ter.
-   `display:none` colapsaria o vão e mudaria o ritmo de toda a página no
-   celular. `visibility:hidden` guarda a caixa e ainda tira o link do
-   clique e da árvore de acessibilidade — que é o certo, porque de fato
-   só existe um botão.
-
-   ── AS DOCAS TÊM A MESMA CAIXA ──────────────────────────────────────
-   `.cta`, `.cta.big` e `.close-cta` têm três alturas diferentes no
-   desktop. Se elas sobrevivessem aqui, o viajante mudaria de tamanho ao
-   trocar de doca e deixaria de ler como um objeto só. No celular as
-   três colapsam numa caixa única, e o viajante usa exatamente essa.
-
-   ── A COR NA PARADA ESCURA ──────────────────────────────────────────
-   Na dobra do fecho o fundo É o Preto da paleta e um botão preto
-   sumiria dentro dele — é por isso que `.close-cta` inverte no desktop.
-   O viajante herda a mesma inversão quando pousa naquela doca.
-
-   O repouso é declarado AQUI, com `bottom` e `env()`, e não calculado no
-   JS: a folga da barra de gestos do aparelho só o CSS sabe medir. O JS
-   lê essa posição uma vez e trabalha em deslocamento a partir dela. */
-.mcta,.mcta-sonda{display:none}
+   Só o desenho e a cor moram aqui; o quando está no `IntersectionObserver`
+   lá embaixo. Ver também `.mcta` dentro do bloco RESPONSIVO, que é onde
+   ela ganha posição e movimento. */
+.mcta{display:none}
 .mcta .cta{width:100%;justify-content:space-between}
 
 /* ══ MOTION ════════════════════════════════════════════════════════ */
@@ -1718,66 +1694,40 @@ section{position:relative;z-index:1}
   .cta.sm{padding:11px 16px}
   .cta.sm .lbl{font-size:.68rem;letter-spacing:.12em}
   .cta.sm .arw{display:none}
-  /* ── AS DOCAS ─────────────────────────────────────────────────────
-     Todo CTA de dentro do <main> — e só eles: o do header fica de fora
-     por estar fora do <main>, e o viajante também. */
-  main .js-cta{visibility:hidden}
-  /* DUAS classes no seletor, e é por especificidade, não por estilo:
-     `.cta.big` e `.close-cta` declaram o próprio padding. `main .cta`
-     pesa (0,1,1) e `main .js-cta` também — as duas perdem para o
-     (0,2,0) de `.cta.big`, e as docas saíam com 79px enquanto o
-     viajante saía com 67: ele pousava numa caixa maior que ele e
-     sobrava um vão embaixo. `main .cta.js-cta` pesa (0,2,1) e ganha. */
-  main .cta.js-cta,.mcta .cta{width:100%;justify-content:space-between;
-    padding:20px 24px}
-  main .cta.js-cta .lbl,.mcta .cta .lbl{font-size:.75rem;letter-spacing:.16em}
-  main .cta.js-cta .arw,.mcta .cta .arw{font-size:1rem}
+  /* ── A BARRA DE BAIXO ─────────────────────────────────────────────
+     Modelo do Ritma, por decisão de Mateus (2026-07-29): os botões das
+     dobras existem de verdade e a BARRA é quem se ajusta. Ela aparece
+     só quando NENHUM botão de conversão está na tela, então há sempre
+     exatamente um pedido visível — o da dobra, ou ela.
 
-  /* ── O VIAJANTE: DOIS ESTADOS, DOIS `position` ────────────────────
-     A primeira versão era `fixed` sempre, com o JS escrevendo um
-     `translateY` a cada quadro para acompanhar a doca. NADAVA. No
-     celular a rolagem corre no compositor e o evento de scroll chega
-     depois, então um elemento fixo movido por JS anda sempre um pouco
-     atrás do dedo — ele "desliza" em cima da página em vez de estar
-     grudado nela. Nenhum ajuste de tempo conserta: o problema é a
-     arquitetura, não o número.
+     ── O QUE FOI DESFEITO, E POR QUE ─────────────────────────────────
+     A versão anterior era um botão só, que viajava: os seis da dobra
+     viravam docas vazias e ele ancorava em cada uma. O movimento estava
+     correto e medido, mas a TROCA de lugar não tem como ser contínua
+     nos dois sentidos com um elemento só — descendo ele sai por cima e
+     a barra entra por baixo, o que lê bem; subindo ele tem de sumir da
+     barra e reaparecer no topo, e ali ele "aparece do nada", que foi
+     exatamente o que Mateus viu. Dois elementos resolvem isso de graça:
+     um está no fluxo e entra rolando, o outro é fixo e desliza.
 
-     Agora quem posiciona é o navegador, nos dois estados:
-
-       SOLTO      `position:fixed`, `bottom` — pregado na tela, como o
-                  do Ritma. Zero JS.
-       ANCORADO   `position:absolute`, `top` em coordenada de DOCUMENTO
-                  — rola junto com a página nativamente. Zero JS.
-
-     O JS só escreve na TROCA de estado, não por quadro. E a troca é
-     invisível porque acontece exatamente onde as duas posições
-     coincidem: é a mesma propriedade da fórmula que já garantia a
-     continuidade, agora valendo também para o mecanismo.
-
-     A camada de dentro continua sendo só entrada e saída — essa é toda
-     transição, e é o que faz o salto não ser teletransporte. */
+     ── A ENTRADA ─────────────────────────────────────────────────────
+     Uma direção só, sempre: sobe de baixo da borda e desce de volta
+     para lá. Sem escolha de lado, sem posição escrita por JS, sem
+     salto — é a transição de `transform` que o navegador resolve
+     sozinho. `visibility` entra junto na transição para a barra não
+     ficar clicável enquanto está fora de cena.                        */
   .mcta{display:block;position:fixed;z-index:45;
     left:var(--pad);right:var(--pad);
-    bottom:calc(var(--s3) + env(safe-area-inset-bottom))}
-  .mcta.ancorado{position:absolute;top:var(--ancora,0px);bottom:auto}
-  /* Sonda de altura zero, no mesmo `bottom` do botão. Ela existe para o
-     JS saber onde é o repouso sem depender de cache: `env()` só o CSS
-     resolve, e o `offsetTop` do botão deixa de servir assim que ele
-     vira `absolute` — passa a ser coordenada de documento. A sonda
-     nunca sai de `fixed`, então sempre responde em coordenada de tela. */
-  .mcta-sonda{display:block;position:fixed;left:0;width:0;height:0;
-    pointer-events:none;bottom:calc(var(--s3) + env(safe-area-inset-bottom))}
-  .mcta-in{transition:transform .42s var(--ease)}
-  /* A SAÍDA VAI PARA A BORDA MAIS PERTO. Ela era sempre para baixo, e
-     no salto que acontece com o botão já subindo pela borda de cima
-     sobram ~50px dele em cena — empurrar para baixo o trazia de volta
-     para dentro da tela antes de sumir, que é o contrário de sair.
-     `pcima` inverte, e fica ligada também na volta: ele saiu por cima e
-     desce para o lugar novo, o que é um movimento local de 90px e não
-     uma travessia de tela. */
-  .mcta.fora .mcta-in{transform:translate3d(0,calc(100% + var(--s4)),0);
-    transition-duration:.2s}
-  .mcta.fora.pcima .mcta-in{transform:translate3d(0,calc(-100% - var(--s4)),0)}
+    bottom:calc(var(--s3) + env(safe-area-inset-bottom));
+    transform:translateY(calc(100% + var(--s4)));visibility:hidden;
+    transition:transform .42s var(--ease),visibility .42s}
+  .mcta.on{transform:none;visibility:visible}
+  /* Na metade escura da jornada o Preto do botão encosta no Preto do
+     fundo. A barra flutua sobre o fundo da vez, sem chapa por trás, e
+     por isso ela inverte junto — mesma troca que `.close-cta` já faz na
+     dobra do fecho. Quem decide é a luminância do fundo, medida no
+     motor de cor, e não o número da dobra: assim ela continua certa se
+     a jornada mudar. */
   .mcta.inv .cta{background:#AABED6;color:#071623}
   .mcta.inv .cta::before{background:color-mix(in srgb,#AABED6 62%,#071623)}
   main{padding-bottom:var(--s7)}
@@ -2151,22 +2101,15 @@ section{position:relative;z-index:1}
 </section>
 </main>
 
-<!-- O botão viajante do celular. Fica FORA do <main> de propósito: é
-     assim que ele se distingue das docas, que são justamente os
-     `.js-cta` de dentro.
-
-     NASCE VISÍVEL. Quem esconde para a entrada é o JS, e a ordem importa:
-     as seis docas são escondidas por CSS puro, então se o script morrer
-     o celular fica sem nenhum botão no fluxo. Com o esconde vindo do
-     mesmo script que revela, script quebrado devolve o botão parado na
-     barra — que é o pior caso aceitável. Marcar `fora` no HTML fazia o
-     contrário: script quebrado, nenhum pedido na página. -->
+<!-- A barra de conversão do celular. Fica FORA do <main> de propósito: é
+     assim que ela se distingue dos botões que o observador vigia, que
+     são justamente os `.js-cta` de dentro.
+     Nasce escondida por CSS. Se o script morrer, o celular perde a
+     barra mas continua com os seis botões das dobras, que são elementos
+     de verdade no fluxo — o pedido nunca some da página. -->
 <div class="mcta" id="mcta">
-  <div class="mcta-in">
-    <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
-  </div>
+  <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
 </div>
-<i class="mcta-sonda" id="mcta-sonda" aria-hidden="true"></i>
 
 <script>
 /* ── ponto único de configuração ─────────────────────────────────── */
@@ -2174,6 +2117,9 @@ const GRUPO_URL = "#PENDENTE-LINK-GRUPO";   /* trocar aqui quando o link do grup
 document.querySelectorAll('.js-cta').forEach(a=>{a.href=GRUPO_URL;a.target="_blank";a.rel="noopener"});
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Declarada aqui em cima porque o motor de cor mexe nela (a inversão da
+   metade escura) e ele roda antes do bloco que a observa. */
+const mcta = document.getElementById('mcta');
 
 /* ── 1 · A TELA INTEIRA É UMA COR SÓ ─────────────────────────────────
    O fundo não pertence à seção: pertence ao momento do scroll.
@@ -2332,6 +2278,13 @@ function paint(){
     inkLight=B.dark; sc=u;
   }
   root.style.setProperty('--bg',    rgb(bg));
+  /* A BARRA INVERTE NA METADE ESCURA. Ela flutua sobre o fundo da vez,
+     sem chapa por trás, e o Preto do botão encosta no Preto da parada 6.
+     Quem decide é a luminância do fundo, e não o número da dobra: o
+     mesmo `lum` que o motor já usa para escolher a tinta. O corte em
+     0,18 é onde o Preto do botão cai abaixo de 3:1 contra o fundo, que
+     é o piso de superfície não textual. */
+  mcta.classList.toggle('inv', lum(bg)<0.18);
   root.style.setProperty('--ink',   rgb(ink,fade));
   root.style.setProperty('--soft',  rgb(soft,fade));
   root.style.setProperty('--accent',rgb(acc,fade));
@@ -2376,127 +2329,44 @@ function steps(){
 const hdr=document.getElementById('hdr');
 let ticking=false;
 
-/* ── O BOTÃO VIAJANTE ────────────────────────────────────────────────
-   Um botão só, que ora repousa na barra de baixo, ora fica ancorado na
-   doca da dobra e sobe com a página. Ver o bloco de CSS `.mcta`.
+/* ── A BARRA DE CONVERSÃO DO CELULAR ─────────────────────────────────
+   Ela aparece só quando NENHUM botão de conversão está na tela. Assim
+   há sempre exatamente um pedido visível: o da dobra, ou ela.
 
-   ── A REGRA, EM UMA LINHA ─────────────────────────────────────────
-   Ele fica na LINHA DE REPOUSO, a não ser que a doca da vez já tenha
-   subido acima dela — aí ele vai para a doca:
+   `IntersectionObserver` e não conta de rolagem, e a diferença não é de
+   estilo. O observador é resolvido pelo navegador fora do laço de
+   scroll, então a barra não depende de quadro chegar na hora — e a
+   página inteira já paga um laço de scroll por causa do motor de cor,
+   que não precisa carregar isto junto.
 
-       dy = min(0, topoDaDoca - linhaDeRepouso)
+   ── O QUE FOI DESFEITO ──────────────────────────────────────────────
+   Aqui morava um botão só, que viajava: os seis da dobra viravam docas
+   vazias e ele ancorava em cada uma. O movimento estava medido e
+   correto, mas com UM elemento a troca de lugar não tem como ser
+   contínua nos dois sentidos: descendo ele sai por cima e a barra entra
+   por baixo, o que lê bem; subindo ele precisa sumir da barra e
+   reaparecer no topo, e ali ele aparece do nada. Com dois elementos o
+   problema não existe — o da dobra entra rolando, porque está no fluxo,
+   e a barra desliza, porque é fixa. Decisão de Mateus, 2026-07-29.
 
-   "A doca da vez" é a PRIMEIRA, na ordem do documento, que ainda não
-   saiu inteira por cima. Enquanto ela está abaixo da linha, ele espera
-   na barra; quando ela sobe até a linha, as duas posições coincidem e
-   ele passa a acompanhá-la. Ninguém salta, porque no ponto da troca a
-   conta dá exatamente zero — a continuidade é consequência da fórmula,
-   não de uma animação que disfarça o corte.
-
-   ── O ÚNICO SALTO ─────────────────────────────────────────────────
-   Quando a doca sai por cima, a doca da vez passa a ser a seguinte, lá
-   embaixo, e o alvo volta para a barra de uma vez. Descendo, isso
-   acontece com o botão JÁ fora da tela e ninguém vê. Subindo, acontece
-   com ele visível na barra: aí ele desliza para fora, a posição troca
-   escondida, e ele volta deslizando no lugar novo. É o que `fora` faz,
-   e é por isso que a posição fica TRAVADA durante a saída — escrever a
-   posição nova no meio dela seria justamente o teletransporte que a
-   saída existe para evitar.
-
-   ── O SALTO É TROCA DE DOCA, NÃO DISTÂNCIA ────────────────────────
-   A primeira versão disparava a saída quando `dy` mudava mais de 72px
-   entre dois quadros. Errado, e o teste pegou: ancorado numa doca, `dy`
-   muda EXATAMENTE o tanto que a página rolou — um gesto rápido passa
-   dos 72px por quadro com folga, e o botão saía de cena no meio de uma
-   rolagem comum, sem ter trocado de lugar nenhum.
-   O que caracteriza o salto é a IDENTIDADE da doca mudar. Enquanto for
-   a mesma, qualquer distância é rolagem e o botão só acompanha.
-
-   ── O JS NÃO POSICIONA NADA POR QUADRO ────────────────────────────
-   Ele só decide ENTRE QUAIS DOIS ESTADOS o botão está, e quem posiciona
-   é o navegador: `fixed` com `bottom` quando solto, `absolute` com um
-   `top` de documento quando ancorado. Ver o bloco de CSS `.mcta`.
-
-   A versão anterior era `fixed` sempre, com um `translateY` reescrito a
-   cada quadro. NADAVA no celular: a rolagem corre no compositor e o
-   evento de scroll chega depois, então o botão andava atrás do dedo.
-   Não era erro de cálculo — era pedir ao JS uma coisa que só o
-   navegador faz na hora certa.
-
-   ── A LINHA DE REPOUSO SAI DA SONDA ───────────────────────────────
-   `env(safe-area-inset-bottom)` só o CSS resolve, e o `offsetTop` do
-   próprio botão deixa de servir no instante em que ele vira `absolute`
-   — ali ele passa a ser coordenada de documento. Então quem responde é
-   uma sonda de altura zero, fixa no mesmo `bottom`, que nunca troca de
-   estado. Lida por quadro, sem cache: guardar esse número num cache já
-   quebrou antes, e o defeito era mudo — o botão parava de pousar em
-   qualquer doca e nada aparecia no console.                          */
-const mcta=document.getElementById('mcta');
-const sonda=document.getElementById('mcta-sonda');
-const docas=[...document.querySelectorAll('main .js-cta')];
-const celular=matchMedia('(max-width:860px)');
-let docaAnt=null, ancoradoAnt=false, travado=false, travadoEm=0, tSalto=0, primeiro=true;
-const SAIDA=200;
-
-/* topo do botão em repouso, em coordenada de TELA */
-const linhaRepouso=()=>sonda.offsetTop-mcta.offsetHeight;
-
-function estadoDoViajante(){
-  const linha=linhaRepouso();
-  for(const d of docas){
-    const r=d.getBoundingClientRect();
-    if(r.bottom>0) return {ancora:r.top<linha ? r.top+scrollY : null, doca:d};
-  }
-  return {ancora:null, doca:null};          /* passou da última: volta à barra */
+   O `.cta.sm` do header fica de fora da vigilância: ele é secundário e
+   vive num header fixo, então nunca deixaria a barra aparecer. O
+   seletor `main .js-cta` já o exclui, e exclui a própria barra junto —
+   as duas vivem fora do <main>.                                      */
+const botoes=[...document.querySelectorAll('main .js-cta')];
+if(mcta && botoes.length && 'IntersectionObserver' in window){
+  const naTela=new Set();
+  /* Sem margem: um pixel de botão na tela e a barra sai. Descontar a
+     altura da barra pareceria mais limpo e não é — no primeiro quadro
+     do celular o CTA do hero fica exatamente ali, colado no rodapé da
+     primeira tela, e a barra subiria por cima dele. */
+  const olho=new IntersectionObserver(entradas=>{
+    entradas.forEach(e=>e.isIntersecting ? naTela.add(e.target) : naTela.delete(e.target));
+    mcta.classList.toggle('on', naTela.size===0);
+  },{rootMargin:'0px'});
+  botoes.forEach(b=>olho.observe(b));
 }
 
-function aplica(e){
-  docaAnt=e.doca; ancoradoAnt=e.ancora!==null;
-  if(e.ancora!==null) mcta.style.setProperty('--ancora',e.ancora+'px');
-  mcta.classList.toggle('ancorado', e.ancora!==null);
-}
-
-function viajante(){
-  if(!celular.matches) return;
-  const e=estadoDoViajante();
-  /* a inversão acompanha a doca, não o salto: ela precisa já estar certa
-     quando o botão reaparece */
-  mcta.classList.toggle('inv', !!e.doca && e.doca.classList.contains('close-cta'));
-  /* A TRAVA SE CURA SOZINHA. Ela liberava só pelo temporizador, e
-     temporizador em aba de fundo é achatado para ~1s pelo navegador —
-     o botão ficava fora de cena até ele vir. Agora quem manda é o
-     relógio: passou o tempo da saída, o primeiro quadro que chegar
-     destrava, tenha o temporizador vindo ou não. */
-  if(travado){
-    if(performance.now()-travadoEm < SAIDA) return;
-    travado=false; mcta.classList.remove('fora');
-  }
-  /* O SALTO É TROCA DE DOCA, e só quando ela vem acompanhada de troca de
-     estado: sair da âncora para a barra, ou o contrário. Trocar de doca
-     continuando solto não move nada, e animar ali seria piscada à toa.
-     (A versão anterior disparava por distância percorrida, e ancorado a
-     distância é a própria rolagem — gesto rápido tirava o botão de cena
-     no meio de uma rolagem comum.) */
-  const trocou = e.doca!==docaAnt && (e.ancora!==null)!==ancoradoAnt;
-  if(!primeiro && !reduce && trocou){
-    travado=true; travadoEm=performance.now();
-    /* sai pela borda que está mais perto de onde ele parou */
-    mcta.classList.toggle('pcima', mcta.getBoundingClientRect().top < innerHeight*.5);
-    mcta.classList.add('fora');
-    clearTimeout(tSalto);
-    /* o temporizador continua, para o caso de a rolagem parar durante a
-       saída e nenhum quadro novo chegar para destravar */
-    tSalto=setTimeout(()=>{
-      if(!travado) return;
-      travado=false;
-      aplica(estadoDoViajante());
-      mcta.classList.remove('fora');
-    },SAIDA+20);
-    return;
-  }
-  primeiro=false;
-  aplica(e);
-}
 /* ── A SAÍDA DA FIGURA ───────────────────────────────────────────────
    Rolando o hero, a figura desfoca e apaga: o palco não é cortado, ele
    é deixado. O progresso vai ao quadrado para o efeito quase não
@@ -2563,7 +2433,6 @@ function frame(){
   steps();
   saida();
   hdr.classList.toggle('stuck', scrollY>60);
-  viajante();
   ticking=false;
 }
 addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(frame)}},{passive:true});
@@ -2572,19 +2441,6 @@ sizeSteps();measure();frame();
 addEventListener('load',()=>{sizeSteps();measure();frame()});
 if(document.fonts&&document.fonts.ready)
   document.fonts.ready.then(()=>{sizeSteps();measure();frame()});
-/* O viajante entra por último, junto com o pedido do hero. Sem isso ele
-   apareceria no primeiro quadro, antes da revelação, e seria a única
-   coisa da página a chegar pronta.
-   Esconder e revelar saem do MESMO lugar de propósito: as docas são
-   escondidas por CSS puro, então script quebrado com `fora` no HTML
-   deixaria o celular sem pedido nenhum. Aqui o pior caso é o botão
-   parado na barra. Com movimento reduzido não há entrada. */
-if(!reduce){
-  mcta.classList.add('fora');
-  addEventListener('load',()=>setTimeout(()=>{
-    viajante(); mcta.classList.remove('fora');
-  },900));
-}
 
 /* ── FATIAR O TÍTULO EM PALAVRAS E LETRAS ────────────────────────────
    Anda pela árvore em vez de reescrever innerHTML: sete dos nove
