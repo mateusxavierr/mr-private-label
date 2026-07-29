@@ -569,8 +569,12 @@ section{position:relative;z-index:1}
    com teto: acima de 880px a figura viraria escultura e o texto ficaria
    boiando longe dela. `svh` e não `vh` porque no celular a barra do
    navegador comeria o corte da bainha.                                */
+/* Tela cheia, e não uma caixa de 880px. O corte da figura precisa
+   acontecer NA BORDA DA TELA: cortada dentro de uma caixa, com faixa
+   branca embaixo, ela lê como foto dentro de um quadro; cortada pela
+   tela, lê como corpo que continua fora dela.                        */
 .palco{position:relative;overflow:hidden;isolation:isolate;
-  height:clamp(600px,calc(100svh - 88px),880px)}
+  height:100svh;min-height:620px}
 
 /* ── O CAMPO DE MARCA ────────────────────────────────────────────────
    A logo completa, na trava oficial do brandbook: o "mr" e o par
@@ -596,10 +600,10 @@ section{position:relative;z-index:1}
    banda de cima (69svh ÷ 2,67 da proporção do glifo). O segundo é o que
    manda em tela baixa, que é onde o encontro acontecia.               */
 .marcona{position:absolute;left:var(--pad);right:var(--pad);
-  top:clamp(58px,7.4vh,86px);container-type:inline-size;
+  top:clamp(46px,6vh,74px);container-type:inline-size;
   pointer-events:none;user-select:none;z-index:1}
 .marcona-in{display:flex;align-items:flex-end;justify-content:center;
-  gap:.1375em;font-size:min(46cqw,60svh);color:var(--fld);
+  gap:.1375em;font-size:min(56cqw,78svh);color:var(--fld);
   transition:color .3s linear}
 .marcona-in svg{width:1em;height:auto;display:block;flex:0 0 auto}
 .marcona-sub{font-size:.1em;font-variation-settings:'wght' 620;
@@ -614,13 +618,14 @@ section{position:relative;z-index:1}
 
    A caixa é ancorada embaixo e sangra: a figura é cortada pela borda do
    palco na altura da bainha, com a calça já fora de quadro.          */
-/* posicionada pelo CENTRO, não por uma borda: o eixo da figura é o que
-   precisa ficar previsível em relação à coluna de texto. Ele anda para a
-   direita do meio da tela até o limite de 300px, e para aí — mais que
-   isso a figura sairia de cima do campo de marca. */
-.vitrine{position:absolute;bottom:0;z-index:2;
-  left:min(76%,calc(50% + 300px));transform:translateX(-50%);
-  height:min(84%,760px);aspect-ratio:1350/1971}
+/* NO EIXO DA TELA, e ancorada pelo TOPO. Ancorar embaixo faria a altura
+   crescer para cima e comer a cabeça; ancorando no topo, tudo o que
+   passa de 100% transborda por baixo e a borda da tela faz o corte.
+   114% deixa ver até ~83% do arquivo, que é meio da coxa: a bainha da
+   peça aparece inteira e ainda sobra um pedaço de calça embaixo dela. */
+.vitrine{position:absolute;z-index:2;
+  left:50%;transform:translateX(-50%);
+  top:clamp(38px,5.2vh,58px);height:114%;aspect-ratio:1350/1971}
 /* O REPOUSO NÃO DEPENDE DA ANIMAÇÃO. Navegador congela animação de aba
    em segundo plano, e a versão anterior deixava a peça atual presa no
    quadro zero de `veste` — que é opacidade zero. Quem abrisse a landing
@@ -680,10 +685,18 @@ section{position:relative;z-index:1}
    anda quase parelha com o relógio e a peça desce no corpo à
    velocidade de quem veste.                                          */
 @keyframes veste{
-  from{opacity:0;transform:translateY(9px) scale(.992);
-       filter:saturate(.12) contrast(.5) brightness(1.42)}
+  from{opacity:0;transform:translateY(16px) scale(.985);
+       filter:saturate(.12) contrast(.5) brightness(1.42) blur(7px)}
+  55% {filter:saturate(.7) contrast(.86) brightness(1.1) blur(1.2px)}
   to  {opacity:1;transform:none;filter:none}}
 @keyframes varre{from{--rev:0%} to{--rev:112%}}
+/* o fio nasce e morre nas pontas: linha de máquina não começa nem
+   termina no ar, ela entra no tecido e sai dele */
+@keyframes fio{
+  from{--rev:0%;opacity:0}
+  14% {opacity:.9}
+  86% {opacity:.9}
+  to  {--rev:112%;opacity:0}}
 /* A peça que sai segura e só cede no fim. Se ela lavasse na mesma
    velocidade da varredura, a faixa do corpo que a máscara ainda não
    alcançou ficaria sem ninguém por baixo — um buraco claro descendo
@@ -696,12 +709,19 @@ section{position:relative;z-index:1}
 /* `.anima` é ligada pelo JS só quando a aba está à frente e o visitante
    não pediu menos movimento — o gesto é enfeite do estado, nunca o
    dono dele */
-.vt.on.anima{animation:veste .9s var(--ease) both,
-                       varre .9s cubic-bezier(.45,.05,.2,1) both}
+.vt.on.anima{animation:veste 1.15s var(--ease) both,
+                       varre 1.15s cubic-bezier(.45,.05,.2,1) both}
 /* a mesma varredura, no mesmo tempo e na mesma curva: é a linha de
    costura das duas máscaras, e ela só fecha se as duas andarem juntas */
-.vt.sai.anima{animation:despe .9s cubic-bezier(.55,0,1,.45) both,
-                        varre .9s cubic-bezier(.45,.05,.2,1) both}
+.vt.sai.anima{animation:despe 1.15s cubic-bezier(.55,0,1,.45) both,
+                        varre 1.15s cubic-bezier(.45,.05,.2,1) both}
+
+/* O FIO. Fora da troca ele não existe — nem pinta, nem ocupa camada. */
+.luz{opacity:0;z-index:4;pointer-events:none}
+.luz.anima{animation:fio 1.15s cubic-bezier(.45,.05,.2,1) both;
+  filter:brightness(2.1) saturate(.3) contrast(.75);
+  -webkit-mask-image:linear-gradient(to bottom,transparent calc(var(--rev) - 1.8%),#000 var(--rev),transparent calc(var(--rev) + 1.8%));
+  mask-image:linear-gradient(to bottom,transparent calc(var(--rev) - 1.8%),#000 var(--rev),transparent calc(var(--rev) + 1.8%))}
 /* a primeira peça não é troca, é chegada: usa o tempo longo da
    revelação da página (1,8s) em vez do tempo curto da troca */
 .vitrine.abre .vt.on.anima{animation-duration:1.8s}
@@ -712,11 +732,36 @@ section{position:relative;z-index:1}
    cada 5 segundos, e a página inteira é construída em cima de contraste
    medido. Então o H1 fica na coluna da esquerda, sobre o campo de marca
    — Preto sobre Azul 30% mede 11:1, e essa não muda nunca.           */
+/* Duas fileiras, e a coluna do meio vazia nas duas: a de cima leva o
+   título, a de baixo o pedido à esquerda e a explicação à direita. A
+   medida de cada bloco segue a silhueta — o corpo é estreito na altura
+   da cabeça e largo na do braço caído, então o título pode ser largo e
+   o que vem depois dele não pode. Isso não é gosto, é medida: a união
+   das treze silhuetas ocupa 80% da caixa da cintura para baixo.      */
+/* A grade do palco NÃO usa o container de 1240px do resto da página.
+   A figura tem largura de svh — em tela alta ela cresce e o texto,
+   preso a 1240, ficaria espremido contra o braço dele. Aqui as colunas
+   acompanham a tela, com teto largo o bastante para não esparramar em
+   monitor gigante. É a mesma sangria que a trava de marca já usa: no
+   hero o quadro é a tela, não o container.                           */
 .palco-grade{position:relative;z-index:4;height:100%;
-  align-content:end;padding-bottom:clamp(28px,4.5vh,52px);
+  width:100%;max-width:1720px;margin-inline:auto;padding-inline:var(--pad);
+  grid-template-rows:auto 1fr auto;
+  padding-top:clamp(88px,12.5vh,146px);padding-bottom:clamp(28px,4.5vh,52px);
   pointer-events:none}
 .palco-grade>*{pointer-events:auto}
-.hero-txt{grid-column:1/8;align-self:end}
+/* O TÍTULO SOBE PARA A FAIXA DA CABEÇA. Ali a silhueta mede 27% da
+   caixa e sobram 436px de coluna limpa; da cintura para baixo sobram
+   272px, e nenhuma linha do H1 cabe nisso. Ele divide a faixa com a
+   trava de marca, que é Preto sobre Azul 30% — 11:1, o mesmo arranjo
+   que já funcionava antes da figura crescer. */
+.hero-txt{grid-column:1/6;grid-row:1}
+.hero-act{grid-column:1/6;grid-row:3;align-self:end}
+/* encostado na direita: a coluna limpa daquele lado começa onde a mão
+   dele acaba, e é ela que dita a medida destes dois blocos */
+.hero-diz{grid-column:8/13;grid-row:3;align-self:end;justify-self:end;
+  display:flex;flex-direction:column;align-items:flex-end;gap:var(--s5);
+  max-width:248px}
 /* Hierarquia por AGRUPAMENTO, não por tamanho: título e subtítulo ficam
    perto (s4) e lêem como um bloco só, a mensagem; o pedido fica longe
    (s5) e lê como o segundo tempo. */
@@ -727,52 +772,71 @@ section{position:relative;z-index:1}
    figura de corpo inteiro, e a conta dá outro número. Os H2 das outras
    dobras não mudam. O que o tamanho menor compra é a banda de baixo
    caber inteira em 900px de tela sem invadir a trava.                 */
-.hero h1{font-size:clamp(2.9rem,4.6vw,4.15rem)}
-.hero-sub{max-width:42ch;margin-bottom:var(--s5)}
+/* 4,3vw e não 4,6: a linha mais longa ("Nossa fábrica.") precisa caber
+   nos 436px que a cabeça dele deixa livre. Meia unidade a mais e ela
+   encosta no ombro. */
+.hero h1{font-size:clamp(2.7rem,4.3vw,3.9rem);margin-bottom:0}
+.hero-sub{max-width:24ch;margin-bottom:0;font-size:1.0625rem;line-height:1.55}
 /* A nota desce para baixo do botão. Lado a lado, as duas dividiam a
    mesma linha óptica e o olho não sabia qual vinha primeiro; empilhadas,
    a ordem de leitura fica declarada. */
 .hero-act{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s3)}
-.hero-act .note{max-width:32ch;font-size:1rem;line-height:1.5;color:var(--soft)}
+.hero-act .note{max-width:26ch;font-size:1rem;line-height:1.5;color:var(--soft)}
 
 /* ── A CARTELA ───────────────────────────────────────────────────────
    O controle da vitrine não é seta nem bolinha: é a cartela de cores
    que a fábrica manda para o lojista escolher. Cada quadrinho é a cor
    média do peito daquela peça, medida do arquivo — nenhuma inventada.
    Sendo o objeto real do ofício, ela explica sozinha o que faz.      */
-/* A cartela fica na coluna do TEXTO, não debaixo da figura. Debaixo da
-   figura ela cairia em cima da calça — e a regra de não pôr elemento
-   sobre a peça vale para o controle também. Aqui ela lê como a legenda
-   da vitrine: o que está vestido, e como trocar.                      */
-.hero-peca{grid-column:1/8;align-self:end;margin-top:var(--s5)}
-.peca-nome{display:block;font-family:var(--serif);font-style:italic;
-  font-size:1.32rem;line-height:1.25;letter-spacing:.005em;
-  font-variation-settings:'wght' 500;color:var(--ink);
-  margin-block:var(--s1) var(--s3);min-height:1.25em}
-/* fila única: as treze de uma vez lêem como cartela de cor da fábrica;
-   quebradas em duas linhas virariam paginação */
-.cartela{display:flex;gap:7px;padding:0;margin:0;border:0}
-.cor{width:23px;height:23px;padding:0;border:1px solid transparent;
-  background:none;cursor:pointer;position:relative;
-  transition:transform .4s var(--ease)}
-.cor i{position:absolute;inset:2px;background:var(--c);
-  box-shadow:inset 0 0 0 1px rgba(7,22,35,.16);
-  transition:inset .4s var(--ease)}
-.cor:hover{transform:translateY(-3px)}
-.cor[aria-current="true"]{border-color:var(--ink)}
-.cor[aria-current="true"] i{inset:3px}
+/* ── O INDICADOR ─────────────────────────────────────────────────────
+   Era uma cartela de cores. Saiu: cartela promete escolha de produto, e
+   nesta dobra ninguém está escolhendo produto — está decidindo se fala
+   com a fábrica. Prometer uma coisa e entregar outra custa atenção no
+   único lugar da página onde ela é mais cara.
+
+   O que fica é o mínimo que um carrossel deve: onde estou, quantas são,
+   e como pular. O ponto da vez estica e vira traço — a mesma diferença
+   entre ponto e linha que a costura da página já usa.                */
+.hero-marcador{display:flex;align-items:center;gap:var(--s3)}
+.pontos{display:flex;align-items:center;gap:6px}
+.pt{width:6px;height:6px;padding:0;border:0;background:none;
+  cursor:pointer;transition:width .55s var(--ease)}
+.pt i{display:block;width:100%;height:100%;border-radius:99px;
+  background:var(--fld);transition:background .45s var(--ease)}
+.pt:hover i{background:var(--soft)}
+.pt[aria-current="true"]{width:22px}
+.pt[aria-current="true"] i{background:var(--ink)}
+.conta{white-space:nowrap;font-variant-numeric:tabular-nums}
+.conta b{font-variation-settings:'wght' 620;color:var(--ink)}
+.conta i{font-style:normal;opacity:.45;margin-inline:.25em}
 
 .hero-num{margin-top:var(--s8)}
 .hero-num .cap{margin-bottom:var(--s5);max-width:46ch}
 
-/* a logo pequena do header sai de cena enquanto a gigante está na tela;
-   volta assim que a página rola, que é quando `stuck` liga */
+/* ── O HEADER NO TOPO É SÓ O TICKER ──────────────────────────────────
+   A logo pequena sai de cena enquanto a gigante está na tela — duas
+   vezes a mesma marca em tamanhos opostos não é hierarquia, é repetição.
+
+   O botão sai junto, e por um motivo mais forte: no topo ele competia
+   com o CTA do hero, que é o MESMO pedido, a dois palmos de distância.
+   Dois botões idênticos na mesma tela dividem o clique em vez de somar.
+   Rolou a página, o CTA do hero saiu de vista e o do header passa a ser
+   o único — aí ele tem função. É o que `stuck` já marcava.           */
 .hdr:not(.stuck) .brand{opacity:0;pointer-events:none}
 .brand{transition:transform .55s var(--ease),opacity .45s var(--ease)}
+.hdr-end{transition:opacity .45s var(--ease)}
+/* O botão só some no desktop. Em coluna única o CTA do hero fica abaixo
+   da dobra e a barra fixa de rodapé só entra depois de 70% de rolagem —
+   esconder o do header deixaria a primeira tela do celular sem pedido
+   nenhum. A regra existe porque os dois competiam na MESMA tela; onde
+   não competem, ela não se aplica. */
+@media (min-width:861px){
+  .hdr:not(.stuck) .hdr-end{opacity:0;pointer-events:none}
+}
 
 @media (prefers-reduced-motion:reduce){
-  .vt.on.anima,.vt.sai.anima{animation:none}
-  .cor:hover{transform:none}
+  .vt.on.anima,.vt.sai.anima,.luz.anima{animation:none}
+  .luz{display:none}
 }
 
 /* 01 · o modelo */
@@ -920,7 +984,8 @@ section{position:relative;z-index:1}
 
 /* ══ RESPONSIVO ════════════════════════════════════════════════════ */
 @media (max-width:1120px){
-  .hero-txt,.hero-peca{grid-column:1/7}
+  .hero-txt,.hero-act{grid-column:1/6}
+  .hero-diz{grid-column:8/13}
   .mod-fig{grid-column:1/6}.mod-c{grid-column:7/13}
   .tro-a,.tro-fig{grid-column:1/6}.tro-b{grid-column:7/13}
   .cam-b{grid-column:8/13}.cam-fig{grid-column:1/6}.cam-c{grid-column:7/13}
@@ -947,15 +1012,20 @@ section{position:relative;z-index:1}
      3. A sangria deixa de vir da borda do palco e passa a vir do corte
         da própria caixa: `cover` ancorado no topo, numa caixa mais
         baixa que a foto. O gesto é o mesmo, o mecanismo é outro.     */
-  .palco{height:auto;overflow:visible;padding-top:clamp(88px,14vh,120px)}
+  .palco{height:auto;min-height:0;overflow:visible;padding-top:clamp(88px,14vh,120px)}
   .marcona{position:static;margin:0 var(--pad) var(--s5)}
   .marcona-in{font-size:min(56cqw,42svh)}
-  .vitrine{position:relative;left:auto;bottom:auto;transform:none;
+  .vitrine{position:relative;left:auto;top:auto;transform:none;
     aspect-ratio:auto;width:min(78vw,320px);height:min(52svh,420px);
     margin-inline:auto;overflow:hidden}
   .vt{object-fit:cover;object-position:top center}
-  .palco-grade{height:auto;padding-bottom:0;margin-top:var(--s6)}
-  .hero-peca{margin-top:var(--s6)}
+  /* em pilha o texto volta a ser uma coluna só, na ordem do documento.
+     O respiro de cima era para separar o título da trava de marca; aqui
+     a figura inteira já está entre os dois. */
+  .palco-grade{height:auto;padding-top:0;padding-bottom:0;margin-top:var(--s5)}
+  .hero-diz{margin-top:var(--s5);gap:var(--s5)}
+  .hero-act{margin-top:var(--s5)}
+  .hero-sub{max-width:38ch}
   .mod-fig,.mod-c,.cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
   .tro-b{margin-top:var(--s7)}
   .gru-b{margin-top:var(--s7)}
@@ -1048,23 +1118,31 @@ section{position:relative;z-index:1}
       <img class="vt on" src="img/vitrine/01-900.webp" srcset="img/vitrine/01-560.webp 560w, img/vitrine/01-900.webp 900w, img/vitrine/01-1120.webp 1120w" sizes="(max-width:860px) 78vw, 540px" alt="" width="1350" height="1971" fetchpriority="high" decoding="async">
     </div>
 
-    <div class="wrap g12 palco-grade">
+    <div class="g12 palco-grade">
+      <!-- O texto vai para os CANTOS porque o meio é do corpo. A ordem no
+           documento continua sendo a de leitura — título, explicação,
+           pedido —; a grade é que os espalha. -->
       <div class="hero-txt">
         <h1 class="d1">
           <span class="rvl" style="--d:0ms;display:block">Nossa fábrica.</span>
           <span class="rvl" style="--d:120ms;display:block"><em>Sua marca</em> na peça.</span>
         </h1>
+      </div>
+
+      <div class="hero-diz">
         <p class="lead hero-sub rv" style="--d:280ms">Produção própria de roupa masculina para o lojista que quer vender marca própria, não o mesmo produto do vizinho.</p>
-        <div class="hero-act rv" style="--d:380ms">
-          <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
-          <p class="note">Coleção nova com a condição dela junto, direto de quem produz.</p>
+        <!-- Nome e cor da peça saíram: quem chega aqui não está escolhendo
+             produto, está decidindo se fala com a fábrica. O indicador só
+             precisa dizer que existe mais coisa e onde ela está. -->
+        <div class="hero-marcador rv" style="--d:520ms">
+          <div class="pontos" id="pontos" role="group" aria-label="Trocar a peça da vitrine"></div>
+          <span class="conta label" aria-hidden="true"><b id="peca-i">01</b><i>/</i>13</span>
         </div>
       </div>
 
-      <div class="hero-peca rv" style="--d:520ms">
-        <span class="label">Peça <span id="peca-i">01</span>/13</span>
-        <span class="peca-nome" id="peca-nome" aria-hidden="true"></span>
-        <div class="cartela" id="cartela" role="group" aria-label="Escolher a peça da vitrine"></div>
+      <div class="hero-act rv" style="--d:380ms">
+        <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+        <p class="note">Coleção nova com a condição dela junto, direto de quem produz.</p>
       </div>
     </div>
   </div>
@@ -1567,34 +1645,31 @@ addEventListener('load',()=>{
    navegador pelo topo da cabeça e pela linha do ombro, então aqui só
    resta empilhar e trocar.
 
-   As cores da cartela são a MÉDIA MEDIDA do peito de cada arquivo, não
-   escolhas — se a peça mudar, o quadrinho muda junto.
-
-   Os nomes descrevem o que a foto mostra (tipo + cor). Nome de modelagem
+   Os nomes não aparecem na tela: servem ao rótulo de acessibilidade de
+   cada ponto e da própria vitrine. Descrevem o que a foto mostra (tipo + cor). Nome de modelagem
    e de malha é informação da fábrica, não do arquivo: entra quando
    Mateus passar.                                                      */
 const PECAS=[
-  {c:'#DCC2A1', n:'Polo bege'},
-  {c:'#F0E3D7', n:'Polo areia'},
-  {c:'#272A37', n:'Camiseta azul-noite'},
-  {c:'#44435B', n:'Camiseta marinho'},
-  {c:'#4D362F', n:'Camiseta marrom'},
-  {c:'#ECE4DE', n:'Polo listrada'},
-  {c:'#664144', n:'Polo bordô'},
-  {c:'#262424', n:'Camiseta preta'},
-  {c:'#E92B3C', n:'Camiseta vermelha'},
-  {c:'#A85628', n:'Polo meio-zíper caramelo'},
-  {c:'#444562', n:'Camisa azul-marinho'},
-  {c:'#43625F', n:'Polo verde'},
-  {c:'#393A54', n:'Camiseta gola alta marinho'}
+  'Polo bege',
+  'Polo areia',
+  'Camiseta azul-noite',
+  'Camiseta marinho',
+  'Camiseta marrom',
+  'Polo listrada',
+  'Polo bordô',
+  'Camiseta preta',
+  'Camiseta vermelha',
+  'Polo meio-zíper caramelo',
+  'Camisa azul-marinho',
+  'Polo verde',
+  'Camiseta gola alta marinho'
 ];
 const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
 
 (()=>{
   const palco=document.getElementById('vitrine');
   if(!palco) return;
-  const cartela=document.getElementById('cartela');
-  const rotulo=document.getElementById('peca-nome');
+  const fila=document.getElementById('pontos');
   const conta=document.getElementById('peca-i');
 
   /* a máscara que veste a peça depende de --rev animar, e propriedade
@@ -1615,7 +1690,7 @@ const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
      fora de vista, então as doze restantes desceriam junto com a
      primeira e disputariam banda com o LCP. Por isso o endereço só é
      escrito na hora — no `load` da página, ou antes se o lojista clicar
-     na cartela primeiro. */
+     na fila primeiro. */
   const arma=im=>{
     if(im.dataset.i===undefined) return Promise.resolve();
     const i=+im.dataset.i; delete im.dataset.i;   /* dataset é texto: sem
@@ -1626,7 +1701,7 @@ const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
     return im.decode().catch(()=>{});
   };
 
-  PECAS.forEach((p,i)=>{
+  PECAS.forEach((peca,i)=>{
     if(i){
       const im=new Image();
       im.className='vt'; im.width=1350; im.height=1971; im.alt='';
@@ -1634,23 +1709,33 @@ const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
       palco.appendChild(im); quadros.push(im);
     }
     const b=document.createElement('button');
-    b.type='button'; b.className='cor'; b.style.setProperty('--c',p.c);
-    b.setAttribute('aria-label',`Ver ${p.n.toLowerCase()}`);
+    b.type='button'; b.className='pt';
+    b.setAttribute('aria-label',`Ver ${peca.toLowerCase()}`);
     b.appendChild(document.createElement('i'));
     b.addEventListener('click',()=>{ mostra(i); segura(); });
-    cartela.appendChild(b);
+    fila.appendChild(b);
   });
-  const botoes=[...cartela.children];
+  const botoes=[...fila.children];
+
+  /* ── A COSTURA ──────────────────────────────────────────────────────
+     Uma cópia da peça que entra, clareada e recortada numa faixa fina
+     que desce junto com a varredura. O que se vê é um fio de luz
+     correndo pelo corpo, no formato do corpo — não uma régua atravessando
+     a tela. É a linha da máquina passando, que é literalmente o que a
+     fábrica faz. Custa zero byte: o endereço é o mesmo da peça que já
+     está decodificada, então sai do cache na hora.                    */
+  const luz=new Image();
+  luz.className='vt luz'; luz.alt=''; luz.decoding='async';
+  luz.width=1350; luz.height=1971;
+  palco.appendChild(luz);
 
   let atual=0, relogio=0;
   /* animação em aba escondida não roda, e o que não roda não pode ser
      dono do estado: o gesto só é ligado quando há alguém vendo */
   const gesto=el=>{ if(!reduce && !document.hidden) el.classList.add('anima'); };
   const escreve=i=>{
-    const p=PECAS[i];
-    rotulo.textContent=p.n;
     conta.textContent=String(i+1).padStart(2,'0');
-    palco.setAttribute('aria-label',`Modelo vestindo ${p.n.toLowerCase()}, produzida pela MR`);
+    palco.setAttribute('aria-label',`Modelo vestindo ${PECAS[i].toLowerCase()}, produzida pela MR`);
     botoes.forEach((b,j)=>b.setAttribute('aria-current',j===i?'true':'false'));
   };
 
@@ -1664,12 +1749,14 @@ const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
     const sai=quadros[atual];
     sai.classList.remove('on','anima'); sai.classList.add('sai');
     entra.classList.remove('sai','anima');
+    luz.classList.remove('anima');
+    luz.src=entra.currentSrc||entra.src;
     /* um quadro de folga para a classe de saída pegar antes de a de
        entrada subir por cima, senão as duas animações começam no mesmo
        tick e o cruzamento perde o meio */
     void entra.offsetWidth;
     entra.classList.add('on');
-    gesto(sai); gesto(entra);
+    gesto(sai); gesto(entra); gesto(luz);
     palco.classList.remove('abre');
     atual=i; escreve(i);
   }
@@ -1684,12 +1771,12 @@ const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
     /* o rodízio para com o dedo ou o teclado na FIGURA e na CARTELA, e
        só nelas: parar a troca porque o mouse encostou no botão de entrar
        no grupo leria como página travada */
-    [palco,cartela].forEach(alvo=>{
+    [palco,fila].forEach(alvo=>{
       alvo.addEventListener('mouseenter',para);
       alvo.addEventListener('mouseleave',segura);
     });
-    cartela.addEventListener('focusin',para);
-    cartela.addEventListener('focusout',segura);
+    fila.addEventListener('focusin',para);
+    fila.addEventListener('focusout',segura);
     /* e para de vez quando a aba sai de foco — animação em aba escondida
        é bateria queimada à toa */
     addEventListener('visibilitychange',()=>
@@ -1703,16 +1790,17 @@ const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
      assume o repouso, que é visível por definição. Melhor perder a
      animação do que devolver um hero em branco. */
   addEventListener('visibilitychange',()=>{
-    if(!document.hidden) quadros.forEach(q=>q.classList.remove('anima'));
+    if(!document.hidden) palco.querySelectorAll('.anima')
+      .forEach(q=>q.classList.remove('anima'));
   });
   /* terminou o gesto, a máscara sai de cena: fora da troca ela não tem
      função e só acumula risco */
   palco.addEventListener('animationend',e=>{
-    if(e.animationName==='veste'||e.animationName==='despe')
+    if(e.animationName==='veste'||e.animationName==='despe'||e.animationName==='fio')
       e.target.classList.remove('anima');
   });
 
-  cartela.addEventListener('keydown',e=>{
+  fila.addEventListener('keydown',e=>{
     const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
     if(!d) return;
     e.preventDefault();
@@ -1727,9 +1815,9 @@ const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
   addEventListener('load',()=>{
     gesto(quadros[0]);          /* a chegada da primeira peça */
     let i=1;
-    (function fila(){
+    (function proxima(){
       if(i>=quadros.length) return;
-      arma(quadros[i++]).then(()=>requestAnimationFrame(fila));
+      arma(quadros[i++]).then(()=>requestAnimationFrame(proxima));
     })();
   });
 })();
