@@ -592,14 +592,23 @@ section{position:relative;z-index:1}
 
    Vive no `background` do próprio palco: nenhum elemento novo, nenhum
    nó a mais na árvore, e o grão do `html` continua passando por baixo
-   porque as duas camadas são quase todas transparentes.              */
+   porque as duas camadas são quase todas transparentes.
+
+   AS DUAS CAMADAS MORREM ANTES DA BORDA. A primeira versão levava cor
+   até a base do palco, e a base do palco é uma aresta: enquanto o hero
+   ocupava a tela inteira ninguém via, mas bastava rolar para aparecer
+   uma linha horizontal onde o tom trocava — uma faixa, exatamente o
+   contrário de "sala". Agora a elipse fecha em transparente antes de
+   chegar lá (centro a 76%, raio 24%: a borda cai fora dela) e o
+   degradê sobe do nada, atinge o pico a 11% e some. A aresta existe,
+   mas não tem o que cortar.                                          */
 .palco{position:relative;overflow:hidden;isolation:isolate;
   height:100svh;min-height:620px;
   background:
-    radial-gradient(56% 40% at 50% 96%,
-      color-mix(in srgb,var(--fld) 46%,transparent), transparent 72%),
-    linear-gradient(to top,
-      color-mix(in srgb,var(--fld) 26%,transparent), transparent 42%)}
+    radial-gradient(48% 24% at 50% 76%,
+      color-mix(in srgb,var(--fld) 44%,transparent), transparent 72%),
+    linear-gradient(to top, transparent 0,
+      color-mix(in srgb,var(--fld) 24%,transparent) 11%, transparent 50%)}
 
 /* ── O CAMPO DE MARCA ────────────────────────────────────────────────
    A logo completa, na trava oficial do brandbook: o "mr" e o par
@@ -872,8 +881,19 @@ section{position:relative;z-index:1}
 .conta b{font-variation-settings:'wght' 620;color:var(--ink)}
 .conta i{font-style:normal;opacity:.45;margin-inline:.25em}
 
-.hero-num{margin-top:var(--s8)}
-.hero-num .cap{margin-bottom:var(--s5);max-width:46ch}
+/* ── OS NÚMEROS DEPOIS DO PALCO ──────────────────────────────────────
+   UMA régua, não quatro. Os quatro traços separados eram o topo de uma
+   tabela, e o cabeçalho dela era a frase que saiu — sem ela, sobraram
+   quatro marquinhas soltas a 96px do corte da figura, duas estruturas
+   horizontais brigando pelo mesmo lugar. Contínua, a régua dá ao bloco
+   uma aresta de cima só e ele volta a ler como ficha.
+
+   E o respiro sobe de --s8 para --sec, o mesmo de qualquer virada de
+   dobra: a passagem de imagem de corpo inteiro para dado é a mais dura
+   da página e não cabia num degrau menor que os outros.              */
+.hero-num{margin-top:var(--sec)}
+.hero-num .ficha{border-top:1px solid var(--rule);padding-top:var(--s4)}
+.hero-num .fi{border-top:0;padding-top:0}
 
 /* ── O HEADER NO TOPO É SÓ O TICKER ──────────────────────────────────
    A logo pequena sai de cena enquanto a gigante está na tela — duas
