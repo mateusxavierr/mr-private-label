@@ -882,17 +882,23 @@ section{position:relative;z-index:1}
 .conta i{font-style:normal;opacity:.45;margin-inline:.25em}
 
 /* ── OS NÚMEROS DEPOIS DO PALCO ──────────────────────────────────────
-   UMA régua, não quatro. Os quatro traços separados eram o topo de uma
-   tabela, e o cabeçalho dela era a frase que saiu — sem ela, sobraram
-   quatro marquinhas soltas a 96px do corte da figura, duas estruturas
-   horizontais brigando pelo mesmo lugar. Contínua, a régua dá ao bloco
-   uma aresta de cima só e ele volta a ler como ficha.
+   SEM RÉGUA NENHUMA. Os quatro traços eram o topo de uma tabela cujo
+   cabeçalho saiu; virei um traço contínuo e ele continuou sobrando,
+   porque a tipografia já diz "ficha" sozinha — rótulo em caixa
+   espaçada, número em serif grande, unidade pequena embaixo. A régua
+   repetia o que o tipo já tinha dito, e era a terceira estrutura
+   horizontal num trecho curto: corte da figura, régua, fita do carimbo.
+   Ficaram as duas que têm função.
 
-   E o respiro sobe de --s8 para --sec, o mesmo de qualquer virada de
-   dobra: a passagem de imagem de corpo inteiro para dado é a mais dura
-   da página e não cabia num degrau menor que os outros.              */
-.hero-num{margin-top:var(--sec)}
-.hero-num .ficha{border-top:1px solid var(--rule);padding-top:var(--s4)}
+   O que segura o bloco sem aresta é o alinhamento: quatro colunas
+   idênticas lado a lado já formam objeto, a repetição faz o trabalho
+   que o traço faria.
+
+   E o respiro encolhe para --s8. Sem régua e sem o vão que existia
+   debaixo dela, são 96px limpos entre o corte da figura e o primeiro
+   rótulo — menos do que os 152 de antes, e ainda o suficiente para os
+   números não lerem como legenda da foto.                            */
+.hero-num{margin-top:var(--s8)}
 .hero-num .fi{border-top:0;padding-top:0}
 
 /* ── O HEADER NO TOPO É SÓ O TICKER ──────────────────────────────────
