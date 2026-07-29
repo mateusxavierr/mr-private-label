@@ -7,14 +7,27 @@
 <meta name="description" content="Fábrica própria em Taquaritinga do Norte/PE que produz para a marca do lojista. Produção da peça de pronta entrega com a sua marca em 10 dias úteis a partir da aprovação da arte, a partir de 12 peças por cor.">
 
 <!-- ══ ÍCONE ═══════════════════════════════════════════════════════════
-     O símbolo do brandbook é o "mr" cursivo, e ele é 2,7× mais largo que
-     alto: a 16px vira borrão. O ícone usa só o "m", recortado por um
-     <svg> aninhado — que recorta de verdade no seu viewport, ao
-     contrário de um transform, que só desloca. Ladrilho no azul da
-     marca, tinta branca: mesmo quando a letra não se lê, a cor se
-     reconhece.
-     O .ico existe para navegador velho e para o Google, que ainda pede
-     um raster quadrado; o .svg é o que os navegadores atuais usam. -->
+     O símbolo do brandbook é o "mr" cursivo INTEIRO, e é ele que está
+     aqui — por decisão de Mateus, 2026-07-29. A versão anterior usava
+     só o "m", recortado, porque o símbolo é 2,71:1 (tinta medida:
+     2112,75 × 779,41) e num quadrado ele só pode ser uma faixa.
+
+     O que faz o "mr" sobreviver é a ENGORDA de 55 unidades no traço,
+     não o tamanho: a cursiva tem fios de cabelo que somem antes da
+     letra, e sem eles o ícone vira uma mancha cinza uniforme. Medido em
+     tamanho real, ampliado 7×: sem engorda o "mr" some a 16 e a 20px;
+     com 95 o olho do "m" fecha e vira borrão sólido; com 55 o fio
+     sobrevive e a letra lê de 20px para cima. São 7% da altura do
+     glifo, invisíveis sem comparação lado a lado.
+
+     A 16px — que é a aba do navegador — o "mr" ainda lê como faixa, não
+     como letra. É o preço conhecido de usar o símbolo inteiro num
+     quadrado, e está pago de propósito: a cor da marca continua se
+     reconhecendo mesmo quando a letra não.
+
+     Ladrilho no azul da marca, tinta branca. O .ico traz 16, 32 e 48
+     para navegador velho e para o Google, que ainda pedem raster
+     quadrado; o .svg é o que os navegadores atuais usam. -->
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -31,7 +44,12 @@
      domínio entrar, esta URL e a `og:url` mudam juntas.
      `og:url` e `canonical` ficam de fora por enquanto: sem `og:url` o
      raspador usa a própria URL pedida, que está sempre certa; com uma
-     errada, ele passa a insistir na errada. -->
+     errada, ele passa a insistir na errada.
+
+     O CARTÃO É DESENHADO, NÃO MONTADO À MÃO: `tools/og.html` é o
+     gerador, e é ele que deve ser editado quando a peça ou a frase
+     mudarem — o .jpg é saída, não fonte. -->
+
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="MR Private Label">
@@ -41,7 +59,7 @@
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Wordmark da MR Private Label ao lado da frase “Nossa fábrica. Sua marca na peça.”, com foto de peça masculina de produção própria.">
+<meta property="og:image:alt" content="O símbolo “mr” em tamanho de pôster ao fundo, a frase “Nossa fábrica. Sua marca na peça.” à frente, e um modelo vestindo camiseta preta de produção própria da MR.">
 <meta name="twitter:card" content="summary_large_image">
 <style>
 /* ════════════════════════════════════════════════════════════════════
@@ -1527,6 +1545,37 @@ section{position:relative;z-index:1}
      do header, e no celular o header agora está VAZIO no topo — sem
      ticker, sem logo pequena e sem botão. A trava sobe para o lugar
      que o botão ocupava.                                             */
+  /* ── A BAINHA DISSOLVE, NÃO É CORTADA ───────────────────────────────
+     No desktop a figura sangra pela borda do palco: a foto sai de cena
+     onde a dobra acaba, e o corte lê como "desceu do palco". Em coluna
+     única não existe borda nenhuma naquela altura — a caixa termina no
+     meio da página e a régua horizontal atravessa a camisa. Lê como
+     recorte de tesoura, que é o oposto do que a página faz em toda
+     figura: a Polaroid revela, a peça veste, o fio costura.
+
+     A máscara vai no CONTÊINER, não nas imagens. As catorze camadas já
+     usam `mask-image` durante a troca (a varredura de `varre`), e duas
+     máscaras no mesmo elemento se substituem: a última declarada ganha
+     e o gesto de vestir morre. No contêiner elas se compõem — as peças
+     trocam por dentro, e o resultado inteiro dissolve por fora.
+
+     A rampa NÃO é linear. Degradê linear em máscara tem derivada
+     constante e o olho enxerga onde ele começa: vira um retângulo de
+     borda macia, não uma dissolução. Os dezesseis pontos abaixo
+     desenham uma curva em S — quase nada nos primeiros passos, o miolo
+     rápido, quase nada de novo no fim —, que é a mesma leitura da
+     revelação lavada do resto da página.
+
+     Começa em 74% da caixa, que é proporção e não pixel: 83px de
+     dissolução na figura de 318 do aparelho alto, 47px na de 181 do
+     curto. Fixar em pixel comeria metade da peça na tela pequena.     */
+  :root{--dissolve:linear-gradient(to bottom,
+    #000 0, #000 74%,
+    rgb(0 0 0/.987) 76.1%, rgb(0 0 0/.951) 78%,   rgb(0 0 0/.896) 79.9%,
+    rgb(0 0 0/.825) 81.5%, rgb(0 0 0/.741) 83.2%, rgb(0 0 0/.648) 84.7%,
+    rgb(0 0 0/.55)  86.2%, rgb(0 0 0/.45)  87.8%, rgb(0 0 0/.352) 89.3%,
+    rgb(0 0 0/.259) 90.8%, rgb(0 0 0/.175) 92.5%, rgb(0 0 0/.104) 94.2%,
+    rgb(0 0 0/.049) 96%,   rgb(0 0 0/.013) 97.9%, transparent 100%)}
   .palco{display:flex;flex-direction:column;
     min-height:100svh;height:auto;overflow:visible;
     padding-top:clamp(16px,3svh,32px);padding-bottom:clamp(16px,2.4svh,24px)}
@@ -1536,7 +1585,8 @@ section{position:relative;z-index:1}
   .vitrine{position:relative;left:auto;top:auto;transform:none;--cx:0px;
     aspect-ratio:auto;width:min(78vw,320px);height:auto;
     flex:1 1 auto;min-height:150px;
-    margin-inline:auto;overflow:hidden}
+    margin-inline:auto;overflow:hidden;
+    -webkit-mask-image:var(--dissolve);mask-image:var(--dissolve)}
   .vt{object-fit:cover;object-position:top center}
   /* em pilha o texto volta a ser uma coluna só, na ordem do documento.
      O respiro de cima era para separar o título da trava de marca; aqui
