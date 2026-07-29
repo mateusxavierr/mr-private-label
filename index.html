@@ -429,16 +429,7 @@ section{position:relative;z-index:1}
 .ficha{display:grid}
 .ficha--cols{grid-template-columns:repeat(4,1fr);column-gap:var(--gap)}
 .ficha--stack{grid-template-columns:1fr}
-.costurado{position:relative}
-.costurado::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
-  background-color:var(--fio-forte);
-  -webkit-mask:var(--costura) repeat-x left center/26px 3px;
-          mask:var(--costura) repeat-x left center/26px 3px}
-.fi{position:relative;padding-top:calc(var(--s4) + 3px);padding-bottom:var(--s5)}
-.fi::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
-  background-color:var(--fio-forte);
-  -webkit-mask:var(--costura) repeat-x left center/26px 3px;
-          mask:var(--costura) repeat-x left center/26px 3px}
+.fi{border-top:1px solid var(--rule);padding-top:var(--s4);padding-bottom:var(--s5)}
 .ficha--stack .fi:last-child{padding-bottom:0}
 .fi-k{display:block;margin-bottom:var(--s3)}
 .fi-v{display:block}
