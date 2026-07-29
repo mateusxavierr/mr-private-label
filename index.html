@@ -528,20 +528,29 @@ section{position:relative;z-index:1}
    consequência da grade em vez de espaço guardado, e continua valendo
    se um dia um valor quebrar — sem cobrar nada de quem não quebra.
 
-   Fica no desktop e atrás de @supports: onde não houver subgrid, ou
-   onde a ficha vira duas colunas, a reserva antiga segue de pé.
+   VALE EM QUALQUER LARGURA, atrás de @supports — só onde não houver
+   subgrid a reserva antiga segue de pé. Ela ficou presa em ≥861px
+   enquanto a ficha desmontava para uma coluna no celular, onde não há
+   nada a alinhar. Agora ela é 2×2 até em 320px, e ali a reserva cobrava
+   o mesmo pedágio que cobrava no desktop: nenhum dos quatro valores
+   quebra em 159px, e sobravam ~40px mortos por card entre o número e a
+   unidade — 80px na dobra, por duas fileiras.
+
+   Com duas colunas, as três faixas explícitas acomodam a primeira
+   fileira e a segunda cai em faixas implícitas. É o comportamento certo
+   e não o acaso: cada FILEIRA se alinha por dentro, que é o que se pede
+   de uma grade de cards — a segunda fileira não é obrigada a herdar a
+   altura de linha da primeira.
 
    O respiro passa a vir do row-gap da própria ficha, e não de margens
    dos filhos. E ele é calibrado pela folga VISTA, não pela declarada:
    o número é Playfair com entrelinha 1,04, então a tinta transborda a
    caixa em ~8px para cada lado, e as duas contas nunca batem.        */
 @supports (grid-template-rows:subgrid){
-  @media (min-width:861px){
-    .ficha--cols{grid-template-rows:auto auto auto;row-gap:var(--s4)}
-    .ficha--cols .fi{display:grid;grid-template-rows:subgrid;grid-row:span 3}
-    .ficha--cols .fi-v{min-height:0}
-    .ficha--cols .fi-k{margin-bottom:0}
-  }
+  .ficha--cols{grid-template-rows:auto auto auto;row-gap:var(--s4)}
+  .ficha--cols .fi{display:grid;grid-template-rows:subgrid;grid-row:span 3}
+  .ficha--cols .fi-v{min-height:0}
+  .ficha--cols .fi-k{margin-bottom:0}
 }
 .fi-s{display:block;margin-top:var(--s2);max-width:34ch}
 .ficha--stack .fi{display:grid;grid-template-columns:minmax(150px,.42fr) 1fr;
@@ -1661,7 +1670,11 @@ section{position:relative;z-index:1}
   .close-act{margin-top:var(--s6)}
   .foot{margin-top:var(--s7);display:block}
   .foot p+p{margin-top:var(--s2)}
+  /* nada quebra em duas linhas dentro de 159px, então a reserva de duas
+     linhas do valor é 40px mortos por card. Onde houver subgrid ela já
+     está zerada; isto é o piso para quem não tiver. */
   .ficha--cols{grid-template-columns:repeat(2,1fr)}
+  .ficha--cols .fi-v{min-height:0}
   .ficha--stack .fi{grid-template-columns:1fr;row-gap:var(--s2)}
   .ficha--stack .fi-k{padding-top:0}
   /* o trilho encolhe: 44px de recuo em 375 comem 12% da largura útil */
@@ -1684,10 +1697,22 @@ section{position:relative;z-index:1}
      do respiro. É o comportamento do "meet" — nada a ajustar aqui. */
 }
 @media (max-width:560px){
-  /* em coluna única não há o que alinhar entre colunas */
-  .ficha--cols{grid-template-columns:1fr}
-  .ficha--cols .fi-v{min-height:0}
-  .ficha--cols .fi{padding-bottom:var(--s4)}
+  /* A FICHA NÃO DESMONTA PARA UMA COLUNA. Ela ficava em 2×2 até 560px e
+     virava pilha abaixo disso; em 390 isso dava quatro linhas de um
+     número só e a dobra inteira passava de 547px de altura — mais alta
+     que o hero, para dizer quatro coisas curtas.
+
+     Em 2×2 são 159px por coluna em 390 de tela, e é o que os dois
+     conteúdos pedem: "+1.500" mede ~118px em Playfair de 38, e
+     "PRODUÇÃO PRÓPRIA" quebra em duas linhas. As quatro lado a lado
+     dariam 67px por coluna — o número teria de cair para ~22px e o
+     rótulo quebraria em três linhas. Aí o número deixa de ser o objeto
+     da ficha, que é a única razão de ela existir.
+
+     O que muda aqui embaixo é só o respiro: sem a régua do topo, quem
+     separa as duas fileiras é o padding de baixo, e ele encolhe junto
+     com o resto da tela. */
+  .ficha--cols .fi{padding-bottom:var(--s5)}
   /* o rodapé do card encolhe aqui, então o desconto do hero encolhe
      junto — senão as duas folgas em torno da fita saem 8px diferentes */
   .hero{padding-bottom:calc(var(--s8) - var(--s4))}
