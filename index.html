@@ -508,7 +508,6 @@ section{position:relative;z-index:1}
 .fig.rv.in{transform:rotate(var(--gir,-1.5deg))}
 .fig.rv.in:hover,.fig.rv.in:focus-within{transform:rotate(0deg) translateY(-5px);
   box-shadow:0 2px 4px rgba(7,22,35,.18), 0 26px 46px -16px rgba(7,22,35,.38)}
-.hero-fig{--gir:-1.1deg}
 .mod-fig{--gir:1.9deg}
 .tro-fig{--gir:-2.2deg}
 .cam-fig{--gir:1.4deg}
@@ -550,33 +549,231 @@ section{position:relative;z-index:1}
 
 /* ══ COMPOSIÇÕES DE DOBRA — mesmos tijolos, arranjos diferentes ═══ */
 
-/* hero */
-.hero{padding-top:clamp(112px,9vw,152px);padding-bottom:var(--sec)}
-.hero-row{position:relative}
-/* A coluna de texto centra contra a figura. Antes ela era ancorada no
-   topo e sobrava um vão morto de ~200px sob o botão, que fazia a dobra
-   parecer inacabada. */
-/* A coluna de texto ganha uma coluna da figura, de 7 para 8. Serve as
-   duas coisas de uma vez: da respiro para o H1 maior e encolhe a foto,
-   que passa a render em menos area — os mesmos 560px de fonte cobrindo
-   uma caixa menor sobem a densidade de 1,34 para ~1,7 pixel por pixel
-   de tela. Nitidez de graca, sem pixel novo. */
-.hero-txt{grid-column:1/9;align-self:center}
+/* ══ HERO — O PALCO DA VITRINE ═════════════════════════════════════
+   A dobra deixa de ser texto-ao-lado-de-foto e vira um palco: campo de
+   marca no fundo, figura recortada na frente, texto apoiado nos dois.
+
+   A Polaroid saiu daqui. Recorte sem fundo não cabe dentro de moldura —
+   a moldura existe para dizer "isto é uma foto pousada na página", e a
+   figura da vitrine diz o contrário: ela é um corpo em pé ATRÁS da
+   página, cortado pela borda de baixo. As outras cinco molduras da
+   página seguem intactas; o que mudou foi só o papel desta dobra.
+
+   A revelação, essa fica: é a assinatura de movimento da página e é o
+   que faz a troca de peça parecer tecido, não slide.                  */
+.hero{padding-bottom:var(--sec)}
+
+/* O palco sangra para fora do wrap. O campo de marca precisa da largura
+   inteira para ler como pôster, e a figura precisa de uma borda de baixo
+   que a corte — `overflow:hidden` É esse corte. A altura é de tela cheia
+   com teto: acima de 880px a figura viraria escultura e o texto ficaria
+   boiando longe dela. `svh` e não `vh` porque no celular a barra do
+   navegador comeria o corte da bainha.                                */
+.palco{position:relative;overflow:hidden;isolation:isolate;
+  height:clamp(600px,calc(100svh - 88px),880px)}
+
+/* ── O CAMPO DE MARCA ────────────────────────────────────────────────
+   A logo completa, na trava oficial do brandbook: o "mr" e o par
+   Private/Label apoiados na mesma linha de base, com as proporções do
+   header multiplicadas — sub a 10% da largura do "mr", vão a 13,75%.
+   Nada foi reinventado de escala; só ampliado.
+
+   `container-type:inline-size` existe para isso: `cqw` faz a trava
+   inteira ser função da largura disponível, então ela cresce e encolhe
+   como um objeto só, sem clamp por peça.
+
+   A cor é --fld, o Azul 30% que já era o traço do campo de marca do
+   fecho. Sendo token, ele ANDA na jornada de cor junto com o resto —
+   o campo não descola do fundo quando a página começa a escurecer.   */
+/* A trava fica na BANDA DE CIMA e a mensagem na de baixo; a figura
+   atravessa as duas e cobre o meio da trava. Foi a primeira tentativa
+   que falhou: com a trava ocupando a tela inteira, o "mr" cruzava o H1
+   e as duas caligrafias brigavam — a Playfair do título contra o script
+   da marca, no mesmo lugar. Não é um problema de opacidade, é de
+   território, então a correção é de território.
+
+   O tamanho tem dois tetos: 50% da largura disponível, e a altura da
+   banda de cima (69svh ÷ 2,67 da proporção do glifo). O segundo é o que
+   manda em tela baixa, que é onde o encontro acontecia.               */
+.marcona{position:absolute;left:var(--pad);right:var(--pad);
+  top:clamp(58px,7.4vh,86px);container-type:inline-size;
+  pointer-events:none;user-select:none;z-index:1}
+.marcona-in{display:flex;align-items:flex-end;justify-content:center;
+  gap:.1375em;font-size:min(46cqw,60svh);color:var(--fld);
+  transition:color .3s linear}
+.marcona-in svg{width:1em;height:auto;display:block;flex:0 0 auto}
+.marcona-sub{font-size:.1em;font-variation-settings:'wght' 620;
+  letter-spacing:.26em;text-transform:uppercase;line-height:1.5;
+  padding-bottom:.3em;white-space:nowrap}
+
+/* ── A VITRINE ───────────────────────────────────────────────────────
+   Treze fotos do mesmo homem, na mesma pose, alinhadas no topo da
+   cabeça e na linha do ombro antes de virarem arquivo. É por isso que
+   a troca funciona: a cabeça está cravada no mesmo pixel nas treze, e
+   o que o olho vê mudando é só a roupa.
+
+   A caixa é ancorada embaixo e sangra: a figura é cortada pela borda do
+   palco na altura da bainha, com a calça já fora de quadro.          */
+/* posicionada pelo CENTRO, não por uma borda: o eixo da figura é o que
+   precisa ficar previsível em relação à coluna de texto. Ele anda para a
+   direita do meio da tela até o limite de 300px, e para aí — mais que
+   isso a figura sairia de cima do campo de marca. */
+.vitrine{position:absolute;bottom:0;z-index:2;
+  left:min(76%,calc(50% + 300px));transform:translateX(-50%);
+  height:min(84%,760px);aspect-ratio:1350/1971}
+/* O REPOUSO NÃO DEPENDE DA ANIMAÇÃO. Navegador congela animação de aba
+   em segundo plano, e a versão anterior deixava a peça atual presa no
+   quadro zero de `veste` — que é opacidade zero. Quem abrisse a landing
+   numa aba de fundo (o normal em anúncio) via hero vazio.
+
+   Agora `.on` já é "visível" por conta própria e a animação é só o
+   gesto por cima. Se ela não rodar, não falta nada: aparece direto.
+
+   A mesma regra já tinha sido paga cara na Polaroid que existia aqui
+   antes: nascendo com opacity:0, o navegador não contava a pintura da
+   figura até a animação acabar — 1.340ms de LCP contra 112ms em mobile
+   4G lento com CPU 4x mais lenta, com a imagem pronta em 325ms nos dois
+   casos. 1,2s de atraso que era animação, não rede. A peça da vitrine é
+   o elemento de LCP agora, e nasce visível pelo mesmo motivo.        */
+.vt{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;object-position:bottom center;
+  opacity:0;z-index:1}
+.vt.on{opacity:1;z-index:3}
+.vt.sai{opacity:0;z-index:2}
+
+/* ── A TROCA ─────────────────────────────────────────────────────────
+   A peça que sai não some: ela LAVA. Perde cor e contraste e estoura de
+   claro — a revelação da Polaroid rodando ao contrário, que é o mesmo
+   gesto que as outras figuras da página fazem ao entrar.
+
+   A peça que entra desce vestida por uma máscara: uma faixa que varre
+   de cima para baixo, do cabelo à bainha. Com a cabeça cravada, a
+   varredura só tem o que revelar a partir do ombro — e o que se vê é
+   uma peça sendo enfiada, não um slide virando.
+
+   As duas se cruzam de propósito. Nos ~600ms em que as duas estão na
+   tela, a região da cabeça é a mesma imagem nas duas camadas, então
+   ela nunca perde opacidade: o rosto fica parado e firme enquanto o
+   corpo troca de roupa. É o truque inteiro da dobra.                 */
+/* As duas máscaras são COMPLEMENTARES e correm na mesma linha: acima
+   dela só existe a peça que entra, abaixo só a que sai. Sem isso as
+   duas ficavam visíveis juntas na parte de cima — dava para ver a manga
+   bege da polo saindo ao lado do ombro da camisa entrando, o que lê
+   como defeito, não como troca. Somadas, as duas alfas dão exatamente 1
+   em qualquer altura: nunca há buraco nem sobreposição.              */
+   A máscara só existe ENQUANTO A TROCA ACONTECE (`.anima`). No repouso
+   ela não tem função nenhuma — e tê-la ali custou caro: em coluna única,
+   com a figura recortada por `cover`, o motor deixava de pintar a peça
+   parada e o hero do celular ficava vazio. Recurso de transição não
+   pode ser condição de existência do que está em repouso.             */
+@property --rev{syntax:'<percentage>';inherits:false;initial-value:112%}
+.vitrine--fio .vt.on.anima{
+  -webkit-mask-image:linear-gradient(to bottom,#000 var(--rev),transparent calc(var(--rev) + 13%));
+  mask-image:linear-gradient(to bottom,#000 var(--rev),transparent calc(var(--rev) + 13%))}
+.vitrine--fio .vt.sai.anima{
+  -webkit-mask-image:linear-gradient(to bottom,transparent var(--rev),#000 calc(var(--rev) + 13%));
+  mask-image:linear-gradient(to bottom,transparent var(--rev),#000 calc(var(--rev) + 13%))}
+
+/* A VARREDURA TEM TEMPO PRÓPRIO. Junto com o resto, na curva da casa
+   (.16,1,.3,1 — saída muito rápida), a máscara chegava a 102% aos
+   330ms de 950: o gesto acabava antes de o olho pegar. Separada, ela
+   anda quase parelha com o relógio e a peça desce no corpo à
+   velocidade de quem veste.                                          */
+@keyframes veste{
+  from{opacity:0;transform:translateY(9px) scale(.992);
+       filter:saturate(.12) contrast(.5) brightness(1.42)}
+  to  {opacity:1;transform:none;filter:none}}
+@keyframes varre{from{--rev:0%} to{--rev:112%}}
+/* A peça que sai segura e só cede no fim. Se ela lavasse na mesma
+   velocidade da varredura, a faixa do corpo que a máscara ainda não
+   alcançou ficaria sem ninguém por baixo — um buraco claro descendo
+   junto com a costura. */
+@keyframes despe{
+  from{opacity:1;transform:none;filter:none}
+  to  {opacity:0;transform:scale(1.009);
+       filter:saturate(.12) contrast(.5) brightness(1.42)}}
+
+/* `.anima` é ligada pelo JS só quando a aba está à frente e o visitante
+   não pediu menos movimento — o gesto é enfeite do estado, nunca o
+   dono dele */
+.vt.on.anima{animation:veste .9s var(--ease) both,
+                       varre .9s cubic-bezier(.45,.05,.2,1) both}
+/* a mesma varredura, no mesmo tempo e na mesma curva: é a linha de
+   costura das duas máscaras, e ela só fecha se as duas andarem juntas */
+.vt.sai.anima{animation:despe .9s cubic-bezier(.55,0,1,.45) both,
+                        varre .9s cubic-bezier(.45,.05,.2,1) both}
+/* a primeira peça não é troca, é chegada: usa o tempo longo da
+   revelação da página (1,8s) em vez do tempo curto da troca */
+.vitrine.abre .vt.on.anima{animation-duration:1.8s}
+
+/* ── O TEXTO SOBRE O PALCO ───────────────────────────────────────────
+   A mensagem NÃO entra em cima da figura. As treze peças passam por
+   vermelho, creme, preto e bege: texto ali teria contraste sorteado a
+   cada 5 segundos, e a página inteira é construída em cima de contraste
+   medido. Então o H1 fica na coluna da esquerda, sobre o campo de marca
+   — Preto sobre Azul 30% mede 11:1, e essa não muda nunca.           */
+.palco-grade{position:relative;z-index:4;height:100%;
+  align-content:end;padding-bottom:clamp(28px,4.5vh,52px);
+  pointer-events:none}
+.palco-grade>*{pointer-events:auto}
+.hero-txt{grid-column:1/8;align-self:end}
 /* Hierarquia por AGRUPAMENTO, não por tamanho: título e subtítulo ficam
    perto (s4) e lêem como um bloco só, a mensagem; o pedido fica longe
-   (s7) e lê como o segundo tempo. O passo tipográfico entre eles já é de
-   2,9x, aumentar não resolveria — o que faltava era distância. */
+   (s5) e lê como o segundo tempo. */
 .hero h1{margin-bottom:var(--s4)}
-.hero-sub{max-width:34ch;margin-bottom:var(--s7)}
+/* O H1 do hero desce de 5,4vw para 4,6vw — e SÓ o do hero. A régua que
+   fixou 5,4 mediu peso óptico contra uma Polaroid e um botão; nesta
+   dobra ele disputa com uma trava de marca em tamanho de pôster e uma
+   figura de corpo inteiro, e a conta dá outro número. Os H2 das outras
+   dobras não mudam. O que o tamanho menor compra é a banda de baixo
+   caber inteira em 900px de tela sem invadir a trava.                 */
+.hero h1{font-size:clamp(2.9rem,4.6vw,4.15rem)}
+.hero-sub{max-width:42ch;margin-bottom:var(--s5)}
 /* A nota desce para baixo do botão. Lado a lado, as duas dividiam a
    mesma linha óptica e o olho não sabia qual vinha primeiro; empilhadas,
-   a ordem de leitura fica declarada. O respiro de s3 as mantém no mesmo
-   grupo — é menos que o s7 que separa o pedido do subtítulo. */
+   a ordem de leitura fica declarada. */
 .hero-act{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s3)}
-.hero-act .note{max-width:34ch;font-size:1rem;line-height:1.5;color:var(--soft)}
-.hero-fig{grid-column:9/13}
+.hero-act .note{max-width:32ch;font-size:1rem;line-height:1.5;color:var(--soft)}
+
+/* ── A CARTELA ───────────────────────────────────────────────────────
+   O controle da vitrine não é seta nem bolinha: é a cartela de cores
+   que a fábrica manda para o lojista escolher. Cada quadrinho é a cor
+   média do peito daquela peça, medida do arquivo — nenhuma inventada.
+   Sendo o objeto real do ofício, ela explica sozinha o que faz.      */
+/* A cartela fica na coluna do TEXTO, não debaixo da figura. Debaixo da
+   figura ela cairia em cima da calça — e a regra de não pôr elemento
+   sobre a peça vale para o controle também. Aqui ela lê como a legenda
+   da vitrine: o que está vestido, e como trocar.                      */
+.hero-peca{grid-column:1/8;align-self:end;margin-top:var(--s5)}
+.peca-nome{display:block;font-family:var(--serif);font-style:italic;
+  font-size:1.32rem;line-height:1.25;letter-spacing:.005em;
+  font-variation-settings:'wght' 500;color:var(--ink);
+  margin-block:var(--s1) var(--s3);min-height:1.25em}
+/* fila única: as treze de uma vez lêem como cartela de cor da fábrica;
+   quebradas em duas linhas virariam paginação */
+.cartela{display:flex;gap:7px;padding:0;margin:0;border:0}
+.cor{width:23px;height:23px;padding:0;border:1px solid transparent;
+  background:none;cursor:pointer;position:relative;
+  transition:transform .4s var(--ease)}
+.cor i{position:absolute;inset:2px;background:var(--c);
+  box-shadow:inset 0 0 0 1px rgba(7,22,35,.16);
+  transition:inset .4s var(--ease)}
+.cor:hover{transform:translateY(-3px)}
+.cor[aria-current="true"]{border-color:var(--ink)}
+.cor[aria-current="true"] i{inset:3px}
+
 .hero-num{margin-top:var(--s8)}
 .hero-num .cap{margin-bottom:var(--s5);max-width:46ch}
+
+/* a logo pequena do header sai de cena enquanto a gigante está na tela;
+   volta assim que a página rola, que é quando `stuck` liga */
+.hdr:not(.stuck) .brand{opacity:0;pointer-events:none}
+.brand{transition:transform .55s var(--ease),opacity .45s var(--ease)}
+
+@media (prefers-reduced-motion:reduce){
+  .vt.on.anima,.vt.sai.anima{animation:none}
+  .cor:hover{transform:none}
+}
 
 /* 01 · o modelo */
 .mod-a{grid-column:1/8;grid-row:1}
@@ -645,14 +842,6 @@ section{position:relative;z-index:1}
 .rv{opacity:0;transform:translateY(20px);
   transition:opacity .9s var(--ease) var(--d,0ms),transform .9s var(--ease) var(--d,0ms)}
 .rv.in{opacity:1;transform:none}
-/* A figura do hero é o elemento de LCP. Entrando com opacity:0 o
-   navegador não conta a pintura dela até a animação acabar: medido em
-   mobile com 4G lento e CPU 4x mais lenta, 1.340ms de LCP contra 112ms
-   sem isso, com a imagem pronta em 325ms nos dois casos. Ou seja, 1,2s
-   de atraso que era animação, não rede.
-   Ela passa a nascer visível e entra só por deslocamento. O movimento
-   continua; o cronômetro deixa de esperar por ele. */
-.hero-fig.rv{opacity:1}
 /* ── TÍTULO: REVELAÇÃO POR LETRA, ESCALONADA POR PALAVRA ─────────────
    A PALAVRA é a unidade do escalonamento. Cada palavra parte um pouco
    depois da anterior, e dentro dela as letras entram em sequência curta.
@@ -731,7 +920,7 @@ section{position:relative;z-index:1}
 
 /* ══ RESPONSIVO ════════════════════════════════════════════════════ */
 @media (max-width:1120px){
-  .hero-txt{grid-column:1/8}.hero-fig{grid-column:8/13}
+  .hero-txt,.hero-peca{grid-column:1/7}
   .mod-fig{grid-column:1/6}.mod-c{grid-column:7/13}
   .tro-a,.tro-fig{grid-column:1/6}.tro-b{grid-column:7/13}
   .cam-b{grid-column:8/13}.cam-fig{grid-column:1/6}.cam-c{grid-column:7/13}
@@ -741,12 +930,32 @@ section{position:relative;z-index:1}
 @media (max-width:860px){
   :root{--sec:96px;--gap:24px}
   .ticker{display:none}
-  .hero{padding-top:104px}
   .hero-txt{padding-top:0}
   /* pilha única: nenhuma colocação explícita de coluna ou linha sobrevive */
   .g12>*,.close>*{grid-column:1/13!important;grid-row:auto!important}
   .g12{row-gap:0}
-  .hero-fig{margin-top:var(--s6)}
+  /* ── O PALCO EM COLUNA ÚNICA ──────────────────────────────────────
+     Três mudanças, cada uma por um motivo diferente.
+
+     1. A trava sai de trás da figura e vai para cima dela. O truque de
+        pôster depende de a marca ser MAIS LARGA que o corpo, para
+        sobrarem as duas pontas; em 375px a figura cobre a trava inteira
+        e o que resta parece erro, não camada.
+     2. A mensagem desce para o fluxo, embaixo. Texto por cima de uma
+        peça que passa por vermelho, creme e preto seria contraste
+        sorteado — e é exatamente o que a página se recusa a fazer.
+     3. A sangria deixa de vir da borda do palco e passa a vir do corte
+        da própria caixa: `cover` ancorado no topo, numa caixa mais
+        baixa que a foto. O gesto é o mesmo, o mecanismo é outro.     */
+  .palco{height:auto;overflow:visible;padding-top:clamp(88px,14vh,120px)}
+  .marcona{position:static;margin:0 var(--pad) var(--s5)}
+  .marcona-in{font-size:min(56cqw,42svh)}
+  .vitrine{position:relative;left:auto;bottom:auto;transform:none;
+    aspect-ratio:auto;width:min(78vw,320px);height:min(52svh,420px);
+    margin-inline:auto;overflow:hidden}
+  .vt{object-fit:cover;object-position:top center}
+  .palco-grade{height:auto;padding-bottom:0;margin-top:var(--s6)}
+  .hero-peca{margin-top:var(--s6)}
   .mod-fig,.mod-c,.cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
   .tro-b{margin-top:var(--s7)}
   .gru-b{margin-top:var(--s7)}
@@ -817,32 +1026,50 @@ section{position:relative;z-index:1}
 <main id="conteudo">
 
 <!-- ══ HERO ═══════════════════════════════════════════════════════ -->
-<section class="hero wrap" id="topo">
-  <!-- 12 · o campo de marca NÃO existe aqui: a moldura da foto cobria
-       o "r" e o que sobrava não lia como wordmark. Ele vive só no fecho. -->
-  <div class="g12 hero-row" data-fold="0">
-    <div class="hero-txt">
-      <h1 class="d1">
-        <span class="rvl" style="--d:0ms;display:block">Nossa fábrica.</span>
-        <span class="rvl" style="--d:120ms;display:block"><em>Sua marca</em> na peça.</span>
-      </h1>
-      <p class="lead hero-sub rv" style="--d:280ms">Produção própria de roupa masculina para o lojista que quer vender marca própria, não o mesmo produto do vizinho.</p>
-      <div class="hero-act rv" style="--d:380ms">
-        <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
-        <p class="note">Coleção nova com a condição dela junto, direto de quem produz.</p>
+<section class="hero" id="topo">
+  <div class="palco" data-fold="0">
+
+    <!-- 12 · o campo de marca VOLTA para o hero, agora em tamanho de
+         pôster. Ele saiu daqui uma vez porque a moldura da foto caía em
+         cima do "r"; sem moldura e com a figura recortada, o corpo cobre
+         o meio da trava e as duas pontas continuam legíveis — que é
+         exatamente o efeito procurado. -->
+    <div class="marcona" aria-hidden="true">
+      <div class="marcona-in">
+        <svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg>
+        <span class="marcona-sub">Private<br>Label</span>
       </div>
     </div>
 
-    <figure class="fig hero-fig rv" style="--d:200ms">
-      <div class="fig-in"><picture>
-        <source srcset="img/01-hero.webp" type="image/webp">
-        <img src="img/01-hero.jpg" alt="Peça de malha da linha Inverno 2026 em uso, sem marca aplicada." width="560" height="700" fetchpriority="high" decoding="async">
-      </picture></div>
-      <figcaption class="label">Linha Inverno 2026</figcaption>
-    </figure>
+    <!-- A vitrine é UMA imagem cujo conteúdo troca, e é assim que ela se
+         declara: role="img" com rótulo reescrito a cada peça. As treze
+         camadas ficam fora da árvore de acessibilidade. -->
+    <div class="vitrine abre" id="vitrine" role="img" aria-label="Modelo vestindo peça produzida pela MR">
+      <img class="vt on" src="img/vitrine/01-900.webp" srcset="img/vitrine/01-560.webp 560w, img/vitrine/01-900.webp 900w, img/vitrine/01-1400.webp 1400w" sizes="(max-width:860px) 78vw, 540px" alt="" width="1350" height="1971" fetchpriority="high" decoding="async">
+    </div>
+
+    <div class="wrap g12 palco-grade">
+      <div class="hero-txt">
+        <h1 class="d1">
+          <span class="rvl" style="--d:0ms;display:block">Nossa fábrica.</span>
+          <span class="rvl" style="--d:120ms;display:block"><em>Sua marca</em> na peça.</span>
+        </h1>
+        <p class="lead hero-sub rv" style="--d:280ms">Produção própria de roupa masculina para o lojista que quer vender marca própria, não o mesmo produto do vizinho.</p>
+        <div class="hero-act rv" style="--d:380ms">
+          <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+          <p class="note">Coleção nova com a condição dela junto, direto de quem produz.</p>
+        </div>
+      </div>
+
+      <div class="hero-peca rv" style="--d:520ms">
+        <span class="label">Peça <span id="peca-i">01</span>/13</span>
+        <span class="peca-nome" id="peca-nome" aria-hidden="true"></span>
+        <div class="cartela" id="cartela" role="group" aria-label="Escolher a peça da vitrine"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="hero-num" data-fold="1">
+  <div class="hero-num wrap" data-fold="1">
     <p class="body cap rv">Quem vai produzir a sua peça é esta fábrica, e estes são os números dela.</p>
     <div class="ficha ficha--cols">
       <div class="fi rv"><span class="fi-k label">Produção própria</span><span class="fi-v num">40 mil</span><span class="fi-s body">peças por mês</span></div>
@@ -1334,6 +1561,178 @@ addEventListener('load',()=>{
   /* o --d do hero já vem no markup; a transição declarada o consome */
   document.querySelectorAll('.hero .rv,.hero .rvl').forEach(revelar);
 });
+
+/* ══ A VITRINE ══════════════════════════════════════════════════════
+   Treze peças, um modelo, uma pose. As fotos foram alinhadas fora do
+   navegador pelo topo da cabeça e pela linha do ombro, então aqui só
+   resta empilhar e trocar.
+
+   As cores da cartela são a MÉDIA MEDIDA do peito de cada arquivo, não
+   escolhas — se a peça mudar, o quadrinho muda junto.
+
+   Os nomes descrevem o que a foto mostra (tipo + cor). Nome de modelagem
+   e de malha é informação da fábrica, não do arquivo: entra quando
+   Mateus passar.                                                      */
+const PECAS=[
+  {c:'#DCC2A1', n:'Polo bege'},
+  {c:'#F0E3D7', n:'Polo areia'},
+  {c:'#272A37', n:'Camiseta azul-noite'},
+  {c:'#44435B', n:'Camiseta marinho'},
+  {c:'#4D362F', n:'Camiseta marrom'},
+  {c:'#ECE4DE', n:'Polo listrada'},
+  {c:'#664144', n:'Polo bordô'},
+  {c:'#262424', n:'Camiseta preta'},
+  {c:'#E92B3C', n:'Camiseta vermelha'},
+  {c:'#A85628', n:'Polo meio-zíper caramelo'},
+  {c:'#444562', n:'Camisa azul-marinho'},
+  {c:'#43625F', n:'Polo verde'},
+  {c:'#393A54', n:'Camiseta gola alta marinho'}
+];
+const RODA = 4600;   /* respiro: tempo de ver a peça, não de esperar */
+
+(()=>{
+  const palco=document.getElementById('vitrine');
+  if(!palco) return;
+  const cartela=document.getElementById('cartela');
+  const rotulo=document.getElementById('peca-nome');
+  const conta=document.getElementById('peca-i');
+
+  /* a máscara que veste a peça depende de --rev animar, e propriedade
+     personalizada só anima se estiver registrada. Onde não registra, a
+     troca cai no cruzamento puro — que continua bonito, só sem a
+     varredura. Melhor perder o gesto do que piscar no meio dele. */
+  try{
+    CSS.registerProperty({name:'--rev',syntax:'<percentage>',
+      inherits:false,initialValue:'112%'});
+    palco.classList.add('vitrine--fio');
+  }catch(e){ if(CSS.supports('--rev','0%')) palco.classList.add('vitrine--fio'); }
+
+  const src=i=>`img/vitrine/${String(i+1).padStart(2,'0')}`;
+  const quadros=[palco.querySelector('.vt')];
+
+  /* As treze camadas estão TODAS dentro da tela, empilhadas no mesmo
+     lugar. Isso mata `loading="lazy"`: o atributo só adia o que está
+     fora de vista, então as doze restantes desceriam junto com a
+     primeira e disputariam banda com o LCP. Por isso o endereço só é
+     escrito na hora — no `load` da página, ou antes se o lojista clicar
+     na cartela primeiro. */
+  const arma=im=>{
+    if(im.dataset.i===undefined) return Promise.resolve();
+    const i=+im.dataset.i; delete im.dataset.i;   /* dataset é texto: sem
+       o `+`, o índice 7 vira "71" no nome do arquivo */
+    im.sizes='(max-width:860px) 78vw, 540px';
+    im.srcset=`${src(i)}-560.webp 560w, ${src(i)}-900.webp 900w, ${src(i)}-1400.webp 1400w`;
+    im.src=`${src(i)}-900.webp`;
+    return im.decode().catch(()=>{});
+  };
+
+  PECAS.forEach((p,i)=>{
+    if(i){
+      const im=new Image();
+      im.className='vt'; im.width=1350; im.height=1971; im.alt='';
+      im.decoding='async'; im.dataset.i=i;
+      palco.appendChild(im); quadros.push(im);
+    }
+    const b=document.createElement('button');
+    b.type='button'; b.className='cor'; b.style.setProperty('--c',p.c);
+    b.setAttribute('aria-label',`Ver ${p.n.toLowerCase()}`);
+    b.appendChild(document.createElement('i'));
+    b.addEventListener('click',()=>{ mostra(i); segura(); });
+    cartela.appendChild(b);
+  });
+  const botoes=[...cartela.children];
+
+  let atual=0, relogio=0;
+  /* animação em aba escondida não roda, e o que não roda não pode ser
+     dono do estado: o gesto só é ligado quando há alguém vendo */
+  const gesto=el=>{ if(!reduce && !document.hidden) el.classList.add('anima'); };
+  const escreve=i=>{
+    const p=PECAS[i];
+    rotulo.textContent=p.n;
+    conta.textContent=String(i+1).padStart(2,'0');
+    palco.setAttribute('aria-label',`Modelo vestindo ${p.n.toLowerCase()}, produzida pela MR`);
+    botoes.forEach((b,j)=>b.setAttribute('aria-current',j===i?'true':'false'));
+  };
+
+  async function mostra(i){
+    if(i===atual) return;
+    const entra=quadros[i];
+    /* a peça só entra depois de decodificada: a máscara varreria papel
+       em branco se a imagem ainda estivesse na rede */
+    await arma(entra);
+    if(i===atual) return;
+    const sai=quadros[atual];
+    sai.classList.remove('on','anima'); sai.classList.add('sai');
+    entra.classList.remove('sai','anima');
+    /* um quadro de folga para a classe de saída pegar antes de a de
+       entrada subir por cima, senão as duas animações começam no mesmo
+       tick e o cruzamento perde o meio */
+    void entra.offsetWidth;
+    entra.classList.add('on');
+    gesto(sai); gesto(entra);
+    palco.classList.remove('abre');
+    atual=i; escreve(i);
+  }
+
+  const anda=()=>mostra((atual+1)%PECAS.length);
+  const segura=()=>{ clearInterval(relogio); if(!reduce) relogio=setInterval(anda,RODA); };
+  const para=()=>clearInterval(relogio);
+
+  escreve(0);
+  if(!reduce){
+    relogio=setInterval(anda,RODA);
+    /* o rodízio para com o dedo ou o teclado na FIGURA e na CARTELA, e
+       só nelas: parar a troca porque o mouse encostou no botão de entrar
+       no grupo leria como página travada */
+    [palco,cartela].forEach(alvo=>{
+      alvo.addEventListener('mouseenter',para);
+      alvo.addEventListener('mouseleave',segura);
+    });
+    cartela.addEventListener('focusin',para);
+    cartela.addEventListener('focusout',segura);
+    /* e para de vez quando a aba sai de foco — animação em aba escondida
+       é bateria queimada à toa */
+    addEventListener('visibilitychange',()=>
+      document.hidden?para():segura());
+  }
+
+  /* ── A REDE ────────────────────────────────────────────────────────
+     Animação congela quando a aba vai para trás, e congelada no quadro
+     zero a máscara esconde a peça inteira. Se a troca começou e a aba
+     saiu de cena no meio, o gesto é descartado ao voltar: a peça atual
+     assume o repouso, que é visível por definição. Melhor perder a
+     animação do que devolver um hero em branco. */
+  addEventListener('visibilitychange',()=>{
+    if(!document.hidden) quadros.forEach(q=>q.classList.remove('anima'));
+  });
+  /* terminou o gesto, a máscara sai de cena: fora da troca ela não tem
+     função e só acumula risco */
+  palco.addEventListener('animationend',e=>{
+    if(e.animationName==='veste'||e.animationName==='despe')
+      e.target.classList.remove('anima');
+  });
+
+  cartela.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d) return;
+    e.preventDefault();
+    const i=(atual+d+PECAS.length)%PECAS.length;
+    mostra(i); botoes[i].focus(); segura();
+  });
+
+  /* as doze restantes só começam a baixar depois que a página terminou:
+     o hero é o LCP e não divide banda com peça que ninguém pediu ainda.
+     Uma de cada vez, na ordem do rodízio, para a próxima estar sempre
+     pronta antes de a vez dela chegar. */
+  addEventListener('load',()=>{
+    gesto(quadros[0]);          /* a chegada da primeira peça */
+    let i=1;
+    (function fila(){
+      if(i>=quadros.length) return;
+      arma(quadros[i++]).then(()=>requestAnimationFrame(fila));
+    })();
+  });
+})();
 
 /* ── ticker do header — motion aprovado ──────────────────────────── */
 const FATOS=[
