@@ -417,7 +417,6 @@ section{position:relative;z-index:1}
    posicionam os blocos por grid-row nomeado — item sem linha declarada
    cairia num buraco de linha anterior. */
 .sec-act{grid-column:1/13;margin-top:var(--s7)}
-.mod-act{grid-row:4}
 .tro-act{grid-row:5}
 .cam-act{grid-row:4}
 .gru-act{grid-row:3}
@@ -959,28 +958,96 @@ section{position:relative;z-index:1}
 }
 
 /* 01 · o modelo — A VITRINE REPETIDA
-   A dobra deixou de CONTAR o argumento para MOSTRÁ-LO: a mesma
-   fotografia impressa três vezes, cada cópia com o nome de uma loja na
-   legenda. A repetição é a tese — se a peça é a mesma em toda vitrine,
-   nenhuma delas é de alguém. A terceira legenda ("A sua loja") põe o
-   leitor dentro do problema; a virada, logo abaixo, o tira. */
-.mod-a{grid-column:1/8;grid-row:1}
-.mod-b{grid-column:8/13;grid-row:1;align-self:start}
-.mod-b p+p{margin-top:var(--s4)}
-/* As três cópias NÃO se alinham: fotos iguais pousadas na mesa, cada
-   uma com seu ângulo e sua altura. Em régua leriam como galeria de
-   produtos diferentes — o desalinho é o que diz "é a mesma foto". */
-.mod-trio{grid-column:1/13;grid-row:2;margin-top:var(--s8);
-  display:grid;grid-template-columns:repeat(3,1fr);column-gap:var(--gap)}
-.mod-trio .fig:nth-child(1){--gir:-2.2deg}
-.mod-trio .fig:nth-child(2){--gir:1.7deg;margin-top:var(--s6)}
-.mod-trio .fig:nth-child(3){--gir:-1.2deg;margin-top:var(--s3)}
-/* A virada fica fora do eixo, à direita: depois de uma fileira que
-   ocupa a largura toda, o bloco deslocado devolve movimento à leitura.
-   E desce de escala — o H2 é o diagnóstico, este é a saída; dois picos
-   iguais na mesma dobra deixam o olho sem saber qual é o argumento. */
-.mod-c{grid-column:7/13;grid-row:3;margin-top:var(--s8)}
-.mod-c h3{font-size:clamp(1.7rem,2.5vw,2.25rem);margin-bottom:var(--s4);max-width:18ch}
+   A dobra não CONTA o argumento, MOSTRA: a mesma fotografia três vezes,
+   cada cópia com o nome de uma loja na legenda. A repetição é a tese —
+   se a peça é a mesma em toda vitrine, nenhuma delas é de alguém. A
+   terceira legenda ("A sua loja") põe o leitor dentro do problema.
+
+   A foto é DE PROPÓSITO de banco de imagem, e é o único lugar da página
+   onde isso vale: aqui a peça precisa ser a mercadoria anônima que
+   qualquer um revende. Usar peça da MR aqui punha a página a acusar o
+   próprio produto que ela vende.
+
+   A dobra era três fileiras de grade — título em cima, trio no meio,
+   virada e botão soltos embaixo — e metade das células ficava vazia.
+   Agora são DUAS COLUNAS cheias: o argumento inteiro à esquerda, a
+   pilha à direita. Não sobra célula. */
+/* O fólio mora na MARGEM, não numa coluna: dar coluna própria ao número
+   roubava largura do H2 e o empurrava de três para quatro linhas. Fora
+   da caixa ele não custa nada ao texto — e marginália é o que ele é. */
+.mod-a{grid-column:1/6;grid-row:1;position:relative}
+.mod-folio{position:absolute;top:-.06em;left:calc(var(--pad) * -1);
+  font-family:var(--serif);font-variation-settings:'wght' 560;
+  font-size:2.4rem;line-height:.9;letter-spacing:-.03em;
+  /* NÃO usar --fld aqui: nesta dobra o fundo já é azul claro e o traço
+     do campo de marca some dentro dele. Diluição da tinta contra o
+     fundo mantém contraste em qualquer parada da jornada de cor. */
+  color:color-mix(in srgb,var(--ink) 26%,var(--bg));
+  font-feature-settings:"lnum" 1,"onum" 0}
+/* o número segue no rótulo para quem lê por leitor de tela; o que sai
+   é só a tinta, senão o "01" apareceria duas vezes na mesma linha */
+.mod-a .eyebrow .n{position:absolute;width:1px;height:1px;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap}
+.mod-a .body{margin-top:var(--s5)}
+/* A tese sai do corpo e sobe de escala: a coluna precisava de um segundo
+   pico de leitura, senão são 5 linhas de cinza uniforme até a virada. */
+.mod-tese{margin-top:var(--s5);font-family:var(--serif);font-style:italic;
+  font-variation-settings:'wght' 500;
+  font-size:clamp(1.5rem,1.95vw,1.9rem);line-height:1.24;letter-spacing:-.01em;
+  color:var(--ink);max-width:19ch}
+.mod-tese b{font-style:normal;font-variation-settings:'wght' 600;color:var(--accent)}
+
+/* A PILHA — as cópias não se alinham em fileira, se empilham como fotos
+   jogadas na mesa. A cascata SOBE da esquerda para a direita e as
+   legendas alinham à direita: é isso que mantém os três nomes legíveis,
+   porque cada foto só cobre a metade esquerda da de trás — e a legenda
+   é onde mora o argumento. Sangra para fora da margem direita. */
+.mod-pilha{grid-column:6/13;grid-row:1/3;position:relative;
+  margin-right:calc(var(--pad) * -1 - 8px);min-height:560px}
+/* A geometria não é gosto, é conta. Chamando L a largura da foto e o o
+   deslocamento de cada degrau, a faixa que sobra livre para a legenda de
+   uma foto é exatamente o DESLOCAMENTO da foto da frente — não a
+   largura. Com 24% de degrau sobravam 170px e "Loja da rua de trás"
+   media mais que isso: a legenda entrava embaixo da foto vizinha. Com
+   28% sobram ~198px e a legenda mais longa cabe inteira. A largura caiu
+   para 44% só para o último degrau (56% + 44%) fechar em 100%. */
+.mod-pilha .fig{position:absolute;width:44%}
+.mod-pilha .fig figcaption{text-align:right;padding-right:14px;font-size:1.08rem}
+/* O degrau VERTICAL é o que fecha a coluna: com 17% a pilha terminava
+   170px acima do pé do bloco azul e reabria, à direita, o mesmo vazio
+   que esta dobra existe para eliminar. Com 23% o último degrau chega
+   perto do pé da coluna esquerda e as duas fecham juntas. O passo ainda
+   é metade da altura da foto, então continua lendo como pilha. */
+.mod-pilha .fig:nth-child(1){--gir:-4.2deg;left:56%;top:0;    z-index:1}
+.mod-pilha .fig:nth-child(2){--gir:2.4deg; left:28%;top:23%;  z-index:2}
+.mod-pilha .fig:nth-child(3){--gir:-1.2deg;left:0;   top:46%; z-index:3;
+  box-shadow:0 2px 5px rgba(7,22,35,.2), 0 30px 56px -18px rgba(7,22,35,.45)}
+.mod-pilha .fig:nth-child(3) figcaption{color:var(--accent)}
+
+/* A VIRADA é bloco, não parágrafo solto: inverte a tinta, sangra até a
+   borda esquerda da página e engole o botão. Resolve de quebra o defeito
+   de o CTA flutuar sozinho numa linha de 12 colunas — ele deixa de
+   flutuar e vira o fecho do bloco. Branco sobre azul, é o ponto mais
+   claro da dobra, que é onde o CTA deve estar. */
+.mod-vira{grid-column:1/6;grid-row:2;margin-top:var(--s7);position:relative;
+  background:var(--accent);color:var(--onacc);
+  margin-left:calc(var(--pad) * -1);
+  padding:var(--s6) var(--s6) var(--s6) var(--pad)}
+/* a costura é bainha do bloco, e é a mesma máscara dos passos da 03 */
+.mod-vira::before{content:"";position:absolute;top:-14px;left:var(--pad);right:0;height:3px;
+  background-color:var(--soft);
+  -webkit-mask:var(--costura) repeat-x left center/26px 3px;
+          mask:var(--costura) repeat-x left center/26px 3px}
+.mod-vira h3{font-size:clamp(1.55rem,2.1vw,1.95rem);margin-bottom:var(--s3);
+  max-width:17ch;color:var(--onacc)}
+/* o itálico não pode virar cor fixa: dentro do bloco ele precisa ser
+   sempre uma diluição da tinta DO BLOCO, senão sai da jornada de cor */
+.mod-vira h3 em{color:color-mix(in srgb,var(--onacc) 64%,var(--accent))}
+.mod-vira .lead{font-size:1.13rem;line-height:1.55;max-width:34ch;
+  color:color-mix(in srgb,var(--onacc) 82%,var(--accent))}
+.mod-vira .cta{margin-top:var(--s5);background:var(--onacc);color:var(--ink)}
+.mod-vira .cta::before{background:var(--ink)}
+.mod-vira .cta:hover{color:var(--onacc)}
 
 /* 02 · a troca */
 .tro-a{grid-column:1/6;grid-row:1}
@@ -1156,7 +1223,6 @@ section{position:relative;z-index:1}
 @media (max-width:1120px){
   .hero-txt,.hero-act{grid-column:1/6}
   .hero-diz{grid-column:8/13}
-  .mod-fig{grid-column:1/6}.mod-c{grid-column:7/13}
   .tro-a,.tro-fig{grid-column:1/6}.tro-b{grid-column:7/13}
   .cam-b{grid-column:8/13}.cam-fig{grid-column:1/6}.cam-c{grid-column:7/13}
   .gru-a,.gru-fig{grid-column:1/6}.gru-b{grid-column:7/13}
@@ -1202,16 +1268,29 @@ section{position:relative;z-index:1}
     flex-direction:column-reverse;align-items:flex-start}
   .hero-act{margin-top:var(--s5)}
   .hero-sub{max-width:38ch}
-  .mod-c,.cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
-  /* a pilha vira PILHA de verdade: cartas em zigue-zague, cada uma
-     sobrepondo um pedaço da DE BAIXO. O z-index decresce para que a
-     foto de cima cubra só imagem da seguinte, nunca legenda — a
+  .cam-cards,.cam-fig,.cam-c,.tro-c,.hero-num{margin-top:var(--s7)}
+  /* Em coluna única a pilha sai do posicionamento absoluto e volta ao
+     fluxo — `position:absolute` num pai sem altura própria colapsaria a
+     dobra. O gesto sobrevive por margem negativa: cartas em zigue-zague,
+     cada uma sobrepondo um pedaço da DE BAIXO. O z-index decresce para
+     que a foto de cima cubra só imagem da seguinte, nunca legenda — a
      legenda é onde mora o argumento. */
-  .mod-trio{grid-template-columns:1fr;margin-top:var(--s7)}
-  .mod-trio .fig{width:min(74vw,300px)}
-  .mod-trio .fig:nth-child(1){z-index:3;justify-self:start;margin-top:0}
-  .mod-trio .fig:nth-child(2){z-index:2;justify-self:end;margin-top:calc(-1*var(--s6))}
-  .mod-trio .fig:nth-child(3){z-index:1;justify-self:center;margin-top:calc(-1*var(--s6))}
+  .mod-pilha{margin-top:var(--s7);min-height:0;margin-right:0;
+    display:grid;grid-template-columns:1fr}
+  .mod-pilha .fig{position:static;width:min(74vw,300px)}
+  .mod-pilha .fig figcaption{text-align:center;padding-right:8px}
+  .mod-pilha .fig:nth-child(1){z-index:3;justify-self:start;margin-top:0}
+  .mod-pilha .fig:nth-child(2){z-index:2;justify-self:end;margin-top:calc(-1*var(--s6))}
+  .mod-pilha .fig:nth-child(3){z-index:1;justify-self:center;margin-top:calc(-1*var(--s6))}
+  /* o fólio sai: ele vive na margem lateral da página, e em 375px essa
+     margem é 24px — não sobra sangria para ele. O número volta a ser o
+     do rótulo, que é de onde ele saiu. */
+  .mod-folio{display:none}
+  .mod-a .eyebrow .n{position:static;width:auto;height:auto;clip-path:none}
+  /* o bloco da virada sangra pelos DOIS lados em coluna única */
+  .mod-vira{margin-top:var(--s7);margin-inline:calc(var(--pad) * -1);
+    padding:var(--s6) var(--pad)}
+  .mod-vira::before{left:var(--pad);right:var(--pad)}
   .tro-b{margin-top:var(--s7)}
   .gru-b{margin-top:var(--s7)}
   .close{margin-top:var(--s7);display:block}
@@ -1224,7 +1303,7 @@ section{position:relative;z-index:1}
   .step-in{grid-template-columns:1fr;row-gap:var(--s3)}
   .step-hd{gap:var(--s3);padding-block:var(--s3)}
   /* na pilha, cada bloco recebe a mesma folga de 32 */
-  .mod-b,.cam-b,.tro-a .lead{margin-top:var(--s5)}
+  .cam-b,.tro-a .lead{margin-top:var(--s5)}
   .cta.sm{padding:11px 16px}
   .cta.sm .lbl{font-size:.68rem;letter-spacing:.12em}
   .cta.sm .arw{display:none}
@@ -1357,20 +1436,20 @@ section{position:relative;z-index:1}
 <section class="sec wrap" id="modelo" data-fold="2">
   <div class="g12">
     <div class="mod-a">
+      <p class="mod-folio rv" aria-hidden="true">01</p>
       <p class="eyebrow label rv"><span class="n">01</span><span>O modelo</span></p>
       <h2 class="d2 rvl">A peça da sua vitrine também está na vitrine <em>do vizinho</em>.</h2>
-    </div>
-
-    <div class="mod-b body rv">
-      <p>É assim que o modelo de revenda funciona: a peça chega pronta, com a marca de outra empresa e o preço sugerido junto. O caminho que trouxe essa peça até a sua loja é o mesmo que a leva para todas as outras.</p>
-      <p>Quando o produto é igual, o que sobra para disputar é desconto.</p>
+      <div class="body rv">
+        <p>É assim que o modelo de revenda funciona: a peça chega pronta, com a marca de outra empresa e o preço sugerido junto. O caminho que trouxe essa peça até a sua loja é o mesmo que a leva para todas as outras.</p>
+      </div>
+      <p class="mod-tese rv">Quando o produto é igual, o que sobra para disputar é <b>desconto</b>.</p>
     </div>
 
     <!-- A prova visual: a MESMA imagem três vezes, de propósito. As
          legendas fazem o trabalho do argumento; as imagens repetidas
          são decorativas para o leitor de tela, que recebe a tese
          inteira no rótulo do grupo. -->
-    <div class="mod-trio" role="group" aria-label="A mesma fotografia de peça repetida três vezes: a peça é igual na loja do centro, na loja da rua de trás e na sua loja.">
+    <div class="mod-pilha" role="group" aria-label="A mesma fotografia de peça repetida três vezes: a peça é igual na loja do centro, na loja da rua de trás e na sua loja.">
       <figure class="fig rv">
         <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
         <figcaption class="label">Loja do centro</figcaption>
@@ -1385,12 +1464,9 @@ section{position:relative;z-index:1}
       </figure>
     </div>
 
-    <div class="mod-c">
-      <h3 class="d2 rvl">Marca <em>própria</em> tira a sua loja dessa foto.</h3>
-      <p class="lead rv">Com a sua marca na peça, preço, margem e cliente deixam de depender de fornecedor.</p>
-    </div>
-
-    <div class="sec-act mod-act rv">
+    <div class="mod-vira rv">
+      <h3 class="d2">Marca <em>própria</em> tira a sua loja dessa foto.</h3>
+      <p class="lead">Com a sua marca na peça, preço, margem e cliente deixam de depender de fornecedor.</p>
       <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
     </div>
   </div>
