@@ -5,6 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MR Private Label · fábrica de roupa masculina com marca própria</title>
 <meta name="description" content="Fábrica própria em Taquaritinga do Norte/PE que produz para a marca do lojista. Produção da peça de pronta entrega com a sua marca em 10 dias úteis a partir da aprovação da arte, a partir de 12 peças por cor.">
+
+<!-- ══ ÍCONE ═══════════════════════════════════════════════════════════
+     O símbolo do brandbook é o "mr" cursivo, e ele é 2,7× mais largo que
+     alto: a 16px vira borrão. O ícone usa só o "m", recortado por um
+     <svg> aninhado — que recorta de verdade no seu viewport, ao
+     contrário de um transform, que só desloca. Ladrilho no azul da
+     marca, tinta branca: mesmo quando a letra não se lê, a cor se
+     reconhece.
+     O .ico existe para navegador velho e para o Google, que ainda pede
+     um raster quadrado; o .svg é o que os navegadores atuais usam. -->
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#2D4E71">
+
+<!-- ══ PRÉVIA SOCIAL ═══════════════════════════════════════════════════
+     Sem isto, o link colado no WhatsApp — que é o canal do funil — cai
+     no raspador padrão, e a primeira imagem do documento é a foto do
+     hero: 1350×1971, retrato. Numa prévia que espera 1200×630 paisagem
+     ela vira tira estreita ou é descartada por proporção.
+     `og:image` PRECISA ser absoluta — caminho relativo é descartado por
+     boa parte dos raspadores. Como o domínio ainda não foi decidido, ela
+     aponta para o GitHub Pages, que é onde a página está hoje. Quando o
+     domínio entrar, esta URL e a `og:url` mudam juntas.
+     `og:url` e `canonical` ficam de fora por enquanto: sem `og:url` o
+     raspador usa a própria URL pedida, que está sempre certa; com uma
+     errada, ele passa a insistir na errada. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="MR Private Label">
+<meta property="og:title" content="MR Private Label · fábrica de roupa masculina com marca própria">
+<meta property="og:description" content="Produção própria em Taquaritinga do Norte/PE para o lojista que quer vender marca própria, não o mesmo produto do vizinho.">
+<meta property="og:image" content="https://mateusxavierr.github.io/mr-private-label/img/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Wordmark da MR Private Label ao lado da frase “Nossa fábrica. Sua marca na peça.”, com foto de peça masculina de produção própria.">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 /* ════════════════════════════════════════════════════════════════════
    MR · SISTEMA DE DESIGN DA PÁGINA (v1)
