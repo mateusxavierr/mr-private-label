@@ -1212,14 +1212,25 @@ section{position:relative;z-index:1}
 /* 02 · o momento — TRÊS POLAROIDS, TRÊS PORTAS
    A Polaroid desta dobra não é ilustração: ela É o card. A moldura
    branca que nas outras dobras segura uma legenda de uma linha aqui
-   segura o bloco inteiro — título, frase e pedido. Continua sendo o
-   mesmo objeto da página, com a mesma base alta e o mesmo giro; o que
-   muda é o que está escrito embaixo da foto.
+   segura a frase e o pedido. Continua sendo o mesmo objeto da página,
+   com a mesma base alta e o mesmo giro.
+
+   O TÍTULO FICA FORA DA MOLDURA, acima dela. Duas outras posições foram
+   testadas e descartadas: SOBRE a foto exigia um véu, e o véu apagava o
+   pé da imagem — na foto da escala, que é azul-marinho de ponta a
+   ponta, ele virava névoa branca em cima do assunto. DENTRO da moldura,
+   acima da foto, dava duas zonas de texto na mesma Polaroid e ela
+   parava de ler como fotografia. Fora, a foto fica inteira, o título
+   pega a tinta da página em contraste cheio, e os três alinham numa
+   fileira em cima das três imagens — que é a comparação que a dobra
+   existe para fazer.
 
    TUDO dentro da moldura tem cor FIXA, nunca token da jornada. A base
    é #FDFDFB em toda a página, então tinta que viaja com o fundo
    inverteria para branco na metade escura e sumiria no papel. É a
-   mesma razão pela qual `.fig figcaption` já usa #22364a cravado.   */
+   mesma razão pela qual `.fig figcaption` já usa #22364a cravado.
+   O título, por viver FORA da moldura, é o contrário: ele usa --ink,
+   porque quem ele contrasta é o fundo da dobra.                     */
 /* 10 colunas, e não 8, porque acima de ~1400px de tela a pergunta
    quebrava em duas linhas — e por um motivo que só aparece nas telas
    GRANDES: o `.d2` é clamp(2.15rem, 3.4vw, 3.05rem) e o wrap trava em
@@ -1228,52 +1239,40 @@ section{position:relative;z-index:1}
    pede 785. Com 10 a coluna vai a 908 e a pergunta fecha numa linha em
    toda largura de desktop; no celular ela quebra, que é o certo. */
 .niv-a{grid-column:1/11}
+/* DUAS FILEIRAS, e o card não é caixa: `display:contents` entrega
+   título e Polaroid direto à grade. É o que faz as três molduras
+   começarem no mesmo pixel sem número mágico nenhum — a fileira de
+   cima mede o título mais alto e as três seguem. Numa coluna de 294px
+   o terceiro título quebra em duas linhas e os outros dois não; com
+   altura mínima cravada eu pagaria esse espaço em TODA largura, e
+   acima de 1180 os três cabem em uma linha só. */
 .niv-grid{grid-column:1/13;margin-top:var(--s7);
-  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);
-  align-items:stretch}
-/* Cada card é uma coluna flex para o botão poder ser empurrado ao pé:
-   as três frases têm comprimentos diferentes e, sem isso, os três
-   pedidos ficavam em alturas diferentes — a dobra inteira existe para
-   comparar as três portas, e comparação pede linha de base comum. */
-.niv-card{display:flex;flex-direction:column;height:100%}
-.niv-card:nth-child(1){--gir:-1.4deg}
-.niv-card:nth-child(2){--gir:1.1deg}
-.niv-card:nth-child(3){--gir:-.7deg}
-
-/* O TÍTULO MORA NA FOTO, não na base. É a construção da referência: o
-   nome do momento pousa sobre a imagem, e a base branca fica só com a
-   frase e o pedido. Fonte SANS aqui, e não a serifada do resto dos
-   títulos — sobre imagem a Playfair perde haste fina no meio da textura
-   do tecido, e a Instrument em 620 aguenta qualquer fundo.
-
-   O VÉU é claro, não escuro. As três fotos são de estúdio claro (fundo
-   #AABED6, peça azul-marinho), então escurecer o pé da imagem para
-   receber texto branco deixaria uma tarja preta no meio de uma dobra
-   inteira de luz. Clareando, a tinta continua sendo a mesma da página e
-   o pé da foto vira névoa — nunca chega ao opaco, senão a foto perderia
-   a borda de baixo contra a base da Polaroid, que é branca também.   */
-.niv-foto{position:relative}
-.niv-t{position:absolute;left:0;right:0;bottom:0;z-index:2;
-  padding:var(--s7) 14px 13px;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  grid-template-rows:auto 1fr;column-gap:var(--gap);align-items:stretch}
+.niv-card{display:contents}
+/* `align-self:end` encosta o título curto no pé da fileira dele: o vão
+   até a foto fica igual nos três, e a sobra da fileira vai para CIMA,
+   onde é só fundo. Sem isso o título de uma linha boiava no topo e
+   abria um buraco entre ele e a moldura. */
+.niv-t{grid-row:1;align-self:end;margin-bottom:var(--s4);
   font-family:var(--sans);font-variation-settings:'wght' 620;
   font-size:1.24rem;line-height:1.26;letter-spacing:-.014em;
-  color:#071623;text-wrap:balance;
-  background:linear-gradient(180deg,
-    rgba(248,252,255,0) 0%,
-    rgba(248,252,255,.78) 38%,
-    rgba(248,252,255,.93) 100%)}
-
-/* O PLACEHOLDER — enquanto a foto não existe, a moldura não pode ficar
-   vazia nem fingir foto. Hachura diagonal em cima do mesmo cinza que
-   `.fig-in` já usa como fundo de imagem, com o nome do quadro no meio:
-   lê como "aqui vai entrar uma foto", que é exatamente o que é.
-   Sai inteiro quando as três imagens chegarem.                      */
-.niv-ph{position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  background:repeating-linear-gradient(-45deg,
-    #e4e7e3 0 2px, #eef0ec 2px 11px)}
-.niv-ph span{font-size:.7rem;line-height:1.7;font-variation-settings:'wght' 620;
-  letter-spacing:.16em;text-transform:uppercase;color:#8d968c}
+  color:var(--ink);text-wrap:balance}
+/* A moldura é coluna flex para o pedido poder ser empurrado ao pé: as
+   três frases têm comprimentos diferentes e, sem isso, os três botões
+   ficavam em alturas diferentes — a dobra existe para comparar as três
+   portas, e comparação pede linha de base comum. */
+/* Linha E coluna declaradas nos seis itens. Com `display:contents` a
+   ordem no HTML é título, moldura, título, moldura… e o auto-placement
+   lê isso como uma fila só: enfiava a segunda moldura na primeira
+   fileira e a dobra desmontava. */
+.niv-fig{grid-row:2;display:flex;flex-direction:column}
+.niv-card:nth-child(1) .niv-t,.niv-card:nth-child(1) .niv-fig{grid-column:1}
+.niv-card:nth-child(2) .niv-t,.niv-card:nth-child(2) .niv-fig{grid-column:2}
+.niv-card:nth-child(3) .niv-t,.niv-card:nth-child(3) .niv-fig{grid-column:3}
+.niv-card:nth-child(1) .niv-fig{--gir:-1.4deg}
+.niv-card:nth-child(2) .niv-fig{--gir:1.1deg}
+.niv-card:nth-child(3) .niv-fig{--gir:-.7deg}
 
 /* A base da Polaroid é `figcaption`, e figcaption é serifado na página
    inteira. Tudo que entra aqui declara a própria fonte — herdar foi o
@@ -1319,13 +1318,16 @@ section{position:relative;z-index:1}
    A foto deita junto. Em 4/5 numa coluna de 560 a imagem sozinha mede
    700px de altura e a frase do card nasce fora da tela.              */
 @media (max-width:1050px){
-  .niv-grid{grid-template-columns:min(560px,100%);gap:var(--s6);
-    margin-top:var(--s6)}
-  .niv-card{--gir:-.4deg}
+  /* Em pilha a grade de duas fileiras não serve: os títulos não precisam
+     mais alinhar entre si, cada um abre a sua Polaroid. O card volta a
+     ser caixa, senão o `gap` da grade entraria também entre o título e
+     a foto dele. */
+  .niv-grid{grid-template-columns:min(560px,100%);grid-template-rows:auto;
+    gap:var(--s6);margin-top:var(--s6)}
+  .niv-card{display:flex;flex-direction:column}
+  .niv-t{align-self:auto}
+  .niv-card .niv-fig{--gir:-.4deg}
   .niv-card .fig-in{aspect-ratio:3/2}
-  /* o véu de --s7 comeria metade de uma foto deitada; encurtado, ele
-     volta a ocupar o mesmo terço de baixo que ocupa no desktop */
-  .niv-t{padding-top:var(--s5)}
   .niv-fecho{margin-top:var(--s6);text-align:left}
 }
 
@@ -2084,38 +2086,53 @@ section{position:relative;z-index:1}
     </div>
 
     <div class="niv-grid">
-      <figure class="fig niv-card rv">
-        <div class="fig-in niv-foto">
-          <div class="niv-ph" aria-hidden="true"><span>Foto 01<br>primeira etiqueta</span></div>
-          <h3 class="niv-t">A marca ainda não é sua</h3>
-        </div>
-        <figcaption class="niv-leg">
-          <p class="niv-p">Hoje você revende. Marca própria custa menos peça do que parece.</p>
-          <button class="cta niv-cta" type="button"><span class="lbl">Responder 4 perguntas</span><span class="arw">&#8594;</span></button>
-        </figcaption>
-      </figure>
+      <div class="niv-card">
+        <h3 class="niv-t rv" style="--d:0ms">A marca ainda não é sua</h3>
+        <figure class="fig niv-fig rv" style="--d:0ms">
+          <div class="fig-in"><img loading="lazy" decoding="async"
+            src="img/momento-01.webp"
+            srcset="img/momento-01-560.webp 560w, img/momento-01.webp 900w"
+            sizes="(max-width:1050px) min(560px, 88vw), 350px"
+            alt="Duas mãos prendendo a primeira etiqueta na gola de uma camiseta azul-marinho dobrada, ao lado de uma caixa de papelão e tags de papel em branco."
+            width="900" height="1125"></div>
+          <figcaption class="niv-leg">
+            <p class="niv-p">Hoje você revende. Marca própria custa menos peça do que parece.</p>
+            <button class="cta niv-cta" type="button"><span class="lbl">Responder 4 perguntas</span><span class="arw">&#8594;</span></button>
+          </figcaption>
+        </figure>
+      </div>
 
-      <figure class="fig niv-card rv">
-        <div class="fig-in niv-foto">
-          <div class="niv-ph" aria-hidden="true"><span>Foto 02<br>coleção própria</span></div>
-          <h3 class="niv-t">A marca já é sua</h3>
-        </div>
-        <figcaption class="niv-leg">
-          <p class="niv-p">Você aplica em peça pronta. Coleção do zero é o passo que falta.</p>
-          <button class="cta niv-cta" type="button"><span class="lbl">Falar com a consultoria</span><span class="arw">&#8594;</span></button>
-        </figcaption>
-      </figure>
+      <div class="niv-card">
+        <h3 class="niv-t rv" style="--d:90ms">A marca já é sua</h3>
+        <figure class="fig niv-fig rv" style="--d:90ms">
+          <div class="fig-in"><img loading="lazy" decoding="async"
+            src="img/momento-02.webp"
+            srcset="img/momento-02-560.webp 560w, img/momento-02.webp 900w"
+            sizes="(max-width:1050px) min(560px, 88vw), 350px"
+            alt="Camiseta, polo e manga longa azul-marinho dobradas em pilha, com a marca aplicada no peito, ao lado de amostras de malha e fita métrica."
+            width="900" height="1125"></div>
+          <figcaption class="niv-leg">
+            <p class="niv-p">Você aplica em peça pronta. Coleção do zero é o passo que falta.</p>
+            <button class="cta niv-cta" type="button"><span class="lbl">Falar com a consultoria</span><span class="arw">&#8594;</span></button>
+          </figcaption>
+        </figure>
+      </div>
 
-      <figure class="fig niv-card rv">
-        <div class="fig-in niv-foto">
-          <div class="niv-ph" aria-hidden="true"><span>Foto 03<br>produção em escala</span></div>
-          <h3 class="niv-t">A produção já passou do fornecedor</h3>
-        </div>
-        <figcaption class="niv-leg">
-          <p class="niv-p">Você já produz em volume. Prazo e condição se negociam direto.</p>
-          <button class="cta niv-cta" type="button"><span class="lbl">Falar direto com o dono</span><span class="arw">&#8594;</span></button>
-        </figcaption>
-      </figure>
+      <div class="niv-card">
+        <h3 class="niv-t rv" style="--d:180ms">A produção já passou do fornecedor</h3>
+        <figure class="fig niv-fig rv" style="--d:180ms">
+          <div class="fig-in"><img loading="lazy" decoding="async"
+            src="img/momento-03.webp"
+            srcset="img/momento-03-560.webp 560w, img/momento-03.webp 900w"
+            sizes="(max-width:1050px) min(560px, 88vw), 350px"
+            alt="Pilhas altas de camisetas azul-marinho dobradas com a mesma marca, e fardos embalados em plástico ao fundo."
+            width="900" height="1125"></div>
+          <figcaption class="niv-leg">
+            <p class="niv-p">Você já produz em volume. Prazo e condição se negociam direto.</p>
+            <button class="cta niv-cta" type="button"><span class="lbl">Falar direto com o dono</span><span class="arw">&#8594;</span></button>
+          </figcaption>
+        </figure>
+      </div>
     </div>
 
     <p class="niv-fecho rv">Nos três casos a peça sai da mesma fábrica. Muda por onde a conversa começa.</p>
