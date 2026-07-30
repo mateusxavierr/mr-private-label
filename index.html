@@ -1622,29 +1622,57 @@ section{position:relative;z-index:1}
   .hero-act{margin-top:clamp(16px,3svh,32px)}
   .hero-sub{max-width:38ch}
   .cam-cards,.cam-fig,.cam-c,.hero-num{margin-top:var(--s7)}
-  /* Em coluna única a pilha sai do posicionamento absoluto e volta ao
-     fluxo — `position:absolute` num pai sem altura própria colapsaria a
-     dobra. O gesto sobrevive por margem negativa: cartas em zigue-zague,
-     cada uma sobrepondo um pedaço da DE BAIXO. O z-index decresce para
-     que a foto de cima cubra só imagem da seguinte, nunca legenda — a
-     legenda é onde mora o argumento. */
+  /* Em coluna única a pilha NÃO vira fileira. Ela mantém a cascata do
+     desktop, só menor: em zigue-zague vertical as três cartas somavam
+     610px de altura para dizer uma coisa só, e em cascata a mesma tese
+     fecha em ~390px.
+     O que muda em relação ao desktop é a mecânica, não o desenho: sem
+     `position:absolute`, porque o pai não tem altura própria aqui e
+     precisaria de um min-height acertado no olho. As três ficam no fluxo,
+     o degrau lateral é margin-left e o vertical é um margin-top negativo.
+     Margem em % mede a LARGURA do bloco, a mesma régua da carta, então a
+     geometria toda escala junta e o bloco continua se medindo.
+     O z-index cresce para baixo, como no desktop: quem fica na frente é
+     a carta de baixo à esquerda, "a sua loja", que é onde a tese chega. */
   .mod-pilha{margin-top:var(--s7);min-height:0;margin-right:0;
-    display:grid;grid-template-columns:1fr}
-  .mod-pilha .fig{position:static;width:min(74vw,300px)}
-  /* A FOTO DEITA. Em retrato de 4/5 cada carta media ~440px de altura e
-     as três empilhadas passavam de 1100px — uma tela e meia de celular
-     para dizer que a peça é a mesma três vezes. Deitada em 3/2 a carta
-     cai para ~265px e a pilha inteira cabe numa tela.
-     O recorte é o preço: em paisagem a peça perde a barra. Então o corte
-     sobe (18%) e fica com o cabide, a gola, os ombros e o peito — que é
-     o que faz a foto ler como camiseta. Centrado, sobraria uma faixa de
-     tronco sem gola nem barra, e aí não lê como peça nenhuma. */
-  .mod-pilha .fig-in{aspect-ratio:3/2}
-  .mod-pilha .fig img{object-position:50% 18%}
-  .mod-pilha .fig figcaption{text-align:center;padding-right:8px}
-  .mod-pilha .fig:nth-child(1){z-index:3;justify-self:start;margin-top:0}
-  .mod-pilha .fig:nth-child(2){z-index:2;justify-self:end;margin-top:calc(-1*var(--s6))}
-  .mod-pilha .fig:nth-child(3){z-index:1;justify-self:center;margin-top:calc(-1*var(--s6))}
+    display:block;position:relative}
+  /* `relative` (e não `static`) porque o z-index da cascata precisa de um
+     elemento posicionado. O preço é que o `left`/`top` do desktop volta a
+     valer — em relativo ele desloca em vez de ancorar — e somava ao
+     degrau: a primeira carta saía 191px para fora do bloco. Os dois são
+     anulados carta por carta, e não no seletor curto, porque `:nth-child`
+     pesa mais que `.mod-pilha .fig` e ganharia mesmo daqui de dentro da
+     media query. Quem posiciona no celular é só a margem. */
+  /* A conta é a mesma do desktop, com outros números: chamando L a
+     largura da carta e s o degrau, a faixa que sobra livre para a legenda
+     de uma carta é o DEGRAU de quem a cobre, e L + 2s tem de fechar 100%.
+     Em 46/27 a faixa dava 92px e "rua de trás" (89px) entrava embaixo da
+     carta da frente pela rotação. Em 40/30 a faixa sobe para 102px, sobra
+     margem para o giro, e o preço é uma foto 20px mais estreita. */
+  .mod-pilha .fig{position:relative;width:40%}
+  .mod-pilha .fig:nth-child(1){left:auto;top:auto;margin-left:60%;z-index:1}
+  .mod-pilha .fig:nth-child(2){left:auto;top:auto;margin-left:30%;margin-top:-42%;z-index:2}
+  .mod-pilha .fig:nth-child(3){left:auto;top:auto;margin-left:0;  margin-top:-42%;z-index:3}
+  /* A CARTA FICA QUADRADA. Cascata pede carta ESTREITA — 40% de 342px dá
+     137px de foto — e nessa largura a paisagem de 3/2 vira uma faixa de
+     91px onde a peça não lê mais. Quadrado é ratio de Polaroid de
+     verdade e, melhor, é o único corte em que a camiseta INTEIRA cabe:
+     880 de 1100px de altura, com gola e barra dentro. Some o corte alto
+     que a versão deitada precisava. */
+  .mod-pilha .fig-in{aspect-ratio:1}
+  .mod-pilha .fig img{object-position:50% 40%}
+  /* A legenda é o argumento, então ela não pode ir para debaixo da carta
+     da frente. Ela é travada em 70% da carta, e não na largura cheia,
+     senão o texto passa por baixo da vizinha em vez de quebrar.
+     A faixa livre é o degrau (30% do bloco, ~100px em 375), mas o texto
+     não pode ocupá-la inteira: a carta da frente é GIRADA, e o giro come
+     de 4 a 8px do canto. Os dois números foram varridos medindo a linha
+     mais larga contra a borda real da carta da frente — em .88rem/82% a
+     legenda do meio passava a 1px de ser cortada, e em 72% ela cabia mas
+     quebrava em três linhas. Em .8rem/70% ela fecha em duas linhas com
+     folga de 11px, que é o par que sobrevive de 320 a 860. */
+  .mod-pilha .fig figcaption{text-align:right;padding:12px 8px 15px 0;
+    font-size:.8rem;max-width:70%;margin-left:auto}
   /* o fólio sai: ele vive na margem lateral da página, e em 375px essa
      margem é 24px — não sobra sangria para ele. O número volta a ser o
      do rótulo, que é de onde ele saiu. */
