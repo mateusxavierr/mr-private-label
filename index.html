@@ -459,16 +459,17 @@ section{position:relative;z-index:1}
    atravessa a jornada inteira sem nunca coincidir com a tinta. Medido
    contra o fundo de cada parada, como superfície:
      0 Branco    18,9:1   ·  1 Azul 15%  15,4:1  ·  2 Azul 30%  11,7:1
-     3 Azul 60%   6,3:1   ·  4 Azul 80%   3,7:1  ·  5 Azul      3,0:1
-   O ponto mais apertado é a parada 5, a dobra do grupo, em 3,0:1 — o
+     3 Azul 45%   8,1:1   ·  4 Azul 60%   6,3:1  ·  5 Azul 80%   3,7:1
+     6 Azul       3,0:1
+   O ponto mais apertado é a parada 6, a dobra do grupo, em 3,0:1 — o
    piso de 3:1 que superfície não textual pede. O rótulo nunca é o
    problema: Branco sobre Preto é 15,7:1 em toda a página.
-   A parada 6 é a exceção e tem tratamento próprio: ali o fundo É o
+   A parada 7 é a exceção e tem tratamento próprio: ali o fundo É o
    Preto, e um botão preto sumiria. Ver .close-act .cta.
 
    ── POR QUE A CORTINA DO HOVER SAIU DO ACENTO ────────────────────────
    Ela era --accent, e o motor faz o acento CONVERGIR na tinta antes da
-   inversão e PARTIR dela depois (linhas do lerp em `acc`). Na parada 3
+   inversão e PARTIR dela depois (linhas do lerp em `acc`). Na parada 4
    a tabela declara ink, soft e acc todos como #071623: a cortina subia
    da cor exata do botão e a animação não existia — na dobra da troca e
    no header, que lê as mesmas variáveis.
@@ -727,12 +728,11 @@ section{position:relative;z-index:1}
   color:#22364a;text-transform:none;
   text-align:center;padding:15px 8px 19px;transform:rotate(-.7deg)}
 
-/* a fita: só onde ela conta, senão vira maneirismo */
-.fita{position:relative}
-.fita::before{content:"";position:absolute;top:-12px;left:50%;translate:-50% 0;
-  width:92px;height:27px;rotate:-3.5deg;z-index:2;pointer-events:none;
-  background:rgba(185,182,173,.5);
-  border-left:1px dashed rgba(7,22,35,.16);border-right:1px dashed rgba(7,22,35,.16)}
+/* A FITA SAIU (decisão de Mateus, 2026-07-30). Ela existia numa única
+   Polaroid, a do grupo, com a justificativa de marcar a dobra do pedido.
+   Com a dobra do momento a página passou de cinco molduras para oito, e
+   um enfeite único em oito não lê mais como ênfase, lê como sobra — e a
+   dobra do grupo já é marcada por rótulo, ficha e botão grande. */
 
 @media (prefers-reduced-motion:reduce){
   .fig.rv,.fig.rv.in,.fig.rv.in:hover{transform:none}
@@ -1209,7 +1209,69 @@ section{position:relative;z-index:1}
    fechamento vêm com a qualificação certa da aprovação da arte. */
 .mod-vira .note{margin-top:var(--s3);font-size:1rem;line-height:1.5;color:var(--soft)}
 
-/* 02 · a troca — A PEÇA NO MEIO
+/* 02 · o momento — TRÊS POLAROIDS, TRÊS PORTAS
+   A Polaroid desta dobra não é ilustração: ela É o card. A moldura
+   branca que nas outras dobras segura uma legenda de uma linha aqui
+   segura o bloco inteiro — título, frase e pedido. Continua sendo o
+   mesmo objeto da página, com a mesma base alta e o mesmo giro; o que
+   muda é o que está escrito embaixo da foto.
+
+   TUDO dentro da moldura tem cor FIXA, nunca token da jornada. A base
+   é #FDFDFB em toda a página, então tinta que viaja com o fundo
+   inverteria para branco na metade escura e sumiria no papel. É a
+   mesma razão pela qual `.fig figcaption` já usa #22364a cravado.   */
+.niv-a{grid-column:1/9}
+.niv-grid{grid-column:1/13;margin-top:var(--s7);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);
+  align-items:stretch}
+/* Cada card é uma coluna flex para o botão poder ser empurrado ao pé:
+   as três frases têm comprimentos diferentes e, sem isso, os três
+   pedidos ficavam em alturas diferentes — a dobra inteira existe para
+   comparar as três portas, e comparação pede linha de base comum. */
+.niv-card{display:flex;flex-direction:column;height:100%}
+.niv-card:nth-child(1){--gir:-1.4deg}
+.niv-card:nth-child(2){--gir:1.1deg}
+.niv-card:nth-child(3){--gir:-.7deg}
+
+/* O PLACEHOLDER — enquanto a foto não existe, a moldura não pode ficar
+   vazia nem fingir foto. Hachura diagonal em cima do mesmo cinza que
+   `.fig-in` já usa como fundo de imagem, com o nome do quadro no meio:
+   lê como "aqui vai entrar uma foto", que é exatamente o que é.
+   Sai inteiro quando as três imagens chegarem.                      */
+.niv-ph{display:flex;align-items:center;justify-content:center;text-align:center;
+  background:repeating-linear-gradient(-45deg,
+    #e4e7e3 0 2px, #eef0ec 2px 11px)}
+.niv-ph span{font-size:.7rem;line-height:1.7;font-variation-settings:'wght' 620;
+  letter-spacing:.16em;text-transform:uppercase;color:#8d968c}
+
+.niv-leg{flex:1;display:flex;flex-direction:column;
+  padding:var(--s4) 14px var(--s5)}
+.niv-t{font-family:var(--serif);font-variation-settings:'wght' 540;
+  font-size:1.32rem;line-height:1.18;letter-spacing:-.014em;
+  color:#071623;margin-bottom:var(--s2);text-wrap:balance}
+.niv-p{font-size:1rem;line-height:1.58;margin-bottom:var(--s5);
+  color:color-mix(in srgb,#071623 74%,#FDFDFB)}
+/* `margin-top:auto` é o que alinha os três botões; o respiro mínimo vem
+   da margem da frase, para o card mais curto não colar texto e pedido.
+   O reset de borda e fonte existe porque este é o único `.cta` da
+   página que é <button>, e botão não herda tipografia sozinho.
+   O rótulo pode quebrar em duas linhas aqui: "Falar com quem
+   desenvolve" não cabe numa coluna de ~350px sem quebrar.           */
+.niv-cta{margin-top:auto;padding:16px 20px;
+  border:0;font-family:inherit;text-align:left;cursor:pointer;
+  width:100%;justify-content:space-between}
+.niv-cta .lbl{white-space:normal}
+
+/* O fecho amarra as três portas numa promessa só, e é a única linha
+   centrada da dobra: ela fala das três colunas ao mesmo tempo, então
+   não pertence a nenhuma. */
+.niv-fecho{grid-column:3/11;margin-top:var(--s7);text-align:center;
+  font-family:var(--serif);font-style:italic;
+  font-variation-settings:'wght' 500;
+  font-size:clamp(1.28rem,1.7vw,1.6rem);line-height:1.32;
+  letter-spacing:-.01em;color:var(--ink)}
+
+/* 03 · a troca — A PEÇA NO MEIO
    A dobra se chama "a troca" e não mostrava troca nenhuma: tinha uma
    Polaroid só, do lado "antes", e o contraste vivia enterrado no miolo
    das frases da ficha ("X, em vez de Y") — que é a posição onde menos
@@ -1679,7 +1741,21 @@ section{position:relative;z-index:1}
   .mod-folio{display:none}
   .mod-a .eyebrow .n{position:static;width:auto;height:auto;clip-path:none}
   .mod-vira{margin-top:var(--s7)}
-  /* ── 02 EM COLUNA ÚNICA ─────────────────────────────────────────────
+  /* ── 02 · O MOMENTO EM COLUNA ÚNICA ────────────────────────────────
+     Três cards em pilha, e a foto DEITA. Em retrato 4/5 cada card mede
+     quase uma tela inteira e as três portas passam a exigir três telas
+     de rolagem para serem comparadas — some justamente a comparação
+     que é o assunto da dobra. Em 3/2 os três cabem em pouco mais de
+     duas telas e o pedido de cada um nasce perto da frase dele.
+     É a mesma correção que a foto do hero já levou.
+
+     O giro cai para quase nada: em largura cheia, 1,4° jogam o canto
+     do card 9px para fora da margem e abrem rolagem horizontal. */
+  .niv-grid{grid-template-columns:1fr;gap:var(--s6);margin-top:var(--s6)}
+  .niv-card{--gir:-.4deg!important}
+  .niv-card .fig-in{aspect-ratio:3/2}
+  .niv-fecho{margin-top:var(--s6)}
+  /* ── 03 EM COLUNA ÚNICA ─────────────────────────────────────────────
      A comparação lado a lado não sobrevive a 375px: duas colunas de
      texto viram duas colunas de uma palavra. Então a tabela desmonta e
      cada linha vira um PAR EMPILHADO — o estado de hoje em cima, o da
@@ -1945,11 +2021,62 @@ section{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- ══ 02 · A TROCA ═══════════════════════════════════════════════ -->
-<section class="sec wrap" id="troca" data-fold="3">
+<!-- ══ 02 · O MOMENTO ═════════════════════════════════════════════
+     A dobra do espelho: o leitor se reconhece num dos três e sai pela
+     porta dele. Vem DEPOIS do modelo de propósito — os cards são saídas,
+     e saída antes de argumento é lead indo embora sem motivo. Depois do
+     modelo a tese já foi entregue ("quando o produto é igual, o que
+     sobra é desconto") e a plateia pode ser dividida.
+
+     As fotos ainda não existem: as molduras nascem com placeholder e a
+     legenda da Polaroid é onde mora o pedido. Os botões AINDA NÃO VÃO
+     A LUGAR NENHUM — são <button> justamente para não fingirem link
+     enquanto o destino de cada nível não está decidido.               -->
+<section class="sec wrap" id="momento" data-fold="3">
+  <div class="g12">
+    <div class="niv-a">
+      <p class="eyebrow label rv"><span class="n">02</span><span>O momento</span></p>
+      <h2 class="d2 rvl">Em que momento a sua <em>loja</em> está?</h2>
+    </div>
+
+    <div class="niv-grid">
+      <figure class="fig niv-card rv">
+        <div class="fig-in niv-ph" aria-hidden="true"><span>Foto 01<br>primeira etiqueta</span></div>
+        <figcaption class="niv-leg">
+          <h3 class="niv-t">A marca ainda não é sua</h3>
+          <p class="niv-p">Hoje você compra pronto e revende. Começar com marca própria custa menos peça do que parece.</p>
+          <button class="cta niv-cta" type="button"><span class="lbl">Responder 4 perguntas</span><span class="arw">&#8594;</span></button>
+        </figcaption>
+      </figure>
+
+      <figure class="fig niv-card rv">
+        <div class="fig-in niv-ph" aria-hidden="true"><span>Foto 02<br>coleção própria</span></div>
+        <figcaption class="niv-leg">
+          <h3 class="niv-t">A marca já é sua</h3>
+          <p class="niv-p">Você aplica em peça pronta e funciona. Coleção do zero — tecido, modelagem, ficha técnica — é o passo que ainda não deu.</p>
+          <button class="cta niv-cta" type="button"><span class="lbl">Falar com a consultoria</span><span class="arw">&#8594;</span></button>
+        </figcaption>
+      </figure>
+
+      <figure class="fig niv-card rv">
+        <div class="fig-in niv-ph" aria-hidden="true"><span>Foto 03<br>produção em escala</span></div>
+        <figcaption class="niv-leg">
+          <h3 class="niv-t">A produção já passou do fornecedor</h3>
+          <p class="niv-p">Você produz com a sua marca todo mês, em volume. Nessa faixa, prazo e condição se negociam direto.</p>
+          <button class="cta niv-cta" type="button"><span class="lbl">Falar direto com o dono</span><span class="arw">&#8594;</span></button>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="niv-fecho rv">Nos três casos a peça sai da mesma fábrica. Muda por onde a conversa começa.</p>
+  </div>
+</section>
+
+<!-- ══ 03 · A TROCA ═══════════════════════════════════════════════ -->
+<section class="sec wrap" id="troca" data-fold="4">
   <div class="g12">
     <div class="tro-a">
-      <p class="eyebrow label rv"><span class="n">02</span><span>A troca</span></p>
+      <p class="eyebrow label rv"><span class="n">03</span><span>A troca</span></p>
       <h2 class="d2 rvl">O que muda quando a peça é <em>sua</em></h2>
       <p class="lead rv">Quando a marca é sua, a reputação da peça também é.</p>
     </div>
@@ -2015,11 +2142,11 @@ section{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- ══ 03 · O CAMINHO ═════════════════════════════════════════════ -->
-<section class="sec wrap" id="caminho" data-fold="4">
+<!-- ══ 04 · O CAMINHO ═════════════════════════════════════════════ -->
+<section class="sec wrap" id="caminho" data-fold="5">
   <div class="g12">
     <div class="cam-a">
-      <p class="eyebrow label rv"><span class="n">03</span><span>O caminho</span></p>
+      <p class="eyebrow label rv"><span class="n">04</span><span>O caminho</span></p>
       <h2 class="d2 rvl">O caminho até a peça <em>pronta</em></h2>
     </div>
     <p class="lead cam-b rv">Um prazo só, e você sabe de onde ele começa a contar antes de aprovar a arte.</p>
@@ -2074,13 +2201,13 @@ section{position:relative;z-index:1}
 
 <!-- ══ 04 · O GRUPO ═══════════════════════════════════════════════ -->
 <section class="sec wrap" id="grupo">
-  <div class="g12" data-fold="5">
+  <div class="g12" data-fold="6">
     <div class="gru-a">
-      <p class="eyebrow label rv"><span class="n">04</span><span>O grupo</span></p>
+      <p class="eyebrow label rv"><span class="n">05</span><span>O grupo</span></p>
       <h2 class="d2 rvl">O que tem <em>dentro</em> do grupo</h2>
     </div>
 
-    <figure class="fig gru-fig fita rv">
+    <figure class="fig gru-fig rv">
       <!-- Não é foto de produto: é um POST REAL da MR, o primeiro card de
            um carrossel de coleção. Aqui isso é o argumento, não enfeite —
            a dobra fala do que chega no grupo, e o que chega é exatamente
@@ -2114,7 +2241,7 @@ section{position:relative;z-index:1}
   </div>
 
   <!-- zona 6 · o fecho. Última parada da jornada: Preto. -->
-  <div class="closing" data-fold="6">
+  <div class="closing" data-fold="7">
     <div class="close">
       <!-- 12 · campo de marca, único — o desfecho. Vetor INTEIRO
            (0 0 2110 790) com "meet": a palavra cabe toda no bloco. -->
@@ -2174,15 +2301,24 @@ const STOPS = [
 /* 0 hero    */ {bg:'#F8FCFF', ink:'#071623', soft:'#2D4E71', acc:'#2D4E71', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
 /* 1 números */ {bg:'#DAE2EA', ink:'#071623', soft:'#2D4E71', acc:'#2D4E71', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
 /* 2 modelo  */ {bg:'#BBC8D4', ink:'#071623', soft:'#2D4E71', acc:'#2D4E71', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
-/* 3 troca   */ {bg:'#7E94AA', ink:'#071623', soft:'#071623', acc:'#071623', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
-/* 4 caminho */ {bg:'#56718D', ink:'#F8FCFF', soft:'#F8FCFF', acc:'#DAE2EA', on:'#071623', fld:'#2D4E71', dark:1},
-/* 5 grupo   */ {bg:'#2D4E71', ink:'#F8FCFF', soft:'#BBC8D4', acc:'#AABED6', on:'#071623', fld:'#2D4E71', dark:1},
-/* 6 fecho   */ {bg:'#071623', ink:'#F8FCFF', soft:'#BBC8D4', acc:'#AABED6', on:'#071623', fld:'#2D4E71', dark:1}
+/* 3 momento */ {bg:'#9DAEBF', ink:'#071623', soft:'#071623', acc:'#2D4E71', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
+/* 4 troca   */ {bg:'#7E94AA', ink:'#071623', soft:'#071623', acc:'#071623', on:'#F8FCFF', fld:'#BBC8D4', dark:0},
+/* 5 caminho */ {bg:'#56718D', ink:'#F8FCFF', soft:'#F8FCFF', acc:'#DAE2EA', on:'#071623', fld:'#2D4E71', dark:1},
+/* 6 grupo   */ {bg:'#2D4E71', ink:'#F8FCFF', soft:'#BBC8D4', acc:'#AABED6', on:'#071623', fld:'#2D4E71', dark:1},
+/* 7 fecho   */ {bg:'#071623', ink:'#F8FCFF', soft:'#BBC8D4', acc:'#AABED6', on:'#071623', fld:'#2D4E71', dark:1}
 ];
-/* Paradas 3 e 4 são o fundo do poço da paleta: sobre Azul 60% só Preto
+/* A PARADA 3 É NOVA (dobra do momento) e é a interpolação Azul 45%, o
+   degrau que faltava no maior salto da rampa: entre a 2 e a antiga 3 a
+   página pulava 30 pontos de mistura de uma vez, e essa era a única
+   travessia que se via acontecer. Sobre Azul 45% o Azul mede 3,80:1 —
+   passa em texto grande e falha em corpo. Então o secundário já colapsa
+   na tinta aqui, uma parada antes do que colapsava, e o acento fica só
+   com o itálico do título, que é a mesma regra que a parada 5 usa.
+
+   Paradas 4 e 5 são o fundo do poço da paleta: sobre Azul 60% só Preto
    passa 4,5:1, e sobre Azul 80% só Branco. Nas duas o secundário
-   colapsa na tinta. Na 3 o acento colapsa junto (Azul mede 2,75:1 ali);
-   na 4 ele reabre em Azul 15% (3,87:1, e só texto grande e o CTA usam
+   colapsa na tinta. Na 4 o acento colapsa junto (Azul mede 2,75:1 ali);
+   na 5 ele reabre em Azul 15% (3,87:1, e só texto grande e o CTA usam
    acento). A hierarquia dessas duas dobras é forma + superfície.     */
 const TOK = ['ink','soft','acc','on','fld'];
 const hex = h => [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
@@ -2390,8 +2526,13 @@ let ticking=false;
    O `.cta.sm` do header fica de fora da vigilância: ele é secundário e
    vive num header fixo, então nunca deixaria a barra aparecer. O
    seletor `main .js-cta` já o exclui, e exclui a própria barra junto —
-   as duas vivem fora do <main>.                                      */
-const botoes=[...document.querySelectorAll('main .js-cta')];
+   as duas vivem fora do <main>.
+
+   Os três botões da dobra do momento entram na vigilância mesmo sem
+   serem `.js-cta` — eles não recebem o link do grupo, mas SÃO pedidos
+   na tela, e a barra existe para garantir que só há um pedido visível
+   por vez. Sem isso o celular mostraria quatro de uma vez ali.       */
+const botoes=[...document.querySelectorAll('main .js-cta, main .niv-cta')];
 if(mcta && botoes.length && 'IntersectionObserver' in window){
   const naTela=new Set();
   /* Sem margem: um pixel de botão na tela e a barra sai. Descontar a
