@@ -1631,6 +1631,16 @@ section{position:relative;z-index:1}
   .mod-pilha{margin-top:var(--s7);min-height:0;margin-right:0;
     display:grid;grid-template-columns:1fr}
   .mod-pilha .fig{position:static;width:min(74vw,300px)}
+  /* A FOTO DEITA. Em retrato de 4/5 cada carta media ~440px de altura e
+     as três empilhadas passavam de 1100px — uma tela e meia de celular
+     para dizer que a peça é a mesma três vezes. Deitada em 3/2 a carta
+     cai para ~265px e a pilha inteira cabe numa tela.
+     O recorte é o preço: em paisagem a peça perde a barra. Então o corte
+     sobe (18%) e fica com o cabide, a gola, os ombros e o peito — que é
+     o que faz a foto ler como camiseta. Centrado, sobraria uma faixa de
+     tronco sem gola nem barra, e aí não lê como peça nenhuma. */
+  .mod-pilha .fig-in{aspect-ratio:3/2}
+  .mod-pilha .fig img{object-position:50% 18%}
   .mod-pilha .fig figcaption{text-align:center;padding-right:8px}
   .mod-pilha .fig:nth-child(1){z-index:3;justify-self:start;margin-top:0}
   .mod-pilha .fig:nth-child(2){z-index:2;justify-self:end;margin-top:calc(-1*var(--s6))}
