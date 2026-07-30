@@ -1220,7 +1220,14 @@ section{position:relative;z-index:1}
    é #FDFDFB em toda a página, então tinta que viaja com o fundo
    inverteria para branco na metade escura e sumiria no papel. É a
    mesma razão pela qual `.fig figcaption` já usa #22364a cravado.   */
-.niv-a{grid-column:1/9}
+/* 10 colunas, e não 8, porque acima de ~1400px de tela a pergunta
+   quebrava em duas linhas — e por um motivo que só aparece nas telas
+   GRANDES: o `.d2` é clamp(2.15rem, 3.4vw, 3.05rem) e o wrap trava em
+   1240. Passando de 1436 a fonte ainda cresce até o teto de 48,8px, o
+   contêiner já parou, e a coluna de 8 fica em 720 para um título que
+   pede 785. Com 10 a coluna vai a 908 e a pergunta fecha numa linha em
+   toda largura de desktop; no celular ela quebra, que é o certo. */
+.niv-a{grid-column:1/11}
 .niv-grid{grid-column:1/13;margin-top:var(--s7);
   display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);
   align-items:stretch}
@@ -2073,7 +2080,7 @@ section{position:relative;z-index:1}
   <div class="g12">
     <div class="niv-a">
       <p class="eyebrow label rv"><span class="n">02</span><span>O momento</span></p>
-      <h2 class="d2 rvl">Em que momento a sua <em>loja</em> está?</h2>
+      <h2 class="d2 rvl">Em que momento o seu <em>negócio</em> está?</h2>
     </div>
 
     <div class="niv-grid">
