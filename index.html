@@ -1233,32 +1233,56 @@ section{position:relative;z-index:1}
 .niv-card:nth-child(2){--gir:1.1deg}
 .niv-card:nth-child(3){--gir:-.7deg}
 
+/* O TÍTULO MORA NA FOTO, não na base. É a construção da referência: o
+   nome do momento pousa sobre a imagem, e a base branca fica só com a
+   frase e o pedido. Fonte SANS aqui, e não a serifada do resto dos
+   títulos — sobre imagem a Playfair perde haste fina no meio da textura
+   do tecido, e a Instrument em 620 aguenta qualquer fundo.
+
+   O VÉU é claro, não escuro. As três fotos são de estúdio claro (fundo
+   #AABED6, peça azul-marinho), então escurecer o pé da imagem para
+   receber texto branco deixaria uma tarja preta no meio de uma dobra
+   inteira de luz. Clareando, a tinta continua sendo a mesma da página e
+   o pé da foto vira névoa — nunca chega ao opaco, senão a foto perderia
+   a borda de baixo contra a base da Polaroid, que é branca também.   */
+.niv-foto{position:relative}
+.niv-t{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:var(--s7) 14px 13px;
+  font-family:var(--sans);font-variation-settings:'wght' 620;
+  font-size:1.24rem;line-height:1.26;letter-spacing:-.014em;
+  color:#071623;text-wrap:balance;
+  background:linear-gradient(180deg,
+    rgba(248,252,255,0) 0%,
+    rgba(248,252,255,.78) 38%,
+    rgba(248,252,255,.93) 100%)}
+
 /* O PLACEHOLDER — enquanto a foto não existe, a moldura não pode ficar
    vazia nem fingir foto. Hachura diagonal em cima do mesmo cinza que
    `.fig-in` já usa como fundo de imagem, com o nome do quadro no meio:
    lê como "aqui vai entrar uma foto", que é exatamente o que é.
    Sai inteiro quando as três imagens chegarem.                      */
-.niv-ph{display:flex;align-items:center;justify-content:center;text-align:center;
+.niv-ph{position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;text-align:center;
   background:repeating-linear-gradient(-45deg,
     #e4e7e3 0 2px, #eef0ec 2px 11px)}
 .niv-ph span{font-size:.7rem;line-height:1.7;font-variation-settings:'wght' 620;
   letter-spacing:.16em;text-transform:uppercase;color:#8d968c}
 
+/* A base da Polaroid é `figcaption`, e figcaption é serifado na página
+   inteira. Tudo que entra aqui declara a própria fonte — herdar foi o
+   que colocou botão em Playfair na primeira versão. */
 .niv-leg{flex:1;display:flex;flex-direction:column;
   padding:var(--s4) 14px var(--s5)}
-.niv-t{font-family:var(--serif);font-variation-settings:'wght' 540;
-  font-size:1.32rem;line-height:1.18;letter-spacing:-.014em;
-  color:#071623;margin-bottom:var(--s2);text-wrap:balance}
 .niv-p{font-size:1rem;line-height:1.58;margin-bottom:var(--s5);
   color:color-mix(in srgb,#071623 74%,#FDFDFB)}
 /* `margin-top:auto` é o que alinha os três botões; o respiro mínimo vem
    da margem da frase, para o card mais curto não colar texto e pedido.
-   O reset de borda e fonte existe porque este é o único `.cta` da
-   página que é <button>, e botão não herda tipografia sozinho.
-   O rótulo pode quebrar em duas linhas aqui: "Falar com quem
-   desenvolve" não cabe numa coluna de ~350px sem quebrar.           */
+   A fonte é declarada, e não herdada: `inherit` aqui pegava a serifada
+   do figcaption e estes eram os três únicos botões da página fora da
+   Instrument Sans. Botão não herda tipografia sozinho, e este é o único
+   `.cta` da página que é <button>, então o reset também é daqui.    */
 .niv-cta{margin-top:auto;padding:16px 20px;
-  border:0;font-family:inherit;text-align:left;cursor:pointer;
+  border:0;font-family:var(--sans);text-align:left;cursor:pointer;
   width:100%;justify-content:space-between}
 .niv-cta .lbl{white-space:normal}
 
@@ -1270,6 +1294,31 @@ section{position:relative;z-index:1}
   font-variation-settings:'wght' 500;
   font-size:clamp(1.28rem,1.7vw,1.6rem);line-height:1.32;
   letter-spacing:-.01em;color:var(--ink)}
+
+/* ── A PILHA COMEÇA CEDO, E NÃO EM 860 ──────────────────────────────
+   Três colunas param de funcionar aqui, e não no ponto onde o resto da
+   página desmonta. Em 900px de tela cada card mede 249, a frase vira
+   três linhas e o rótulo do botão quebra em duas — a dobra existe para
+   COMPARAR as três portas, e comparação com texto espremido não é
+   comparação. Então a pilha começa em 1050.
+
+   A coluna é travada em 560px porque o card é uma Polaroid: em largura
+   cheia de tablet ele viraria um pôster de 900px, e a moldura branca
+   deixaria de ler como foto pousada na página. Alinhado à esquerda, que
+   é onde vive todo o resto da página.
+
+   A foto deita junto. Em 4/5 numa coluna de 560 a imagem sozinha mede
+   700px de altura e a frase do card nasce fora da tela.              */
+@media (max-width:1050px){
+  .niv-grid{grid-template-columns:min(560px,100%);gap:var(--s6);
+    margin-top:var(--s6)}
+  .niv-card{--gir:-.4deg}
+  .niv-card .fig-in{aspect-ratio:3/2}
+  /* o véu de --s7 comeria metade de uma foto deitada; encurtado, ele
+     volta a ocupar o mesmo terço de baixo que ocupa no desktop */
+  .niv-t{padding-top:var(--s5)}
+  .niv-fecho{margin-top:var(--s6);text-align:left}
+}
 
 /* 03 · a troca — A PEÇA NO MEIO
    A dobra se chama "a troca" e não mostrava troca nenhuma: tinha uma
@@ -1741,20 +1790,6 @@ section{position:relative;z-index:1}
   .mod-folio{display:none}
   .mod-a .eyebrow .n{position:static;width:auto;height:auto;clip-path:none}
   .mod-vira{margin-top:var(--s7)}
-  /* ── 02 · O MOMENTO EM COLUNA ÚNICA ────────────────────────────────
-     Três cards em pilha, e a foto DEITA. Em retrato 4/5 cada card mede
-     quase uma tela inteira e as três portas passam a exigir três telas
-     de rolagem para serem comparadas — some justamente a comparação
-     que é o assunto da dobra. Em 3/2 os três cabem em pouco mais de
-     duas telas e o pedido de cada um nasce perto da frase dele.
-     É a mesma correção que a foto do hero já levou.
-
-     O giro cai para quase nada: em largura cheia, 1,4° jogam o canto
-     do card 9px para fora da margem e abrem rolagem horizontal. */
-  .niv-grid{grid-template-columns:1fr;gap:var(--s6);margin-top:var(--s6)}
-  .niv-card{--gir:-.4deg!important}
-  .niv-card .fig-in{aspect-ratio:3/2}
-  .niv-fecho{margin-top:var(--s6)}
   /* ── 03 EM COLUNA ÚNICA ─────────────────────────────────────────────
      A comparação lado a lado não sobrevive a 375px: duas colunas de
      texto viram duas colunas de uma palavra. Então a tabela desmonta e
@@ -2041,28 +2076,34 @@ section{position:relative;z-index:1}
 
     <div class="niv-grid">
       <figure class="fig niv-card rv">
-        <div class="fig-in niv-ph" aria-hidden="true"><span>Foto 01<br>primeira etiqueta</span></div>
-        <figcaption class="niv-leg">
+        <div class="fig-in niv-foto">
+          <div class="niv-ph" aria-hidden="true"><span>Foto 01<br>primeira etiqueta</span></div>
           <h3 class="niv-t">A marca ainda não é sua</h3>
-          <p class="niv-p">Hoje você compra pronto e revende. Começar com marca própria custa menos peça do que parece.</p>
+        </div>
+        <figcaption class="niv-leg">
+          <p class="niv-p">Hoje você revende. Marca própria custa menos peça do que parece.</p>
           <button class="cta niv-cta" type="button"><span class="lbl">Responder 4 perguntas</span><span class="arw">&#8594;</span></button>
         </figcaption>
       </figure>
 
       <figure class="fig niv-card rv">
-        <div class="fig-in niv-ph" aria-hidden="true"><span>Foto 02<br>coleção própria</span></div>
-        <figcaption class="niv-leg">
+        <div class="fig-in niv-foto">
+          <div class="niv-ph" aria-hidden="true"><span>Foto 02<br>coleção própria</span></div>
           <h3 class="niv-t">A marca já é sua</h3>
-          <p class="niv-p">Você aplica em peça pronta e funciona. Coleção do zero — tecido, modelagem, ficha técnica — é o passo que ainda não deu.</p>
+        </div>
+        <figcaption class="niv-leg">
+          <p class="niv-p">Você aplica em peça pronta. Coleção do zero é o passo que falta.</p>
           <button class="cta niv-cta" type="button"><span class="lbl">Falar com a consultoria</span><span class="arw">&#8594;</span></button>
         </figcaption>
       </figure>
 
       <figure class="fig niv-card rv">
-        <div class="fig-in niv-ph" aria-hidden="true"><span>Foto 03<br>produção em escala</span></div>
-        <figcaption class="niv-leg">
+        <div class="fig-in niv-foto">
+          <div class="niv-ph" aria-hidden="true"><span>Foto 03<br>produção em escala</span></div>
           <h3 class="niv-t">A produção já passou do fornecedor</h3>
-          <p class="niv-p">Você produz com a sua marca todo mês, em volume. Nessa faixa, prazo e condição se negociam direto.</p>
+        </div>
+        <figcaption class="niv-leg">
+          <p class="niv-p">Você já produz em volume. Prazo e condição se negociam direto.</p>
           <button class="cta niv-cta" type="button"><span class="lbl">Falar direto com o dono</span><span class="arw">&#8594;</span></button>
         </figcaption>
       </figure>
