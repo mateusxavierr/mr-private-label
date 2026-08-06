@@ -1075,11 +1075,17 @@ section{position:relative;z-index:1}
    deveria ter que mirar. A caixa clicável tem 38px, o desenho dentro
    dela tem 13 — dedo acha, olho não tropeça. A margem negativa devolve
    à linha o espaço que o alvo ocupa, senão o marcador engordava de 6px
-   para 38 e empurrava a cartela inteira para baixo.                  */
+   para 38 e empurrava a cartela inteira para baixo.
+
+   Nasceram na cor apagada dos pontos e sumiam: seta que ninguém enxerga
+   não é atalho, é enfeite. Ficam no azul da marca em repouso e fecham
+   no preto ao encostar — escuras nos dois estados, com o preto reservado
+   ao ponto da vez e ao gesto, que é onde ele ainda significa alguma
+   coisa.                                                             */
 .marc-nav{display:flex;align-items:center}
 .seta{width:38px;height:38px;margin-block:-11px;
   display:grid;place-items:center;padding:0;border:0;background:none;
-  color:var(--fld);cursor:pointer;
+  color:var(--soft);cursor:pointer;
   transition:color .35s var(--ease),transform .35s var(--ease)}
 .seta svg{width:13px;height:13px;fill:none;stroke:currentColor;
   stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
