@@ -1069,6 +1069,23 @@ section{position:relative;z-index:1}
 .pt:hover i{background:var(--soft)}
 .pt[aria-current="true"]{width:22px}
 .pt[aria-current="true"] i{background:var(--ink)}
+
+/* As duas setas fazem o que os pontos já faziam, sem exigir pontaria:
+   ponto de 6px é alvo de precisão, e quem só quer ver a próxima peça não
+   deveria ter que mirar. A caixa clicável tem 38px, o desenho dentro
+   dela tem 13 — dedo acha, olho não tropeça. A margem negativa devolve
+   à linha o espaço que o alvo ocupa, senão o marcador engordava de 6px
+   para 38 e empurrava a cartela inteira para baixo.                  */
+.marc-nav{display:flex;align-items:center}
+.seta{width:38px;height:38px;margin-block:-11px;
+  display:grid;place-items:center;padding:0;border:0;background:none;
+  color:var(--fld);cursor:pointer;
+  transition:color .35s var(--ease),transform .35s var(--ease)}
+.seta svg{width:13px;height:13px;fill:none;stroke:currentColor;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.seta:hover,.seta:focus-visible{color:var(--ink)}
+.seta--ant:hover{transform:translateX(-2px)}
+.seta--pos:hover{transform:translateX(2px)}
 .conta{white-space:nowrap;font-variant-numeric:tabular-nums}
 .conta b{font-variation-settings:'wght' 620;color:var(--ink)}
 .conta i{font-style:normal;opacity:.45;margin-inline:.25em}
@@ -1996,7 +2013,15 @@ section{position:relative;z-index:1}
              produto, está decidindo se fala com a fábrica. O indicador só
              precisa dizer que existe mais coisa e onde ela está. -->
         <div class="hero-marcador rv" style="--d:920ms">
-          <div class="pontos" id="pontos" role="group" aria-label="Trocar a peça da vitrine"></div>
+          <div class="marc-nav" id="marc-nav">
+            <button type="button" class="seta seta--ant" data-vit="-1" aria-label="Peça anterior">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>
+            </button>
+            <div class="pontos" id="pontos" role="group" aria-label="Trocar a peça da vitrine"></div>
+            <button type="button" class="seta seta--pos" data-vit="1" aria-label="Próxima peça">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
           <span class="conta label" aria-hidden="true"><b id="peca-i">01</b><i>/</i>13</span>
         </div>
       </div>
@@ -2789,6 +2814,7 @@ const RODA = 3200;
   const palco=document.getElementById('vitrine');
   if(!palco) return;
   const fila=document.getElementById('pontos');
+  const nav=document.getElementById('marc-nav');
   const conta=document.getElementById('peca-i');
 
   /* a máscara que veste a peça depende de --rev animar, e propriedade
@@ -2890,12 +2916,12 @@ const RODA = 3200;
     /* o rodízio para com o dedo ou o teclado na FIGURA e na CARTELA, e
        só nelas: parar a troca porque o mouse encostou no botão de entrar
        no grupo leria como página travada */
-    [palco,fila].forEach(alvo=>{
+    [palco,nav].forEach(alvo=>{
       alvo.addEventListener('mouseenter',para);
       alvo.addEventListener('mouseleave',segura);
     });
-    fila.addEventListener('focusin',para);
-    fila.addEventListener('focusout',segura);
+    nav.addEventListener('focusin',para);
+    nav.addEventListener('focusout',segura);
     /* e para de vez quando a aba sai de foco — animação em aba escondida
        é bateria queimada à toa */
     addEventListener('visibilitychange',()=>
@@ -2927,6 +2953,16 @@ const RODA = 3200;
     e.preventDefault();
     const i=(atual+d+PECAS.length)%PECAS.length;
     mostra(i); botoes[i].focus(); segura();
+  });
+
+  /* As setas pulam uma peça para cada lado e dão a volta nas pontas. Não
+     roubam o foco de lugar nenhum: quem clicou na seta continua na seta,
+     e pode clicar de novo sem procurar o botão outra vez. */
+  nav.querySelectorAll('.seta').forEach(b=>{
+    b.addEventListener('click',()=>{
+      mostra((atual + +b.dataset.vit + PECAS.length)%PECAS.length);
+      segura();
+    });
   });
 
   /* as doze restantes só começam a baixar depois que a página terminou:
