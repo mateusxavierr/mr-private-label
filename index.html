@@ -40,8 +40,10 @@
      ela vira tira estreita ou é descartada por proporção.
      `og:image` PRECISA ser absoluta — caminho relativo é descartado por
      boa parte dos raspadores. Como o domínio ainda não foi decidido, ela
-     aponta para o GitHub Pages, que é onde a página está hoje. Quando o
-     domínio entrar, esta URL e a `og:url` mudam juntas.
+     aponta para o Cloudflare Pages, que é onde a página está hoje e é o
+     destino de produção nos dois caminhos em estudo (subdomínio ou
+     /comercial). Quando o domínio entrar, esta URL e a do 404.html mudam
+     juntas — são as duas únicas absolutas do projeto.
      `og:url` e `canonical` ficam de fora por enquanto: sem `og:url` o
      raspador usa a própria URL pedida, que está sempre certa; com uma
      errada, ele passa a insistir na errada.

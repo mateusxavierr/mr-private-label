@@ -1,0 +1,27 @@
+# ⚠ ARQUIVO TEMPORÁRIO — APAGAR QUANDO O DOMÍNIO DEFINITIVO ENTRAR.
+#
+# mr-private-label.pages.dev é endereço de revisão, não o endereço do cliente.
+# Indexado, ele passa a competir com o domínio final pelos mesmos termos e com
+# o mesmo conteúdo: duas URLs disputando a mesma página, e o Google escolhendo
+# qual das duas mostra.
+#
+# O bloqueio vale para buscador, NÃO para prévia de link. Os raspadores de
+# WhatsApp, Facebook e Twitter ficam liberados de propósito: o funil desta
+# página é link colado em conversa, e é assim que a revisão é feita hoje.
+# Sem as três exceções abaixo, o link compartilhado apareceria sem imagem e
+# sem título, e pareceria bug do og:image.
+#
+# Quando comercial.mrprivatelabel.com.br (ou o /comercial) entrar no ar:
+# apagar este arquivo inteiro. O `noindex` do 404.html é outra coisa e fica.
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: *
+Disallow: /

@@ -20,9 +20,19 @@ python3 -m http.server 4501 --bind 127.0.0.1
 
 ```
 index.html   página inteira: markup + CSS + JS
+404.html     página de erro, mesmo sistema visual, CSS próprio
 img/         5 fotos, recortadas dos materiais da marca
 fonts/       8 faces em woff2, subsetadas (latin e latin-ext)
+robots.txt   TEMPORÁRIO — some quando o domínio definitivo entrar
+_redirects   regra de build do Cloudflare; não vai para o ar
 ```
+
+O `404.html` repete os tokens do `index.html` em vez de importar: são dois
+arquivos sem build entre eles, e um CSS compartilhado viraria um request a mais
+numa página que quase ninguém abre. O que ele **não** pode fazer é usar caminho
+relativo — o Cloudflare serve essa página a partir de qualquer endereço que não
+existe, e em `/a/b/c` um `fonts/x.woff2` viraria `/a/b/fonts/x.woff2`. Todo
+`href` e `url()` dele começa com barra.
 
 ## Pendência que trava a publicação
 

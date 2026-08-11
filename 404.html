@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página não encontrada · MR Private Label</title>
+<meta name="description" content="O endereço não existe. Voltar para a página da MR Private Label, fábrica de roupa masculina com marca própria.">
+
+<!-- ══ NÃO INDEXAR ═════════════════════════════════════════════════════
+     Página de erro não entra em busca. Sem isto ela concorre com a
+     landing pelos mesmos termos e aparece no Google como se fosse
+     conteúdo. O `noindex` é da própria página; o `robots.txt` da raiz
+     resolve outra coisa (o endereço de revisão inteiro) e sai quando o
+     domínio definitivo entrar — este aqui fica para sempre. -->
+<meta name="robots" content="noindex, follow">
+
+<!-- ══ CAMINHOS ABSOLUTOS, SEM EXCEÇÃO ═════════════════════════════════
+     O index.html é servido só da raiz, então lá `fonts/x.woff2` resolve.
+     Esta página é servida a partir de QUALQUER endereço que não existe —
+     em /a/b/c um caminho relativo viraria /a/b/fonts/x.woff2 e a página
+     abriria sem fonte, sem ícone e com o botão levando para /a/b/. Todo
+     href e url() daqui começa com barra. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#2D4E71">
+
+<!-- ══ PRÉVIA SOCIAL ═══════════════════════════════════════════════════
+     Mesmo cartão da landing, de propósito. Um link quebrado colado no
+     WhatsApp — que é o canal do funil — continua mostrando a marca em
+     vez de cair no raspador padrão e virar prévia vazia. `og:image`
+     precisa ser absoluta e acompanha a da landing: quando o domínio
+     definitivo entrar, as duas mudam juntas. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="MR Private Label">
+<meta property="og:title" content="Página não encontrada · MR Private Label">
+<meta property="og:description" content="O endereço não existe. Voltar para a página da MR Private Label.">
+<meta property="og:image" content="https://mr-private-label.pages.dev/img/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O símbolo “mr” em tamanho de pôster ao fundo, a frase “Nossa fábrica. Sua marca na peça.” à frente, e um modelo vestindo camiseta oversized azul escura de produção própria da MR.">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+/* ══ SISTEMA ═══════════════════════════════════════════════════════════
+   Os tokens abaixo são cópia literal do :root do index.html — mesma
+   paleta do brandbook, mesma escala de espaço, mesma curva. A landing
+   reescreve --bg/--ink/--accent por JS a cada quadro da rolagem; aqui
+   não há rolagem, então ficam na parada 0 (hero), que é o branco.
+
+   Só entra o que esta página usa. As 8 faces da landing viram 5: sem
+   itálico de Instrument Sans e sem os pesos que nenhum texto daqui pede. */
+:root{
+  --bg:#F8FCFF;      /* Branco */
+  --ink:#071623;     /* Preto  */
+  --soft:#2D4E71;    /* Azul   */
+  --accent:#2D4E71;  /* Azul   */
+
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Instrument Sans',system-ui,-apple-system,sans-serif;
+
+  --s3:16px; --s4:24px; --s5:32px; --s6:48px;
+  --pad:clamp(24px,5vw,72px);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+
+  --grao:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.19'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23g%29'/%3E%3C/svg%3E");
+}
+
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;
+  src:url(/fonts/pf-rm-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;
+  src:url(/fonts/pf-rm-latinext.woff2) format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:swap;
+  src:url(/fonts/pf-it-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url(/fonts/is-rm-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url(/fonts/is-rm-latinext.woff2) format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;
+  background-color:var(--bg);background-image:var(--grao);background-size:160px 160px}
+body{margin:0;font-family:var(--sans);color:var(--ink);
+  font-synthesis-weight:none;-webkit-font-smoothing:antialiased}
+
+main{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:var(--pad);max-width:840px}
+
+/* ══ TIPOGRAFIA ════════════════════════════════════════════════════════
+   .eyebrow, .label, .d1 e .lead são os mesmos da landing. O 404 ocupa o
+   lugar do número de seção ("01 · O modelo"), que é como a página já
+   numera as dobras — o erro entra no sistema em vez de inventar um
+   selo próprio. */
+.eyebrow{display:flex;align-items:baseline;gap:var(--s3);margin:0 0 var(--s4)}
+.label{font-size:.75rem;line-height:1.4;font-variation-settings:'wght' 620;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.eyebrow .n{color:var(--ink)}
+
+.d1{margin:0;font-family:var(--serif);font-variation-settings:'wght' 500;
+  font-size:clamp(3rem,5.4vw,4.9rem);line-height:1.06;letter-spacing:-.024em;
+  text-wrap:balance}
+.d1 em{font-family:var(--serif);font-style:italic;color:var(--accent);
+  font-variation-settings:'wght' 500}
+
+.lead{margin:var(--s4) 0 0;max-width:44ch;
+  font-size:clamp(1.25rem,1.5vw,1.5rem);line-height:1.48;letter-spacing:-.006em;
+  color:var(--soft)}
+
+/* ══ BOTÃO ═════════════════════════════════════════════════════════════
+   Cópia literal do .cta da landing, incluindo a cortina que sobe no
+   hover e a seta que anda 6px. É o mesmo objeto, não uma imitação. */
+.cta{position:relative;display:inline-flex;align-items:center;gap:14px;
+  align-self:flex-start;margin-top:var(--s6);
+  padding:18px 30px;background:#071623;color:#F8FCFF;text-decoration:none;
+  overflow:hidden;isolation:isolate;
+  transition:color .45s var(--ease),background-color .5s var(--ease)}
+.cta .lbl{position:relative;z-index:2;font-size:.75rem;font-variation-settings:'wght' 620;
+  letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.cta .arw{position:relative;z-index:2;transition:transform .55s var(--ease)}
+.cta::before{content:"";position:absolute;inset:0;z-index:1;
+  background:color-mix(in srgb,#071623 66%,#F8FCFF);
+  transform:translateY(101%);transition:transform .55s var(--ease)}
+.cta:hover::before{transform:translateY(0)}
+.cta:hover .arw{transform:translateX(6px)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+@media (max-width:560px){
+  .cta{width:100%;justify-content:space-between}
+}
+@media (prefers-reduced-motion:reduce){
+  .cta,.cta::before,.cta .arw{transition:none}
+}
+</style>
+</head>
+<body>
+
+<main>
+  <p class="eyebrow label"><span class="n">404</span><span>Página não encontrada</span></p>
+  <h1 class="d1">Essa página <em>saiu de linha</em>.</h1>
+  <p class="lead">O endereço que você abriu não existe mais — ou nunca existiu.</p>
+  <a class="cta" href="/"><span class="lbl">Voltar para o início</span><span class="arw">&#8594;</span></a>
+</main>
+
+</body>
+</html>

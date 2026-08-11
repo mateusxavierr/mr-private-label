@@ -1,0 +1,15 @@
+# Cloudflare Pages serve TUDO que está versionado, e o repositório tem três
+# arquivos que não são o site: as notas do projeto, o .gitignore e o gerador do
+# cartão social. Publicados, eles vão junto quando o domínio do cliente apontar
+# para cá — comercial.mrprivatelabel.com.br/README.md abrindo nota de trabalho
+# é lixo na vitrine do cliente.
+#
+# Resposta é 404, não redirecionamento para a home: esses endereços não deveriam
+# existir, e quem chega neles é robô ou curioso, não visitante perdido. Mandar
+# para a home fingiria que o arquivo virou outra coisa.
+#
+# Este arquivo é consumido pela build e não vai para o ar.
+
+/README.md     /404.html  404
+/.gitignore    /404.html  404
+/tools/*       /404.html  404
