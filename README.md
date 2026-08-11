@@ -35,7 +35,32 @@ const GRUPO_URL = "#PENDENTE-LINK-GRUPO";
 
 Todos os botões com a classe `js-cta` recebem esse valor no carregamento.
 
+## Publicação
+
+O destino de produção é o **Cloudflare Pages** — site estático, deploy a cada
+push na `main`, sem build. O GitHub Pages foi só a hospedagem de revisão e sai
+de cena quando o endereço definitivo entrar.
+
+O endereço que o cliente vê ainda está em decisão, e a escolha muda só a última
+etapa — a hospedagem é a mesma nos dois casos:
+
+| Endereço | Como o domínio chega na página |
+|---|---|
+| `comercial.mrprivatelabel.com.br` | um registro CNAME no DNS, criado uma vez |
+| `mrprivatelabel.com.br/comercial` | um Worker de proxy na conta Cloudflare de quem hospeda o site principal |
+
+O DNS de `mrprivatelabel.com.br` está no Cloudflare de terceiro (a agência que
+mantém o site principal), então qualquer um dos dois caminhos depende de um
+pedido a eles. O servidor de origem roteia **todas** as URLs pela aplicação PHP
+deles — inclusive `.js` e `.svg` — então subir uma pasta `comercial/` por FTP
+não funcionaria.
+
+O `og:image` aponta para `mr-private-label.pages.dev`, que existe nos dois
+cenários. Se o projeto no Cloudflare Pages nascer com outro nome, corrigir a
+tag junto.
+
 ## Estado
 
-Pré-produção. A página está no ar via GitHub Pages para revisão, com o botão
-de conversão ainda apontando para o placeholder acima.
+Pré-produção. O botão de conversão ainda aponta para o placeholder acima, e a
+página segue indexável — decidir entre `noindex` no endereço de revisão ou
+publicar de vez quando o link do grupo entrar.
