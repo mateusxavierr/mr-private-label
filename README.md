@@ -34,6 +34,11 @@ relativo — o Cloudflare serve essa página a partir de qualquer endereço que 
 existe, e em `/a/b/c` um `fonts/x.woff2` viraria `/a/b/fonts/x.woff2`. Todo
 `href` e `url()` dele começa com barra.
 
+⚠️ **O path do símbolo `mr` (`<g id="mrg">`) está duplicado nos dois arquivos.**
+É o preço de não ter build: um `.svg` externo custaria um request a mais e
+impediria o `currentColor`. Se o símbolo mudar no `index.html`, **mudar no
+`404.html` junto** — nada avisa.
+
 ## Pendência que trava a publicação
 
 Os CTAs apontam para um placeholder. O link real do grupo entra em **um lugar
