@@ -4,12 +4,18 @@
 # para cá — comercial.mrprivatelabel.com.br/README.md abrindo nota de trabalho
 # é lixo na vitrine do cliente.
 #
-# Resposta é 404, não redirecionamento para a home: esses endereços não deveriam
-# existir, e quem chega neles é robô ou curioso, não visitante perdido. Mandar
-# para a home fingiria que o arquivo virou outra coisa.
+# O destino é a home, não o 404. A primeira versão deste arquivo mandava as três
+# linhas para /404.html com status 404, que é a resposta honesta — esses
+# endereços não deveriam existir. Não funciona: o _redirects do Pages só aceita
+# 3xx e o 200 de proxy, então as linhas com 404 foram ignoradas em silêncio e os
+# arquivos continuaram no ar. Verificado no deploy de 2026-08-11.
+#
+# Quem chega nesses endereços é robô ou curioso, nunca visitante do funil, então
+# cair na landing não atrapalha ninguém. A página 404 continua existindo e
+# atende o que importa: endereço digitado errado.
 #
 # Este arquivo é consumido pela build e não vai para o ar.
 
-/README.md     /404.html  404
-/.gitignore    /404.html  404
-/tools/*       /404.html  404
+/README.md     /  301
+/.gitignore    /  301
+/tools/*       /  301
