@@ -56,19 +56,41 @@ O destino de produção é o **Cloudflare Pages** — site estático, deploy a c
 push na `main`, sem build. O GitHub Pages foi só a hospedagem de revisão e sai
 de cena quando o endereço definitivo entrar.
 
-O endereço que o cliente vê ainda está em decisão, e a escolha muda só a última
-etapa — a hospedagem é a mesma nos dois casos:
+O endereço é **`comercial.mrprivatelabel.com.br`** (decisão de Mateus,
+2026-08-11). O caminho alternativo, `mrprivatelabel.com.br/comercial`, foi
+descartado: exigiria um Worker de proxy morando na conta Cloudflare da agência
+que mantém o site principal, o que é dependência permanente de terceiro para
+uma página que passa a depender deles até para continuar existindo. O
+subdomínio custa um registro de DNS, criado uma vez.
 
-| Endereço | Como o domínio chega na página |
-|---|---|
-| `comercial.mrprivatelabel.com.br` | um registro CNAME no DNS, criado uma vez |
-| `mrprivatelabel.com.br/comercial` | um Worker de proxy na conta Cloudflare de quem hospeda o site principal |
+O DNS de `mrprivatelabel.com.br` está no Cloudflare dessa agência, então mesmo o
+subdomínio depende de um pedido a eles:
 
-O DNS de `mrprivatelabel.com.br` está no Cloudflare de terceiro (a agência que
-mantém o site principal), então qualquer um dos dois caminhos depende de um
-pedido a eles. O servidor de origem roteia **todas** as URLs pela aplicação PHP
-deles — inclusive `.js` e `.svg` — então subir uma pasta `comercial/` por FTP
-não funcionaria.
+```
+Tipo: CNAME · Nome: comercial · Valor: mr-private-label.pages.dev
+Proxy: DNS only (nuvem cinza) · TTL: Auto
+```
+
+O "DNS only" não é detalhe: com o proxy laranja ligado, o Cloudflare Pages não
+consegue validar o domínio e o certificado nunca é emitido.
+
+Registrado para quem for investigar de novo: o servidor de origem do site
+principal roteia **todas** as URLs pela aplicação PHP da agência, inclusive
+`.js` e `.svg` (verificado em 2026-08-11 — os assets voltam com `PHPSESSID` e
+sem `etag`). Subir uma pasta `comercial/` por FTP nunca teria funcionado.
+
+### Ordem da virada
+
+A infraestrutura pode subir antes da página estar pronta para tráfego. O que
+**não** pode acontecer antes do `GRUPO_URL` real entrar é a página ficar
+visível para busca ou ser divulgada, porque os CTAs não levam a lugar nenhum.
+
+1. Adicionar `comercial.mrprivatelabel.com.br` em Custom domains no projeto do
+   Cloudflare Pages.
+2. Pedir o CNAME acima à agência.
+3. Domínio validado e SSL emitido: trocar o `og:image` nos **dois** arquivos
+   (`index.html` e `404.html`) para o domínio novo.
+4. **Só depois do link do grupo entrar:** apagar o `robots.txt` e divulgar.
 
 O `og:image` aponta para `mr-private-label.pages.dev`, que existe nos dois
 cenários. Se o projeto no Cloudflare Pages nascer com outro nome, corrigir a

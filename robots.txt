@@ -11,8 +11,16 @@
 # Sem as três exceções abaixo, o link compartilhado apareceria sem imagem e
 # sem título, e pareceria bug do og:image.
 #
-# Quando comercial.mrprivatelabel.com.br (ou o /comercial) entrar no ar:
-# apagar este arquivo inteiro. O `noindex` do 404.html é outra coisa e fica.
+# QUANDO APAGAR: não é quando o domínio entrar, é quando a página estiver
+# pronta para receber gente. O endereço definitivo é
+# comercial.mrprivatelabel.com.br (decisão de Mateus, 2026-08-11), e a
+# infraestrutura sobe antes — mas enquanto GRUPO_URL for o placeholder, os
+# quatro CTAs não levam a lugar nenhum. Indexar uma página de conversão com
+# botão morto é pior do que não indexar: o Google guarda a versão quebrada e
+# o primeiro lojista que chegar clica no vazio.
+#
+# Ordem: link do grupo entra → apagar este arquivo → divulgar.
+# O `noindex` do 404.html é outra coisa e fica para sempre.
 
 User-agent: facebookexternalhit
 Allow: /
