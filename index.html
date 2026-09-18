@@ -1506,6 +1506,14 @@ section{position:relative;z-index:1}
 .foot p:nth-child(1){grid-column:1/6}
 .foot p:nth-child(2){grid-column:6/10}
 .foot p:nth-child(3){grid-column:10/13}
+/* selo da agência, na linha do ©. O fecho é Preto, então o logo é a
+   versão de "digital" branco; o rótulo usa --soft (Azul 30% sobre
+   Preto, 10,6:1). O hover só troca a cor — nada se move. */
+.foot-mxc{display:flex;align-items:center;gap:.5rem;width:max-content;
+  margin-top:var(--s2);color:var(--soft);text-decoration:none;
+  font-family:var(--sans);font-size:.875rem;transition:color .2s}
+.foot-mxc:hover{color:var(--ink)}
+.foot-mxc img{height:26px;width:auto}
 
 /* barra fixa mobile */
 /* ══ A BARRA DE CONVERSÃO DO CELULAR ═══════════════════════════════
@@ -2359,7 +2367,9 @@ section{position:relative;z-index:1}
     <footer class="foot">
       <p>Empresa aberta em 03/08/2021, com fábrica própria em Taquaritinga do Norte, Pernambuco.</p>
       <p>Instagram: @mr.privatelabel · 80,3 mil seguidores</p>
-      <p>© 2026 MR Private Label</p>
+      <p>© 2026 MR Private Label
+        <a class="foot-mxc" href="https://mxcdigital.com.br" target="_blank" rel="noopener" aria-label="Feito por MXC Digital (abre em nova aba)"><span>Feito por</span><img src="img/mxc-logo-claro.webp" width="281" height="64" alt="" loading="lazy" decoding="async"></a>
+      </p>
     </footer>
   </div>
 </section>
