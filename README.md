@@ -39,16 +39,17 @@ existe, e em `/a/b/c` um `fonts/x.woff2` viraria `/a/b/fonts/x.woff2`. Todo
 impediria o `currentColor`. Se o símbolo mudar no `index.html`, **mudar no
 `404.html` junto** — nada avisa.
 
-## Pendência que trava a publicação
+## Link do grupo
 
-Os CTAs apontam para um placeholder. O link real do grupo entra em **um lugar
-só**, a constante no topo do `<script>`:
+O link do grupo de WhatsApp mora em **um lugar só**, a constante no topo do
+`<script>` (entrou em 2026-10-05):
 
 ```js
-const GRUPO_URL = "#PENDENTE-LINK-GRUPO";
+const GRUPO_URL = "https://chat.whatsapp.com/Lcc3SPFlFLx5NvgtlSBc1Z";
 ```
 
-Todos os botões com a classe `js-cta` recebem esse valor no carregamento.
+Todos os botões com a classe `js-cta` recebem esse valor no carregamento. Se o
+grupo trocar de link (ou o convite for redefinido no WhatsApp), muda só aqui.
 
 ## Publicação
 
@@ -98,6 +99,6 @@ tag junto.
 
 ## Estado
 
-Pré-produção. O botão de conversão ainda aponta para o placeholder acima, e a
-página segue indexável — decidir entre `noindex` no endereço de revisão ou
-publicar de vez quando o link do grupo entrar.
+Link do grupo no ar (2026-10-05): os CTAs já levam ao WhatsApp. Falta a virada
+de domínio — `comercial.mrprivatelabel.com.br` ainda não responde, então o
+`robots.txt` fica até os passos 1–3 da ordem acima; aí apaga e divulga.
