@@ -10,7 +10,7 @@ tags: [mxc, mr-private-label, seo]
 · não valem: `[local]` `[loja]` `[ref]` `[UE]` `[plano]` `[plano 597]` `[blog]` `[portal]` `[evento]` `[saas]` `[vagas]` `[hotel]`
 **Plano:** nenhum (landing R$ 750, quitada; vault `projetos/mxc/financeiro.md`) · **Data:** 10/10/2026 · **molde:** `seo-mxc/SEO-MXC.md`
 
-**Atualizada pra lista de 344 itens em 10/10/2026** · 344 itens · 27 feitos · 180 N/A · 137 abertos
+**Atualizada pra lista de 346 itens em 10/10/2026** · 346 itens · 27 feitos · 182 N/A · 137 abertos
 
 "O que falta de SEO na MR?" = esta ficha. Contexto: [README.md](README.md) ("Publicação" e "Ordem da virada").
 
@@ -241,6 +241,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [x] L.47 Loja que vende o que é proibido a menor: trava de idade N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.42 Moda no Merchant (roupa, calçado, acessório) N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.43 Condição e marca certas no feed e no dado estruturado N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
+- [x] L.51 `[loja]` Kit ou combo montado pela loja marcado no Merchant (`multipack`/`is_bundle`) N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.44 Suplemento ou alimento: título, descrição, alt, perguntas e categoria só com alegação aprovada… N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 
 ### `[ref]` Reformulação ou migração
@@ -344,6 +345,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [x] 4.38 `[local]` Notificações do Perfil chegando no e-mail do cliente e da MXC, com a regra escrita… N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.39 `[local]` Negócio que ainda vai abrir N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.40 `[local]` Redes oficiais no campo "Perfis de redes sociais" do Perfil da Empresa N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
+- [x] 4.43 `[local]` GA4 vinculado ao Perfil da Empresa N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 
 ### Quem é a marca (Google e IAs)
 
