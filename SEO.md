@@ -77,7 +77,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 1.05 Links `<a href>`: os 8 CTAs nascem `href="#"` e o link do grupo só entra por JS (index.html:1984, 2391-2392); os 3 botões da dobra 02 são `<button>` sem destino (index.html:2140, 2156, 2172) (MXC: `GRUPO_URL` direto no `href`; destino dos 3 botões no 1.93)
 - [ ] 1.06 Canônica: ausente de propósito até o domínio entrar (comentário em index.html:47-49; conferir-seo ❌) (MXC: `https://comercial.mrprivatelabel.com.br/` na virada)
 - [ ] 1.07 Prévia de link: título, descrição e imagem 1200×630 com width/height/type/alt (index.html:52-62; `img/og.jpg` 1200×630, 200 na prévia, curl 10/10); falta `og:url` e a imagem aponta pro `pages.dev` (MXC: trocar nos 2 arquivos na virada, README "Ordem da virada" passo 3)
-- [ ] 1.08 Ícone: `favicon.ico` tem 16/32/48 mas é declarado `sizes="32x32"`, e o PNG grande declarado com `rel="icon"` não existe (só `.ico`, `.svg` e o `apple-touch-icon.png` 180×180, index.html:33-35; `favicon-32.png` solto no repo) (MXC: PNG quadrado ≥48 com `rel="icon"` e `sizes` certo no `.ico`, nos 2 arquivos)
+- [ ] 1.08 Ícone: `favicon.ico` tem 16/32/48 mas é declarado `sizes="32x32"`, e o PNG grande declarado com `rel="icon"` não existe (só `.ico`, `.svg` e o `apple-touch-icon.png` 180×180, index.html:31-33; `favicon-32.png` solto no repo) (MXC: PNG quadrado ≥48 com `rel="icon"` e `sizes` certo no `.ico`, nos 2 arquivos)
 - [x] 1.09 `lang="pt-BR"` (index.html:2) e títulos sem pular nível, h1 → h2 → h3 (index.html:2019-2359) — 10/10
 - [ ] 1.10 Alt: as fotos de conteúdo têm alt descritivo (index.html:2136, 2152, 2168, 2224, 2295, 2328); a foto do hero tem `alt=""` com o rótulo num `div role="img"` (index.html:2010-2011), que o Google não lê como alt (MXC: alt na `<img>` do hero)
 - [ ] 1.11 Dados estruturados: nenhum JSON-LD (grep 0; conferir-seo ⚠️) (MXC: `Organization` da fábrica com endereço e redes, só o que está na tela)
@@ -100,7 +100,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 1.48 Perguntas reais com resposta direta: não há bloco de perguntas (cliente: dúvidas do WhatsApp, 0.18; MXC: subtítulo + resposta em 1-2 frases)
 - [x] 1.49 Afirmação comercial com prova: sem superlativo nem depoimento; números com fonte registrada (CLAUDE.md "Fatos de prova social") — 10/10
 - [x] 1.50 Links externos: só o grupo e o selo MXC; nenhum dado de terceiro citado, link pago ou área de visitante (index.html:2372, 2391) — 10/10
-- [x] 1.51 Marca, serviço e cidade por extenso: "MR Private Label", "roupa masculina", "Taquaritinga do Norte, Pernambuco" (index.html:7, 2367); um assunto por endereço — 10/10
+- [x] 1.51 Marca, serviço e cidade por extenso: "MR Private Label", "roupa masculina", "Taquaritinga do Norte, Pernambuco" (index.html:7, 2368); um assunto por endereço — 10/10
 - [x] 1.52 Endereço da página: só `/` no subdomínio `comercial` — 10/10
 - [ ] 1.53 Imagem em `<img src>` com `src` de reserva no `srcset` (index.html:2011, 2133-2139); sem `license`/`creator` nas fotos (MXC: baixa)
 - [x] 1.54 Conteúdo atrás de clique no HTML: os 4 passos com painel estão no markup (index.html:2264-2291); lazy só abaixo da dobra, hero com `fetchpriority="high"` (index.html:2011) — 10/10
@@ -168,9 +168,9 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 1.22 Cabeçalhos de segurança: só `x-content-type-options` e `referrer-policy`; sem HSTS, CSP nem `frame-ancestors` (curl -I 10/10) (MXC: `_headers`; HSTS em escada só no domínio)
 - [x] 1.23 Código versionado em `github.com/mateusxavierr/mr-private-label` (git remote) — 10/10
 - [ ] 1.24 Verificador verde: `conferir-seo` com 6 falhas e 4 avisos (seção Conferidor) (MXC: zerar antes de abrir pro Google)
-- [ ] 1.95 Endereço num lugar só: o `og:image` está escrito à mão em 2 arquivos (index.html:58, 404.html:39) e não há canônica nem sitemap (MXC: os 3 trocam juntos na virada; conferir-seo ❌ "endereço de prévia no HTML")
+- [ ] 1.95 Endereço num lugar só: o `og:image` está escrito à mão em 2 arquivos (index.html:60, 404.html:39) e não há canônica nem sitemap (MXC: os 3 trocam juntos na virada; conferir-seo ❌ "endereço de prévia no HTML")
 - [x] 1.96 Arquivo estático antes da regra de SPA: não é SPA (tem `404.html`); `robots.txt` 200 `text/plain` (curl 10/10) — 10/10
-- [x] 1.97 Arquivo de trabalho fora do ar: `/README.md`, `/.gitignore` e `/tools/*` → 301 pra `/` (_redirects:20-22; curl 10/10); `docs/`, `CLAUDE.md` e `.claude/` fora do git (.gitignore) — 10/10
+- [x] 1.97 Arquivo de trabalho fora do ar: `/README.md`, `/.gitignore` e `/tools/*` → 301 pra `/` (_redirects:19-21; curl 10/10); `docs/`, `CLAUDE.md` e `.claude/` fora do git (.gitignore) — 10/10
 - [x] 1.98 404 sem canônica e sem `og:url`, com caminhos absolutos (404.html:15, 23-25, 74-86, 197) — 10/10
 - [ ] 1.99 Trava de GA4 sem aviso de cookies: não há build nem GA4 hoje (MXC: quando o GA4 entrar, conferir no mesmo commit; sem build, a trava é a revisão)
 - [x] 1.106 `X-Robots-Tag` em função ou SSR N/A — site estático, sem função
@@ -250,7 +250,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 2.01 DNS: a virada é um CNAME `comercial` → `mr-private-label.pages.dev` no Cloudflare da agência, sem mexer em e-mail (README "Publicação") (cliente e agência: criar o CNAME; `comercial.` não resolve, dig 10/10)
 - [x] M.04 `[ref]` Site novo testado pelo IP antes de mudar o DNS N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [ ] 2.02 Cloudflare: com o CNAME em DNS only valem as configurações do projeto Pages, não as da zona da agência (MXC: na virada, conferir políticas de robô e Bot Fight Mode da conta do Pages)
-- [x] 2.03 www N/A — subdomínio `comercial.` sem variante www; as 3 linhas do `_redirects` já levam 301 escrito (_redirects:20-22)
+- [x] 2.03 www N/A — subdomínio `comercial.` sem variante www; as 3 linhas do `_redirects` já levam 301 escrito (_redirects:19-21)
 - [ ] 2.04 HTTPS num pulo (MXC: curl no dia da virada)
 - [ ] 2.05 Nada da prévia vazou: hoje o `og:image` aponta pro `pages.dev` e não há canônica nem sitemap (MXC: na virada)
 - [ ] 2.06 Google e Bing abrem o site (MXC: Inspeção de URL ao vivo no domínio)
