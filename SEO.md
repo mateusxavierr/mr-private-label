@@ -7,10 +7,10 @@ tags: [mxc, mr-private-label, seo]
 **Site:** MR Private Label (confecção de roupa masculina com marca do lojista, Taquaritinga do Norte/PE; via Manolo) · **Domínio:** https://comercial.mrprivatelabel.com.br (decidido em 11/08; **não resolve**, dig/curl 10/10: falta o CNAME na Cloudflare da agência da loja)
 **Prévia:** https://mr-private-label.pages.dev (projeto de produção do Pages; fora do Google só por `Disallow: /` no robots, sem `X-Robots-Tag`, curl 10/10) · cópia de revisão ainda no ar e aberta: https://mateusxavierr.github.io/mr-private-label/
 **Tipo:** landing estática de uma página (HTML puro, sem build, Cloudflare Pages) · **Etiquetas que valem:** `[landing]` · em aberto: `[pago]` (0.07)
-· não valem: `[local]` `[loja]` `[ref]` `[UE]` `[plano 597]` `[blog]` `[portal]` `[evento]` `[saas]` `[vagas]` `[hotel]`
+· não valem: `[local]` `[loja]` `[ref]` `[UE]` `[plano]` `[plano 597]` `[blog]` `[portal]` `[evento]` `[saas]` `[vagas]` `[hotel]`
 **Plano:** nenhum (landing R$ 750, quitada; vault `projetos/mxc/financeiro.md`) · **Data:** 10/10/2026 · **molde:** `seo-mxc/SEO-MXC.md`
 
-**Ficha nova, lista de 329 itens, 10/10/2026** · 329 itens · 27 feitos · 163 N/A · 139 abertos
+**Atualizada pra lista de 344 itens em 10/10/2026** · 344 itens · 27 feitos · 180 N/A · 137 abertos
 
 "O que falta de SEO na MR?" = esta ficha. Contexto: [README.md](README.md) ("Publicação" e "Ordem da virada").
 
@@ -23,7 +23,7 @@ O domínio final ainda não existe, então todo o bloco 2 em diante espera a vir
 (4) desligar a cópia do GitHub Pages (2.09); (5) os 3 botões mortos da dobra 02 (1.12, 1.93).
 
 **Leitura que precisa de Mateus:** tratei a MR como não `[local]` (fábrica B2B que vende pro Brasil todo; Perfil da Empresa e Apple/Bing Places ficam fora desta landing).
-Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
+Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 
 ---
 ## 0 · Antes de começar — perguntas que mudam a lista
@@ -36,8 +36,9 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 0.06 Plano mensal: hoje nenhum (vault `projetos/mxc/financeiro.md`, "Sem manutenção nenhuma", com a dúvida "decisão ou esquecimento?") (Mateus: decidir ou oferecer; sem plano vale o 6.05)
 - [ ] 0.07 Anúncio pago: não registrado; o comentário do header cita "tráfego pago" (index.html:1977) (cliente: confirmar; decide 3.11 e 3.26)
 - [x] 0.08 Público só no Brasil: lojista brasileiro, copy pt-BR, nenhum pedido de outro país (leitura MXC do CLAUDE.md "O que é") — 10/10
-- [x] 0.09 Nicho não regulado: confecção de roupa, sem conselho nem ANVISA (leitura MXC) — 10/10
+- [x] 0.09 Nicho não regulado: confecção de roupa, sem conselho nem ANVISA (leitura MXC); a lei PE de tabela de preço vale só pra saúde (1.121) — 10/10
 - [ ] 0.10 Treino de IA: sem decisão; hoje o `robots.txt` bloqueia todo robô menos 3 raspadores de prévia (cliente: decidir por escrito; a recusa vai no robots, robô por robô)
+- [x] L.46 `[loja]` Shopify: canal Agentic N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] 0.11 Inventário do que já mede N/A — subdomínio novo, nada no ar antes em `comercial.` (não resolve, curl 10/10); a medição da loja é de outra agência e não muda
 - [ ] 0.12 O vendido de SEO copiado pra ficha: landing R$ 750 via Manolo, quitada (vault `financeiro.md` e `carteira.md`); o escopo de SEO da proposta ou contrato não foi lido nesta rodada (MXC: copiar)
 - [ ] 0.13 Estudo de demanda: não existe; a landing foi desenhada em 27-30/07 sem estudo (MXC: `moldes/ESTUDO-DE-DEMANDA.md` enxuto: "private label roupa masculina", "fábrica de camiseta com sua marca", Agreste/Taquaritinga)
@@ -45,6 +46,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] 0.15 `[local]` Quantas unidades reais (com equipe e horário próprios) e quantos profissionais… N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 0.16 Histórico do domínio N/A — domínio do cliente desde 07/09/2021 (whois), não é novo, recomprado nem expirado
 - [ ] 0.28 Homônimo do ramo e marca no INPI: não conferidos (Ambos; o domínio já está no CNPJ dele)
+- [x] 0.34 `[UE]` Domínio escolhido pelo país do público N/A — público só no Brasil (0.08); o domínio é `.com.br` no CNPJ do cliente (0.01)
 - [x] 0.31 `[ref]` Site existente montado no navegador N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [x] 0.32 `[pago]` Público criança ou adolescente N/A — o público é lojista adulto (B2B)
 - [x] 0.33 WordPress N/A — HTML estático, sem CMS (README "Como rodar")
@@ -95,6 +97,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 1.44 Quem somos com gente de verdade: o rodapé diz abertura e cidade (index.html:2367-2368); sem nome do dono nem foto real da fábrica (cliente: fotos de fábrica e produção, CLAUDE.md "Pendências")
 - [x] 1.45 Texto revisado por profissional habilitado N/A — nicho não regulado (0.09)
 - [x] 1.31 Registro e regra de conselho N/A — nicho não regulado (0.09)
+- [x] 1.121 Saúde que atende em Pernambuco: tabela de preço da Lei PE 16.559/2019 N/A — a MR fica em PE, mas é confecção, não serviço de saúde (0.09)
 - [x] 1.46 `[blog]` `[portal]` Artigo: autor com página própria N/A — não é portal nem tem blog
 - [ ] 1.47 Conferido fato a fato: sem registro de conferência; as 3 fotos da dobra 02 são geradas por IA (commit a27f1e4, 30/07) e mostram cena de fábrica (MXC: conferir o texto; cliente: aprovar ou trocar as fotos por reais)
 - [ ] 1.48 Perguntas reais com resposta direta: não há bloco de perguntas (cliente: dúvidas do WhatsApp, 0.18; MXC: subtítulo + resposta em 1-2 frases)
@@ -103,7 +106,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] 1.51 Marca, serviço e cidade por extenso: "MR Private Label", "roupa masculina", "Taquaritinga do Norte, Pernambuco" (index.html:7, 2368); um assunto por endereço — 10/10
 - [x] 1.52 Endereço da página: só `/` no subdomínio `comercial` — 10/10
 - [ ] 1.53 Imagem em `<img src>` com `src` de reserva no `srcset` (index.html:2011, 2133-2139); sem `license`/`creator` nas fotos (MXC: baixa)
-- [x] 1.54 Conteúdo atrás de clique no HTML: os 4 passos com painel estão no markup (index.html:2264-2291); lazy só abaixo da dobra, hero com `fetchpriority="high"` (index.html:2011) — 10/10
+- [x] 1.54 Conteúdo atrás de clique no HTML: os 4 passos com painel estão no markup (index.html:2264-2291); a frase que responde a seção fica fora dos painéis, visível (`.lead`, index.html:2259), e o prazo de 10 dias úteis também aparece fora deles (index.html:1974); lazy só abaixo da dobra, hero com `fetchpriority="high"` (index.html:2011) — 10/10
 - [x] 1.55 Celular com o mesmo conteúdo: um HTML só pra todo aparelho, layout por CSS — 10/10
 - [x] 1.56 Nenhum JS mexendo na rolagem nem no `#` na carga (sem `scrollTo`, `history` ou `location` no script, grep 10/10) — 10/10
 - [x] 1.57 Sem pop-up de tela cheia (nenhum modal ou dialog no markup, grep 10/10) — 10/10
@@ -122,6 +125,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] 1.83 `[local]` Páginas de lugar pela regra do tipo de negócio N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 1.84 `[local]` Página de lugar nasce com `noindex`, fora do mapa do site e sem link N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 1.85 `[local]` Hub "Áreas atendidas" ou "Unidades" no menu ou na home N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
+- [x] 1.119 `[local]` Mais de uma unidade: página própria por unidade N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 1.86 `[local]` Clínica, vet ou laboratório N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 1.87 Comparativo ou "melhores X" N/A — não há na página
 - [x] 1.88 Registro do profissional no dado estruturado N/A — nicho não regulado
@@ -131,6 +135,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 1.92 Número gerado do dado: a idade é calculada pelo JS, mas o markup diz "4 anos" e hoje são 5 (index.html:2055); "80,3 mil seguidores" escrito à mão (index.html:2054, 2368) (MXC: corrigir o markup; seguidores revistos no 7.05)
 - [ ] 1.93 Link pra destino não pronto: os 3 botões da dobra 02 ("Responder 4 perguntas", "Falar com a consultoria", "Falar direto com o dono") não fazem nada (index.html:2140, 2156, 2172) (Ambos: destino de cada um, ou o grupo como reserva)
 - [x] 1.94 `[portal]` Notícia reescrita de outra fonte N/A — não é portal nem tem blog
+- [x] 1.122 `[portal]` `[blog]` Texto de terceiro publicado inteiro leva `noindex` N/A — não é portal nem tem blog
 - [x] 1.100 Serviço 100% online N/A — fábrica com endereço real em Taquaritinga do Norte/PE (CLAUDE.md "Cliente")
 - [x] 1.101 `[local]` Horário da tela, do dado estruturado e do "aberto agora" gerados de uma grade só N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 1.102 Palavras proibidas do nicho no build N/A — nicho não regulado (0.09)
@@ -140,6 +145,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] 1.109 `[portal]` `[blog]` Publieditorial, matéria paga ou conteúdo de parceiro com rótulo visível no… N/A — não é portal nem tem blog
 - [ ] 1.111 Imagem da página pro resultado (`primaryImageOfPage`): não existe; o `og.jpg` é card com frase (index.html:58) (MXC: foto real no 1.11)
 - [x] 1.113 `[portal]` Toda matéria com foto principal própria, nunca o logo nem arte cheia de texto N/A — não é portal nem tem blog
+- [x] 1.120 `[blog]` Receita publicada no site com `Recipe` N/A — não é portal nem tem blog
 
 ### Site
 
@@ -159,9 +165,10 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] 1.67 Compressão: `content-encoding: br` no HTML (curl na prévia) — 10/10
 - [x] 1.68 Nenhum `nosnippet`, `noarchive` ou `max-snippet` (grep 0) — 10/10
 - [x] 1.69 `[landing]` `unavailable_after` N/A — landing de captação permanente, sem data de fim
-- [ ] 1.20 Velocidade: hero com `fetchpriority="high"`, sem lazy e sem preload, `width`/`height` em toda imagem, webp com `srcset`, fontes próprias em woff2 (index.html:242-262, 2011); `02-modelo.jpg` e `04-caminho.jpg` sem webp nem `srcset`, `font-display:swap` também no corpo, nada medido no domínio (MXC: medir no domínio, 5.07)
+- [ ] 1.20 Velocidade: hero com `fetchpriority="high"`, sem lazy e sem preload, `width`/`height` em toda imagem, webp com `srcset`, fontes próprias em woff2 (index.html:242-262, 2011); `02-modelo.jpg` e `04-caminho.jpg` sem webp nem `srcset`, `font-display:swap` também no corpo, nada medido no domínio (MXC: medir no domínio, mediana de 3 rodadas e peso real rolando até o fim, CHECKLIST-FINAL blocos 9 e 18)
 - [x] 1.112 Vídeo de fundo N/A — sem vídeo
 - [ ] 1.114 Cache: tudo com `max-age=0, must-revalidate`, inclusive imagem e fonte (curl -I 10/10); não há `_headers` no repo (MXC: `_headers` com prazo curto em imagem e fonte)
+- [x] 1.118 Próxima página aberta na hora por Speculation Rules N/A — landing de página única (o item diz N/A pra esse caso): os links internos são só âncoras da própria página (`#mrg`, `#topo`, `#conteudo`; grep 10/10)
 - [ ] 1.21 Celular, tablet, computador, teclado, foco e contraste 7:1: não conferido nesta rodada (MXC)
 - [ ] 1.115 Símbolo "Acessibilidade" no rodapé: não existe (index.html:2367-2374) (MXC: símbolo + trecho curto de como avisar, junto da política do 1.29)
 - [x] 1.116 Sem formulário; botões de ícone com nome acessível (setas com `aria-label`, index.html:2032, 2036) — 10/10
@@ -198,6 +205,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] L.02 Endereço de produto e categoria legível N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.03 Produto nos dados estruturados N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.04 Avaliação do próprio produto, visível na página dele, aparecendo nos dados estruturados N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
+- [x] L.45 Estrela de produto no Shopping N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.05 Esgotados com regra: temporário fica no ar com `OutOfStock`/`BackOrder`/`PreOrder` e… N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.06 Foto de produto com pelo menos 500×500 N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.07 Checkout, e-mails da loja e linha legal do e-commerce N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
@@ -219,6 +227,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] L.26 Programa de fidelidade ou preço de membro N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.27 Desistência em 7 dias explicada e feita pelo mesmo canal da compra, com confirmação na hora N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.28 Preço à vista ao lado da foto N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
+- [x] L.48 Loja que vende pra consumidor em Pernambuco (Lei PE 16.559/2019, arts. 40 a 44) N/A — esta landing não vende nem mostra produto com preço: é captação B2B pro grupo do WhatsApp; a loja de atacado `mrprivatelabel.com.br` é outro site, de outra agência
 - [x] L.30 `[UE]` Loja pra Europa: botão "desistir do contrato" N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.32 Title e descrição de produto gerados do cadastro N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.33 Descrição de produto padronizada a partir de uma tabela de atributos N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
@@ -229,6 +238,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] L.39 Ebook ou livro com `Book` N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.40 WooCommerce existente: catálogo exportado pela Store API pública e auditado com número N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.41 Produto adulto (nudez ou uso sexual) N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
+- [x] L.47 Loja que vende o que é proibido a menor: trava de idade N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.42 Moda no Merchant (roupa, calçado, acessório) N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.43 Condição e marca certas no feed e no dado estruturado N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.44 Suplemento ou alimento: título, descrição, alt, perguntas e categoria só com alegação aprovada… N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
@@ -242,7 +252,6 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] M.06 Blog e conteúdo antigo com destino decidido N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [x] M.07 Site antigo varrido atrás de link de spam escondido ou invasão N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [x] M.08 Mapas do site do CMS antigo só saem do Search Console depois que o novo estiver "Processado" N/A — não é reformulação: subdomínio novo, nada no ar antes
-- [x] M.10 Redirecionamentos mantidos pelo menos 1 ano, e mais enquanto o endereço antigo ainda recebe… N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [x] M.12 Troca de domínio não acontece junto com o site novo N/A — não é reformulação: subdomínio novo, nada no ar antes
 
 ## 2 · Publicação — o dia da virada
@@ -284,14 +293,15 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 3.10 GA4: não existe; a página não faz nenhum request externo (README "Como rodar") (MXC: GA4 com aviso de cookies, salvo recusa escrita do cliente)
 - [ ] 3.11 `[pago]` GTM, Pixel e Clarity só depois do aceite (cliente: depende do 0.07; sem anúncio vira N/A)
 - [x] 3.12 `[loja]` Merchant Center criado na conta Google da MXC, como as outras contas do 3.06, com a… N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
+- [x] L.49 `[loja]` Merchant ligado ao Search Console e ao GA4 N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.23 `[loja]` Microsoft Merchant Center importando do Google Merchant N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.25 `[loja]` Promoções do Merchant Center N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [ ] 3.13 Regra de UTM escrita: o link da landing nas bios e no grupo com UTM próprio (MXC)
 - [x] 3.14 `[portal]` Google Notícias: a entrada é automática N/A — não é portal nem tem blog
 - [ ] 3.15 "IA generativa da Pesquisa" = Incluir (MXC: depois do 3.01)
 - [ ] 3.16 Anotação no Search Console no dia da virada (MXC)
-- [ ] 3.17 Instagram @mr.privatelabel e Threads como propriedades de plataforma (Ambos)
-- [x] 3.18 `[portal]` Botão "fonte preferida no Google" no site e nas redes N/A — não é portal nem tem blog
+- [ ] 3.17 Instagram @mr.privatelabel e Threads como propriedades de plataforma (Ambos: antes, conferir conta pública e profissional com a opção de aparecer em buscador ligada)
+- [x] 3.18 `[portal]` `[blog]` Fonte preferida no Google N/A — não é portal nem tem blog
 - [ ] 3.19 Bing Site Scan e AI Performance do mês zero (MXC)
 - [ ] 3.20 Canal "IA" no GA4 (MXC: com o 3.10)
 - [ ] 3.21 Consent Mode v2 no modo básico (MXC: com o 3.10)
@@ -324,9 +334,10 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] 4.24 `[local]` Só área de atendimento: endereço oculto, até 20 cidades ou bairros N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.25 `[local]` WhatsApp no campo de chat do Perfil, com mensagem pronta "vim pelo Google" N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.26 `[local]` Link de agendamento no Perfil, com UTM, quando o cliente agenda online N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
+- [x] 4.42 `[local]` Restaurante, bar ou padaria com entrega: apps no botão de pedido do Perfil N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.27 `[local]` Atributos do Perfil preenchidos N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.28 `[local]` Profissional que atende em nome próprio N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
-- [x] 4.29 `[local]` Mais de uma unidade: página própria por unidade N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
+- [x] 4.29 `[local]` Mais de uma unidade: um Perfil por unidade N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.30 `[local]` `[hotel]` Perfil sem horário, detalhes do hotel preenchidos e links de reserva… N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.31 `[local]` Concorrente com palavra no nome, endereço falso ou duplicado N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 4.32 `[local]` Avaliação também no site forte do nicho N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
@@ -347,8 +358,9 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [ ] 4.33 Links de parceiros e entidades reais: polo de confecção do Agreste, fornecedores (Ambos)
 - [ ] 4.34 Pauta pra imprensa local com dado próprio (Ambos)
 - [ ] 4.35 Patrocínio, permuta ou recebidos com `rel="sponsored"` (Ambos: quando houver)
-- [ ] 4.36 Listas de terceiros "melhores fábricas de private label" (Ambos: pedir inclusão, nunca pagar posição)
+- [ ] 4.36 Listas de terceiros "melhores fábricas de private label": só lista genuína e não patrocinada conta (Ambos: pedir inclusão, nunca pagar posição)
 - [ ] 4.37 Reputação de fora (Reclame Aqui, avaliações, notícias): não conferida (MXC)
+- [x] 4.41 `[ref]` Endereço mudou: perfis, anúncios e links de fora trocados N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [x] L.29 `[loja]` Página da empresa no Reclame Aqui reivindicada e respondida N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 
 ## 5 · Dia 7 — reconferir
@@ -359,8 +371,6 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] 5.04 `[ref]` Duas semanas olhando 404 de endereço antigo com clique → vira 301 N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [ ] 5.05 Relatórios de resultado rico sem erro (MXC: depois do 1.11)
 - [ ] 5.06 Robôs de IA visitando com 200 (MXC: painel do Cloudflare do Pages)
-- [ ] 5.07 Número de laboratório com prova: nenhuma medição registrada (MXC: mediana de 3 no domínio)
-- [ ] 5.08 Auditoria com prova: a ficha usa curl, cmp, whois e arquivo:linha, mas o peso real rolando até o fim não foi medido (1.20) e a verificação de 10/10 achou 3 [x] sem prova (MXC: medir o peso rolando e fechar junto do 1.20)
 
 ## 6 · Dia 30 — fechar a entrega
 
@@ -370,25 +380,30 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] 6.04 DMARC N/A — sem e-mail no domínio (2.07)
 - [ ] 6.05 Sem plano: aviso escrito "ninguém da MXC acompanha os números" + guia mensal (MXC: mandar ao cliente; 0.06)
 - [ ] 6.06 Acesso residual da MXC removido ou papel escrito (Ambos)
-- [ ] 6.07 Vencimentos no calendário MXC: domínio 07/09/2027 (whois); DNS é da agência (MXC)
+- [ ] 6.07 Vencimentos: domínio 07/09/2027 (whois); DNS é da agência (MXC: sem plano, vão pro guia entregue ao cliente com o aviso do 6.05)
 - [ ] 6.08 Monitor de queda testado (MXC)
 - [ ] 6.09 Estatísticas de rastreamento com host verde (MXC)
 - [x] 6.10 `[local]` Geogrid refeito e comparado com o do 3.22 N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
-- [x] 6.11 `[local]` Páginas de lugar medidas pela pasta no Search Console aos 30, 60 e 90 dias N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
+- [x] 6.11 `[local]` Páginas de lugar medidas pela pasta no Search Console no dia 30 N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [ ] 6.12 Estudo de demanda revisado com dados reais (MXC: depende do 0.13)
 
 ## 7 · Sempre
 
 - [x] 7.01 Página nova pelos 5 portões N/A — nenhuma página nova prevista (landing única, CLAUDE.md §4); a regra vale se houver
-- [x] 7.02 `[plano 597]` Todo mês: buscas, erros, estatísticas de rastreamento e segurança no Search… N/A — sem plano mensal (0.06)
+- [x] 7.02 `[plano 597]` Todo mês: buscas, erros e estatísticas de rastreamento no Search Console, GA4, Perfil… N/A — sem plano mensal (0.06)
+- [x] 7.23 `[plano]` Todo mês, em qualquer plano, segurança e queda N/A — sem plano mensal (0.06); volta a valer se entrar plano
 - [ ] 7.03 60-90 dias: repetir as perguntas do 3.08 (MXC)
+- [x] 7.22 `[local]` Páginas de lugar medidas de novo aos 60 e 90 dias N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [ ] 7.04 A cada 3 meses: concorrentes, links, dados estruturados, Bing, zona DNS (MXC; sem plano, ver 6.05)
 - [ ] 7.05 Todo ano: renovar o domínio (cliente: vence 07/09/2027) e revisar números citados (seguidores, idade)
+- [x] M.10 `[ref]` Redirecionamentos do site antigo mantidos pelo menos 1 ano N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [ ] 7.06 A cada 3 meses: conteúdo antigo atualizado de verdade (MXC; sem plano, ver 6.05)
 - [x] 7.07 `[loja]` Página sazonal (Black Friday, datas da loja) publicada com antecedência, linkada da… N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] 7.08 Links e velocidade no acompanhamento mensal N/A — sem plano mensal (0.06)
 - [x] 7.09 `[plano 597]` Relatório mensal: comparação com o mês anterior e o mesmo mês do ano anterior N/A — sem plano mensal (0.06)
 - [x] 7.10 `[local]` Horário especial em todo feriado nacional e municipal, lançado antes da data N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
+- [x] 7.24 `[local]` Empresa que vai fechar por um tempo N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
+- [x] L.50 `[loja]` Loja com Merchant que fica um tempo sem vender N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] 7.11 `[local]` Perfil suspenso: nunca criar outro N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 7.12 `[local]` Nome, endereço ou categoria só mudam com prova do mundo real N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [x] 7.13 `[blog]` A cada 6 meses: página sem impressão e sem lead em 12 meses é melhorada primeiro N/A — não tem blog nem é portal
@@ -396,7 +411,7 @@ Se a decisão for o contrário, os 45 itens com `[local]` voltam a abrir.
 - [x] L.31 `[loja]` Selo da loja do Google (store widget) no site quando o Merchant liberar N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.37 `[loja]` "Buscas sem resultado" da busca interna lidas todo mês N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] 7.15 `[local]` `[plano 597]` Geogrid repetido todo mês nas mesmas buscas N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
-- [ ] 7.16 Vazamento pro Google: a cópia do GitHub Pages está aberta pro Google (2.09) e a indexação dela não foi conferida (MXC: Search Console ou `site:`; no índice, Remoções + desligar a cópia)
+- [ ] 7.16 Vazamento pro Google: a cópia do GitHub Pages está aberta pro Google (2.09) e a indexação dela não foi conferida (MXC: Search Console ou `site:`; no índice, primeiro desligar a cópia ou pôr `noindex`, depois Remoções)
 - [x] 7.17 Ação manual N/A — nenhuma conhecida (a conferência é o 3.07, aberto); a regra vale se acontecer
 - [x] 7.18 Site invadido N/A — nenhum sinal conhecido (a conferência é o 3.07, aberto); a regra vale se acontecer
 - [x] 7.19 `[local]` Avaliação ruim no Perfil N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
