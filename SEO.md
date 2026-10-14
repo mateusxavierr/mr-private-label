@@ -4,23 +4,21 @@ tags: [mxc, mr-private-label, seo]
 
 # SEO · MR Private Label — ficha
 
-**Site:** MR Private Label (confecção de roupa masculina com marca do lojista, Taquaritinga do Norte/PE; via Manolo) · **Domínio:** https://comercial.mrprivatelabel.com.br (decidido em 11/08; **não resolve**, dig/curl 10/10: falta o CNAME na Cloudflare da agência da loja)
-**Prévia:** https://mr-private-label.pages.dev (projeto de produção do Pages; fora do Google só por `Disallow: /` no robots, sem `X-Robots-Tag`, curl 10/10) · cópia de revisão ainda no ar e aberta: https://mateusxavierr.github.io/mr-private-label/
+**Site:** MR Private Label (confecção de roupa masculina com marca do lojista, Taquaritinga do Norte/PE; via Manolo) · **Domínio:** https://comercial.mrprivatelabel.com.br (decidido em 11/08; **no ar e aberto pro Google desde 14/10** — CNAME → `mr-private-label.pages.dev`, SSL Google Trust até 12/01/2027, dig/openssl 14/10)
+**Prévia:** https://mr-private-label.pages.dev (projeto de produção do Pages; fora do Google por `X-Robots-Tag: noindex` só no `*.pages.dev`, `_headers`, curl -I 14/10) · cópia do GitHub Pages desligada 14/10 (404)
 **Tipo:** landing estática de uma página (HTML puro, sem build, Cloudflare Pages) · **Etiquetas que valem:** `[landing]` · em aberto: `[pago]` (0.07)
 · não valem: `[local]` `[loja]` `[ref]` `[UE]` `[plano]` `[plano 597]` `[blog]` `[portal]` `[evento]` `[saas]` `[vagas]` `[hotel]`
 **Plano:** nenhum (landing R$ 750, quitada; vault `projetos/mxc/financeiro.md`) · **Data:** 10/10/2026 · **molde:** `seo-mxc/SEO-MXC.md`
 
-**Atualizada pra lista de 346 itens em 10/10/2026** · 346 itens · 27 feitos · 182 N/A · 137 abertos
+**Atualizada pra lista de 346 itens em 10/10/2026** · virada de domínio 14/10 · 346 itens · 38 feitos · 182 N/A · 126 abertos
 
 "O que falta de SEO na MR?" = esta ficha. Contexto: [README.md](README.md) ("Publicação" e "Ordem da virada").
 
-Prova "no ar" desta rodada: home e 404 servidas em `mr-private-label.pages.dev` e a home de `mateusxavierr.github.io/mr-private-label/`
-são idênticas byte a byte ao `index.html`/`404.html` do HEAD (`cmp`, 10/10); onde a prova cita arquivo do repo, vale pro que está na prévia.
-O domínio final ainda não existe, então todo o bloco 2 em diante espera a virada.
+Prova "no ar" desta rodada: 10/10 por `cmp` na prévia; 14/10 por curl no domínio (canônica, robots, sitemap, cabeçalhos) e pelo navegador (os 3 botões da dobra 02).
 
-**O que trava a abertura pro Google, em ordem:** (1) a agência cria o CNAME `comercial` em DNS only (2.01, 2.17);
-(2) canônica, `og:url`, `og:image` e sitemap no domínio (1.06, 1.07, 1.15, 1.95); (3) robots aberto e `X-Robots-Tag` só no `pages.dev` (1.13, 1.14, 1.18);
-(4) desligar a cópia do GitHub Pages (2.09); (5) os 3 botões mortos da dobra 02 (1.12, 1.93).
+**Virada feita em 14/10 (Mateus):** CNAME e SSL no ar (2.01, 2.17); canônica, `og:url`, `og:image` e sitemap no domínio (1.06, 1.07, 1.15, 1.95);
+robots aberto pelo molde e `X-Robots-Tag` só no `pages.dev` (1.13, 1.14, 1.18); cópia do GitHub Pages desligada (2.09); os 3 botões da dobra 02 levam ao grupo por enquanto (1.93).
+Segue aberto da trava antiga: os números do brandbook na página (1.12) e a decisão de treino de IA (0.10).
 
 **Leitura que precisa de Mateus:** tratei a MR como não `[local]` (fábrica B2B que vende pro Brasil todo; Perfil da Empresa e Apple/Bing Places ficam fora desta landing).
 Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
@@ -37,7 +35,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 0.07 Anúncio pago: não registrado; o comentário do header cita "tráfego pago" (index.html:1977) (cliente: confirmar; decide 3.11 e 3.26)
 - [x] 0.08 Público só no Brasil: lojista brasileiro, copy pt-BR, nenhum pedido de outro país (leitura MXC do CLAUDE.md "O que é") — 10/10
 - [x] 0.09 Nicho não regulado: confecção de roupa, sem conselho nem ANVISA (leitura MXC); a lei PE de tabela de preço vale só pra saúde (1.121) — 10/10
-- [ ] 0.10 Treino de IA: sem decisão; hoje o `robots.txt` bloqueia todo robô menos 3 raspadores de prévia (cliente: decidir por escrito; a recusa vai no robots, robô por robô)
+- [ ] 0.10 Treino de IA: sem decisão; desde 14/10 o `robots.txt` está aberto e treino fica liberado por omissão (opção A do molde) (cliente: decidir por escrito; a recusa vai no robots, robô por robô — opção B do molde)
 - [x] L.46 `[loja]` Shopify: canal Agentic N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] 0.11 Inventário do que já mede N/A — subdomínio novo, nada no ar antes em `comercial.` (não resolve, curl 10/10); a medição da loja é de outra agência e não muda
 - [ ] 0.12 O vendido de SEO copiado pra ficha: landing R$ 750 via Manolo, quitada (vault `financeiro.md` e `carteira.md`); o escopo de SEO da proposta ou contrato não foi lido nesta rodada (MXC: copiar)
@@ -77,13 +75,13 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 1.03 H1 visível "Nossa fábrica. Sua marca na peça." (index.html:2019-2022) sem a palavra da busca e diferente do title; o subtítulo diz o quê e pra quem, não onde (index.html:2026) (MXC: title = H1, ou subtítulo com serviço + Taquaritinga do Norte/PE)
 - [ ] 1.04 Texto no HTML do servidor: estático, todo o texto principal no markup (index.html:2019-2370); o ticker do topo só existe por JS (`FATOS`, index.html:3049-3054) e o markup diz "4 anos" quando já são 5 (index.html:2056; o JS corrige, index.html:3010-3018) (MXC: fatos do ticker no HTML e "5 anos" no markup)
 - [ ] 1.05 Links `<a href>`: os 8 CTAs nascem `href="#"` e o link do grupo só entra por JS (index.html:1984, 2391-2392); os 3 botões da dobra 02 são `<button>` sem destino (index.html:2140, 2156, 2172) (MXC: `GRUPO_URL` direto no `href`; destino dos 3 botões no 1.93)
-- [ ] 1.06 Canônica: ausente de propósito até o domínio entrar (comentário em index.html:47-49; conferir-seo ❌) (MXC: `https://comercial.mrprivatelabel.com.br/` na virada)
-- [ ] 1.07 Prévia de link: título, descrição e imagem 1200×630 com width/height/type/alt (index.html:52-62; `img/og.jpg` 1200×630, 200 na prévia, curl 10/10); falta `og:url` e a imagem aponta pro `pages.dev` (MXC: trocar nos 2 arquivos na virada, README "Ordem da virada" passo 3)
+- [x] 1.06 Canônica `https://comercial.mrprivatelabel.com.br/` (index.html, `<link rel="canonical">`; servida no domínio, curl 14/10) — 14/10
+- [x] 1.07 Prévia de link: título, descrição, imagem 1200×630 com width/height/type/alt, `og:url` e `og:image` no domínio (index.html e 404.html; `img/og.jpg` 200 em comercial.mrprivatelabel.com.br, curl 14/10) — 14/10
 - [ ] 1.08 Ícone: `favicon.ico` tem 16/32/48 mas é declarado `sizes="32x32"`, e o PNG grande declarado com `rel="icon"` não existe (só `.ico`, `.svg` e o `apple-touch-icon.png` 180×180, index.html:31-33; `favicon-32.png` solto no repo) (MXC: PNG quadrado ≥48 com `rel="icon"` e `sizes` certo no `.ico`, nos 2 arquivos)
 - [x] 1.09 `lang="pt-BR"` (index.html:2) e títulos sem pular nível, h1 → h2 → h3 (index.html:2019-2359) — 10/10
 - [ ] 1.10 Alt: as fotos de conteúdo têm alt descritivo (index.html:2136, 2152, 2168, 2224, 2295, 2328); a foto do hero tem `alt=""` com o rótulo num `div role="img"` (index.html:2010-2011), que o Google não lê como alt (MXC: alt na `<img>` do hero)
 - [ ] 1.11 Dados estruturados: nenhum JSON-LD (grep 0; conferir-seo ⚠️) (MXC: `Organization` da fábrica com endereço e redes, só o que está na tela)
-- [ ] 1.12 Fora do Google até confirmar: os 3 botões da dobra 02 "AINDA NÃO VÃO A LUGAR NENHUM" (comentário em index.html:2117-2119); os números vêm do brandbook e da bio (CLAUDE.md "Fatos de prova social") e só os 80,3 mil foram confirmados (Ambos: destino dos 3 botões e números confirmados antes de abrir o robots)
+- [ ] 1.12 Aberto pro Google por decisão de Mateus (14/10) com os 3 botões da dobra 02 indo pro grupo; os números vêm do brandbook e da bio (CLAUDE.md "Fatos de prova social") e só os 80,3 mil foram confirmados (Ambos: confirmar os demais números)
 - [ ] 1.32 Bloco de fatos citáveis existe (index.html:2052-2056, 2232-2240), mas a lista pede só fato confirmado: 40 mil peças/mês e +1.500 marcas vêm do brandbook e da bio, sem confirmação (CLAUDE.md "Fatos de prova social"; 1.12), e o HTML do servidor diz "4 anos" quando já são 5 (index.html:2056) (Ambos: cliente confirma os 2 números; MXC: "5 anos" no markup)
 - [ ] 1.33 Nome de arquivo descritivo: `02-modelo.jpg`, `momento-01.webp`, `vitrine/01-900.webp` (img/) (MXC: renomear com o que a foto mostra)
 - [x] 1.34 Página de vídeo N/A — a landing não tem vídeo
@@ -133,7 +131,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [x] 1.90 Duas naturezas no mesmo endereço N/A — a landing fala só da fábrica; a loja de atacado é outro site (CLAUDE.md "Fora do escopo")
 - [x] 1.91 Atalho de quem já é cliente N/A — landing de captação, sem área do cliente
 - [ ] 1.92 Número gerado do dado: a idade é calculada pelo JS, mas o markup diz "4 anos" e hoje são 5 (index.html:2055); "80,3 mil seguidores" escrito à mão (index.html:2054, 2368) (MXC: corrigir o markup; seguidores revistos no 7.05)
-- [ ] 1.93 Link pra destino não pronto: os 3 botões da dobra 02 ("Responder 4 perguntas", "Falar com a consultoria", "Falar direto com o dono") não fazem nada (index.html:2140, 2156, 2172) (Ambos: destino de cada um, ou o grupo como reserva)
+- [x] 1.93 Os 3 botões da dobra 02 viraram `<a class="js-cta">` e levam ao grupo do WhatsApp por enquanto (Mateus, 14/10; conferido no navegador: os 3 com href do grupo e `_blank`); destino próprio de cada nível segue sem decisão (comentário em index.html na dobra 02) — 14/10
 - [x] 1.94 `[portal]` Notícia reescrita de outra fonte N/A — não é portal nem tem blog
 - [x] 1.122 `[portal]` `[blog]` Texto de terceiro publicado inteiro leva `noindex` N/A — não é portal nem tem blog
 - [x] 1.100 Serviço 100% online N/A — fábrica com endereço real em Taquaritinga do Norte/PE (CLAUDE.md "Cliente")
@@ -149,12 +147,12 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 
 ### Site
 
-- [ ] 1.13 `robots.txt`: 200 `text/plain`, mas sem linha `Sitemap:` e com `Disallow: /` pra todos (robots.txt; curl 10/10; conferir-seo ❌) (MXC: no domínio, robots aberto com o sitemap)
-- [ ] 1.14 Robôs de busca liberados: hoje todos bloqueados no grupo `*`; só facebookexternalhit, WhatsApp e Twitterbot passam (robots.txt) (MXC: liberar na virada; treino conforme 0.10)
-- [ ] 1.15 Mapa do site: não existe (`/sitemap.xml` 404, curl 10/10) (MXC: `sitemap.xml` de 1 URL com `lastmod` real)
+- [x] 1.13 `robots.txt` pelo molde seo-mxc: `User-agent: *` + `Allow: /` + `Sitemap: https://comercial.mrprivatelabel.com.br/sitemap.xml`, 200 no domínio (curl 14/10) — 14/10
+- [x] 1.14 Robôs de busca liberados: todos no grupo `*`, sem grupo nomeado (robots.txt; curl 14/10); treino conforme 0.10 — 14/10
+- [x] 1.15 Mapa do site: `sitemap.xml` de 1 URL com `lastmod` 2026-10-14, 200 em comercial.mrprivatelabel.com.br (curl 14/10) — 14/10
 - [x] 1.16 404 de verdade com página desenhada: endereço inexistente responde 404 com o `404.html` (curl -I na prévia; igual byte a byte ao do repo, cmp) — 10/10
 - [x] 1.17 `llms.txt` N/A — opcional e o site não tem build que gere (decisão de 09/10)
-- [ ] 1.18 Prévia fora do Google por `X-Robots-Tag` por host: hoje é `Disallow: /` no `robots.txt`, sem `X-Robots-Tag` (curl -I 10/10), e o case da MXC linka o `pages.dev` (MXC: molde `_headers-previa` e apagar o robots temporário; aqui o `pages.dev` é o projeto de produção)
+- [x] 1.18 Prévia fora do Google por `X-Robots-Tag: noindex` por host (`_headers`, molde `_headers-previa`): `mr-private-label.pages.dev` responde noindex e o domínio não (curl -I 14/10); o case da MXC já linka o domínio — 14/10
 - [ ] 1.37 Um endereço por página: `/index.html` → 308 pra `/` (curl 10/10); sem canônica, endereço com UTM não aponta pra versão limpa (MXC: 1.06)
 - [ ] 1.38 `max-image-preview:large`: ausente, nenhuma meta robots (grep 0) (MXC)
 - [x] 1.39 `[UE]` Site em mais de um idioma N/A — público só no Brasil (0.08)
@@ -175,7 +173,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 1.22 Cabeçalhos de segurança: só `x-content-type-options` e `referrer-policy`; sem HSTS, CSP nem `frame-ancestors` (curl -I 10/10) (MXC: `_headers`; HSTS em escada só no domínio)
 - [x] 1.23 Código versionado em `github.com/mateusxavierr/mr-private-label` (git remote) — 10/10
 - [ ] 1.24 Verificador verde: `conferir-seo` com 6 falhas e 4 avisos (seção Conferidor) (MXC: zerar antes de abrir pro Google)
-- [ ] 1.95 Endereço num lugar só: o `og:image` está escrito à mão em 2 arquivos (index.html:60, 404.html:39) e não há canônica nem sitemap (MXC: os 3 trocam juntos na virada; conferir-seo ❌ "endereço de prévia no HTML")
+- [x] 1.95 Endereço num lugar só: canônica, `og:url`, `og:image` (2 arquivos), sitemap e linha Sitemap do robots no domínio, e o comentário da prévia social em index.html lista os seis lugares que mudam juntos — 14/10
 - [x] 1.96 Arquivo estático antes da regra de SPA: não é SPA (tem `404.html`); `robots.txt` 200 `text/plain` (curl 10/10) — 10/10
 - [x] 1.97 Arquivo de trabalho fora do ar: `/README.md`, `/.gitignore` e `/tools/*` → 301 pra `/` (_redirects:19-21; curl 10/10); `docs/`, `CLAUDE.md` e `.claude/` fora do git (.gitignore) — 10/10
 - [x] 1.98 404 sem canônica e sem `og:url`, com caminhos absolutos (404.html:15, 23-25, 74-86, 197) — 10/10
@@ -257,7 +255,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 
 ## 2 · Publicação — o dia da virada
 
-- [ ] 2.01 DNS: a virada é um CNAME `comercial` → `mr-private-label.pages.dev` no Cloudflare da agência, sem mexer em e-mail (README "Publicação") (cliente e agência: criar o CNAME; `comercial.` não resolve, dig 10/10)
+- [x] 2.01 DNS: CNAME `comercial` → `mr-private-label.pages.dev` no ar, sem mexer em e-mail (comercial.mrprivatelabel.com.br resolve, dig 14/10) — 14/10
 - [x] M.04 `[ref]` Site novo testado pelo IP antes de mudar o DNS N/A — não é reformulação: subdomínio novo, nada no ar antes
 - [ ] 2.02 Cloudflare: com o CNAME em DNS only valem as configurações do projeto Pages, não as da zona da agência (MXC: na virada, conferir políticas de robô e Bot Fight Mode da conta do Pages)
 - [x] 2.03 www N/A — subdomínio `comercial.` sem variante www; as 3 linhas do `_redirects` já levam 301 escrito (_redirects:19-21)
@@ -266,7 +264,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 2.06 Google e Bing abrem o site (MXC: Inspeção de URL ao vivo no domínio)
 - [x] 2.07 E-mail do domínio N/A — sem MX em `mrprivatelabel.com.br` (dig 10/10); a landing não publica e-mail
 - [ ] 2.08 `/seo-mxc` de novo no domínio (MXC: depois da virada)
-- [ ] 2.09 Nenhuma cópia indexável fora do domínio: a cópia de revisão `mateusxavierr.github.io/mr-private-label/` segue no ar, igual byte a byte ao repo (cmp 10/10), e aberta pro Google (o `robots.txt` da subpasta não vale; a raiz do host responde "Site not found"); o `pages.dev` só tem `Disallow` (MXC: desligar o GitHub Pages ou meta refresh pro domínio; `X-Robots-Tag` no `pages.dev`, 1.18)
+- [x] 2.09 Nenhuma cópia indexável fora do domínio: GitHub Pages desligado (`gh api -X DELETE .../pages`, github.io 404 14/10) e `pages.dev` com `X-Robots-Tag: noindex` (1.18) — 14/10
 - [ ] 2.10 Hospedagem no nome do cliente: Cloudflare Pages (README "Publicação"), conta não registrada no repo; desde 18/09 a regra é Hostinger paga pelo cliente (Mateus: manter no Pages ou migrar)
 - [x] 2.11 Hostinger N/A — a hospedagem é o Cloudflare Pages (muda se o 2.10 for pra Hostinger)
 - [ ] 2.12 Hospedagem e CDN sem bloqueio de robô (MXC: na virada, curl com nome de robô no domínio)
@@ -274,7 +272,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 2.14 Safe Browsing no dia da virada (MXC)
 - [ ] 2.15 2FA nas contas que seguram o domínio: registrador e Cloudflare da agência, Pages e GitHub da MXC (Ambos: não conferido)
 - [x] 2.16 Fora do ar planejado com 503 N/A — nenhuma manutenção planejada; a regra vale se houver
-- [ ] 2.17 CNAME em DNS only: escrito no README ("Proxy: DNS only (nuvem cinza)") e ainda não criado (agência: criar; MXC: conferir o certificado emitido)
+- [x] 2.17 CNAME em DNS only com certificado emitido (Google Trust Services WE1, válido até 12/01/2027, openssl 14/10) — 14/10
 - [ ] 2.18 Registro pendurado: hoje nenhum registro do cliente aponta pra cá (`comercial.` não resolve, dig 10/10); se o Pages sair (2.10), o CNAME sai no mesmo dia (MXC)
 - [ ] 2.19 Servidor perto do público: Pages na borda GIG (Rio), TTFB de 0,29 s na prévia (curl 10/10, laboratório) (MXC: medir no domínio)
 

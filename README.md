@@ -23,7 +23,7 @@ index.html   página inteira: markup + CSS + JS
 404.html     página de erro, mesmo sistema visual, CSS próprio
 img/         5 fotos, recortadas dos materiais da marca
 fonts/       8 faces em woff2, subsetadas (latin e latin-ext)
-robots.txt   TEMPORÁRIO — fechado até a página poder ir pro Google
+robots.txt   aberto, com a linha Sitemap (molde da seo-mxc)
 sitemap.xml  1 URL, no domínio do cliente
 _headers     noindex só no *.pages.dev + segurança; não vai para o ar
 _redirects   regra de build do Cloudflare; não vai para o ar
@@ -56,8 +56,8 @@ grupo trocar de link (ou o convite for redefinido no WhatsApp), muda só aqui.
 ## Publicação
 
 O destino de produção é o **Cloudflare Pages** — site estático, deploy a cada
-push na `main`, sem build. O GitHub Pages foi só a hospedagem de revisão e sai
-de cena quando o endereço definitivo entrar.
+push na `main`, sem build. O GitHub Pages foi só a hospedagem de revisão e foi
+desligado em 2026-10-14, com o domínio no ar.
 
 O endereço é **`comercial.mrprivatelabel.com.br`** (decisão de Mateus,
 2026-08-11). O caminho alternativo, `mrprivatelabel.com.br/comercial`, foi
@@ -98,7 +98,7 @@ visível para busca ou ser divulgada, porque os CTAs não levam a lugar nenhum.
 2. Pedir o CNAME acima à agência.
 3. Domínio validado e SSL emitido: trocar o `og:image` nos **dois** arquivos
    (`index.html` e `404.html`) para o domínio novo.
-4. **Só depois do link do grupo entrar:** apagar o `robots.txt` e divulgar.
+4. **Só depois do link do grupo entrar:** abrir o `robots.txt` e divulgar. (Feito 14/10.)
 
 O `og:image` aponta para `mr-private-label.pages.dev`, que existe nos dois
 cenários. Se o projeto no Cloudflare Pages nascer com outro nome, corrigir a
@@ -107,8 +107,9 @@ tag junto.
 ## Estado
 
 Link do grupo no ar (2026-10-05): os CTAs já levam ao WhatsApp.
-Domínio no ar (2026-10-14): `comercial.mrprivatelabel.com.br` responde, passos
-1–3 feitos — canônica, `og:url`, `og:image` e `sitemap.xml` no domínio, e o
-`_headers` dá `noindex` só no `*.pages.dev` (a prévia não disputa com o domínio).
-Falta o passo 4: o `robots.txt` segue fechado porque os 3 botões da dobra 02
-ainda não levam a lugar nenhum (SEO.md 1.12 e 1.93).
+No Google desde 2026-10-14: `comercial.mrprivatelabel.com.br` no ar, a ordem da
+virada inteira feita — canônica, `og:url`, `og:image` e `sitemap.xml` no
+domínio; `robots.txt` aberto pelo molde da seo-mxc; `_headers` dá `noindex` só
+no `*.pages.dev`; cópia do GitHub Pages desligada. Os 3 botões da dobra 02
+levam ao grupo por enquanto, até cada nível ganhar destino próprio. Falta
+divulgar e confirmar os números do brandbook (SEO.md 1.12).
