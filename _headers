@@ -1,0 +1,24 @@
+# _headers — Cloudflare Pages (molde seo-mxc/ferramentas/moldes/_headers-previa). SEO-MXC 1.18 e 2.09.
+#
+# PRÉVIA FORA DO GOOGLE, DOMÍNIO ABERTO. A regra casa por HOST: vale só nos *.pages.dev
+# (mr-private-label.pages.dev e os endereços de cada versão). comercial.mrprivatelabel.com.br
+# aponta pro mesmo projeto e NÃO casa com essas linhas — é o endereço que vai pro Google.
+# Sem isto o pages.dev vira cópia indexável da landing, disputando com o domínio.
+# Conferir:  curl -sI https://mr-private-label.pages.dev/ | grep -i x-robots          → noindex
+#            curl -sI https://comercial.mrprivatelabel.com.br/ | grep -i x-robots   → (nada)
+# :project e :version são marcadores do Cloudflare; não trocar.
+#
+# Este arquivo é consumido pela build e não vai para o ar.
+
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# Segurança básica, todo host (1.22). Sem CSP: a página não carrega terceiro nenhum.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()

@@ -30,6 +30,7 @@
      quadrado; o .svg é o que os navegadores atuais usam. -->
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://comercial.mrprivatelabel.com.br/">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#2D4E71">
 
@@ -39,14 +40,12 @@
      hero: 1350×1971, retrato. Numa prévia que espera 1200×630 paisagem
      ela vira tira estreita ou é descartada por proporção.
      `og:image` PRECISA ser absoluta — caminho relativo é descartado por
-     boa parte dos raspadores. Como o domínio ainda não foi decidido, ela
-     aponta para o Cloudflare Pages, que é onde a página está hoje e é o
-     destino de produção nos dois caminhos em estudo (subdomínio ou
-     /comercial). Quando o domínio entrar, esta URL e a do 404.html mudam
-     juntas — são as duas únicas absolutas do projeto.
-     `og:url` e `canonical` ficam de fora por enquanto: sem `og:url` o
-     raspador usa a própria URL pedida, que está sempre certa; com uma
-     errada, ele passa a insistir na errada.
+     boa parte dos raspadores. Desde 14/10 tudo aponta pro domínio do
+     cliente (comercial.mrprivatelabel.com.br): `og:image`, `og:url` e a
+     canônica aqui, a `og:image` do 404.html, o sitemap.xml e a linha
+     Sitemap do robots.txt. Trocar o domínio é trocar nesses seis lugares
+     juntos. A prévia .pages.dev serve a mesma página e aponta a canônica
+     pro domínio — e o _headers ainda dá noindex nela.
 
      O CARTÃO É DESENHADO, NÃO MONTADO À MÃO: `tools/og.html` é o
      gerador, e é ele que deve ser editado quando a peça ou a frase
@@ -57,7 +56,8 @@
 <meta property="og:site_name" content="MR Private Label">
 <meta property="og:title" content="MR Private Label · fábrica de roupa masculina com marca própria">
 <meta property="og:description" content="Produção própria em Taquaritinga do Norte/PE para o lojista que quer vender marca própria, não o mesmo produto do vizinho.">
-<meta property="og:image" content="https://mr-private-label.pages.dev/img/og.jpg">
+<meta property="og:url" content="https://comercial.mrprivatelabel.com.br/">
+<meta property="og:image" content="https://comercial.mrprivatelabel.com.br/img/og.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
