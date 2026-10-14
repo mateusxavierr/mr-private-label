@@ -1,35 +1,17 @@
-# ⚠ ARQUIVO TEMPORÁRIO — APAGAR QUANDO O DOMÍNIO DEFINITIVO ENTRAR.
+# robots.txt — molde seo-mxc (ferramentas/moldes/robots.txt). SEO-MXC 0.10, 1.13, 1.14.
+# Aberto desde 14/10/2026 (Mateus), com o domínio comercial.mrprivatelabel.com.br no ar.
 #
-# mr-private-label.pages.dev é endereço de revisão, não o endereço do cliente.
-# Indexado, ele passa a competir com o domínio final pelos mesmos termos e com
-# o mesmo conteúdo: duas URLs disputando a mesma página, e o Google escolhendo
-# qual das duas mostra.
+# A prévia mr-private-label.pages.dev NÃO se esconde aqui: este arquivo é o mesmo em todo host.
+# Ela sai do Google pelo X-Robots-Tag: noindex do _headers, que só casa com *.pages.dev.
 #
-# O bloqueio vale para buscador, NÃO para prévia de link. Os raspadores de
-# WhatsApp, Facebook e Twitter ficam liberados de propósito: o funil desta
-# página é link colado em conversa, e é assim que a revisão é feita hoje.
-# Sem as três exceções abaixo, o link compartilhado apareceria sem imagem e
-# sem título, e pareceria bug do og:image.
+# Robô de busca não ganha grupo próprio: fica no *, que já libera (grupo nomeado faz o robô
+# esquecer o * inteiro). Os raspadores de prévia (WhatsApp, facebookexternalhit, Twitterbot)
+# também caem no * — o funil é link colado em conversa, e eles precisam passar.
 #
-# QUANDO APAGAR: não é quando o domínio entrar, é quando a página estiver
-# pronta para receber gente. O endereço definitivo é
-# comercial.mrprivatelabel.com.br (decisão de Mateus, 2026-08-11), e a
-# infraestrutura sobe antes — mas enquanto GRUPO_URL for o placeholder, os
-# quatro CTAs não levam a lugar nenhum. Indexar uma página de conversão com
-# botão morto é pior do que não indexar: o Google guarda a versão quebrada e
-# o primeiro lojista que chegar clica no vazio.
-#
-# Ordem: link do grupo entra → apagar este arquivo → divulgar.
-# O `noindex` do 404.html é outra coisa e fica para sempre.
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: WhatsApp
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
+# TREINO DE IA: sem decisão do cliente (SEO.md 0.10). Hoje liberado por omissão — é o padrão do
+# molde (opção A). Se ele recusar, entra aqui o grupo da opção B do molde, robô por robô.
 
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://comercial.mrprivatelabel.com.br/sitemap.xml
