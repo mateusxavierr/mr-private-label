@@ -23,7 +23,9 @@ index.html   página inteira: markup + CSS + JS
 404.html     página de erro, mesmo sistema visual, CSS próprio
 img/         5 fotos, recortadas dos materiais da marca
 fonts/       8 faces em woff2, subsetadas (latin e latin-ext)
-robots.txt   TEMPORÁRIO — some quando o domínio definitivo entrar
+robots.txt   TEMPORÁRIO — fechado até a página poder ir pro Google
+sitemap.xml  1 URL, no domínio do cliente
+_headers     noindex só no *.pages.dev + segurança; não vai para o ar
 _redirects   regra de build do Cloudflare; não vai para o ar
 ```
 
@@ -104,6 +106,9 @@ tag junto.
 
 ## Estado
 
-Link do grupo no ar (2026-10-05): os CTAs já levam ao WhatsApp. Falta a virada
-de domínio — `comercial.mrprivatelabel.com.br` ainda não responde, então o
-`robots.txt` fica até os passos 1–3 da ordem acima; aí apaga e divulga.
+Link do grupo no ar (2026-10-05): os CTAs já levam ao WhatsApp.
+Domínio no ar (2026-10-14): `comercial.mrprivatelabel.com.br` responde, passos
+1–3 feitos — canônica, `og:url`, `og:image` e `sitemap.xml` no domínio, e o
+`_headers` dá `noindex` só no `*.pages.dev` (a prévia não disputa com o domínio).
+Falta o passo 4: o `robots.txt` segue fechado porque os 3 botões da dobra 02
+ainda não levam a lugar nenhum (SEO.md 1.12 e 1.93).
