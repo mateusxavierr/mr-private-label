@@ -65,7 +65,12 @@ uma página que passa a depender deles até para continuar existindo. O
 subdomínio custa um registro de DNS, criado uma vez.
 
 O DNS de `mrprivatelabel.com.br` está no Cloudflare dessa agência, então mesmo o
-subdomínio depende de um pedido a eles:
+subdomínio depende de um pedido a eles. **A loja roda na Faz Agilizar**
+(`fazagilizar.com.br`, assets em `s3.fazagilizar.com.br` — conferido 14/10). Os
+servidores de nome viraram Cloudflare em 09/02/2026, pelo usuário do cliente no
+Registro.br, na mesma semana em que a hospedagem antiga (Hostoo, WordPress) foi
+suspensa por falta de crédito — a Hostoo está morta e não manda em nada. A zona não
+está no Cloudflare do Gmail da MR (vazio, conferido 14/10): é da plataforma. O pedido:
 
 ```
 Tipo: CNAME · Nome: comercial · Valor: mr-private-label.pages.dev
