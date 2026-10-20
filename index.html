@@ -1480,7 +1480,7 @@ section{position:relative;z-index:1}
 .close-act{grid-column:8/13;grid-row:1}
 /* O ÚLTIMO BOTÃO É O ÚNICO DIFERENTE, e por duas razões que se somam.
    A primeira é de leitura: ele era o sexto botão idêntico da página, a
-   334px do botão da dobra 04 — o clímax não pode ser indistinguível do
+   334px do botão da dobra 05 — o clímax não pode ser indistinguível do
    que veio antes. Aqui ele sai da coluna, atravessa as doze e sobe de
    corpo, então o olho reconhece que a página acaba ali.
    A segunda é de contraste: na parada 6 o fundo É o Preto da paleta, e
@@ -1516,6 +1516,124 @@ section{position:relative;z-index:1}
 .foot-mxc img{height:26px;width:auto}
 
 /* barra fixa mobile */
+/* ══ 02 · A FÁBRICA — o vídeo ══════════════════════════════════════
+   Molde da seção de vídeo da Ritma: título em cima, palco escuro no
+   meio, botão embaixo, tudo centrado. É a única dobra centrada da
+   página além do fecho do momento, e de propósito: o vídeo é o objeto
+   da dobra, e texto à esquerda puxaria o olho para fora dele.
+
+   A dobra não tem parada própria no motor de cor (sem `data-fold`):
+   ela mora na travessia Azul 30% → Azul 45% entre o modelo e o
+   momento. Uma parada nova exigiria uma cor fora da tabela do
+   brandbook, e a travessia já é a mais curta da rampa. */
+.fab{text-align:center;color:var(--ink)}   /* re-resolve a tinta aqui: o modo cinema troca --ink só nesta dobra */
+.fab-a{max-width:30ch;margin-inline:auto}
+.fab .eyebrow{justify-content:center}
+.fab .d2{transition:color .7s var(--ease)}
+
+/* Palco 16:9 — o formato vem do material, não de gosto. A largura é o
+   menor de dois limites: a coluna inteira do wrap, e 150vh de altura
+   convertida em largura (16:9 × 84vh), para o palco nunca passar da
+   altura da tela num notebook baixo. Canto vivo, como todo o resto da
+   página: botão e moldura não arredondam. */
+.fab-palco{position:relative;display:flex;align-items:center;justify-content:center;
+  margin:var(--s7) auto 0;width:min(100%,150vh);aspect-ratio:16/9;overflow:hidden;
+  background:#071623;
+  box-shadow:0 2px 6px rgb(7 22 35 / .14),0 28px 70px rgb(7 22 35 / .26)}
+/* .rv no seletor para vencer a transição genérica da revelação, que vem
+   depois no arquivo e não sabe da sombra */
+.fab-palco.rv{transition:opacity .9s var(--ease) var(--d,0ms),transform .6s var(--ease),
+             filter .62s var(--ease) var(--d,0ms),box-shadow .6s var(--ease)}
+/* Tocando, o palco cresce 1% e a sombra aprofunda. Só isso. */
+.fab-palco.in.is-playing{transform:scale(1.01);
+  box-shadow:0 4px 10px rgb(7 22 35 / .18),0 38px 90px rgb(7 22 35 / .34)}
+.fab-midia{position:absolute;inset:0;display:block;width:100%;height:100%;
+  object-fit:cover;background:#071623;cursor:pointer}
+
+.fab-grande{position:relative;z-index:3;display:flex;align-items:center;justify-content:center;
+  width:76px;height:76px;padding:0;border-radius:50%;
+  background:rgb(7 22 35 / .46);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  border:1px solid rgb(248 252 255 / .42);color:#F8FCFF;cursor:pointer;
+  transition:transform .26s var(--ease),background-color .2s}
+.fab-grande:hover{background:rgb(7 22 35 / .64);transform:scale(1.06)}
+.fab-grande[hidden]{display:none}
+.fab-grande svg{margin-left:3px}       /* o triângulo tem o peso à esquerda */
+
+/* Pílula de som: canto superior esquerdo. A legenda queimada deste
+   vídeo vive no meio-direito do quadro, e a barra, embaixo. */
+.fab-som-dica{position:absolute;z-index:4;top:14px;left:14px;
+  display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border:0;
+  background:rgb(7 22 35 / .72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  color:#F8FCFF;font:inherit;font-size:.75rem;line-height:1;
+  font-variation-settings:'wght' 620;letter-spacing:.16em;text-transform:uppercase;
+  cursor:pointer;transition:background-color .2s}
+.fab-som-dica:hover{background:rgb(7 22 35 / .9)}
+.fab-som-dica[hidden]{display:none}
+
+/* Barra de controles. Degradê e não faixa sólida, para o quadro seguir
+   lendo por baixo. O traço cheio é Azul claro, o mesmo acento que o
+   botão usa nas paradas escuras: o player é do site. */
+.fab-barra{position:absolute;z-index:4;left:0;right:0;bottom:0;
+  display:flex;align-items:center;gap:8px;padding:30px 14px 12px;
+  background:linear-gradient(to top,rgb(7 22 35 / .86),rgb(7 22 35 / 0));
+  color:#F8FCFF;opacity:0;transform:translateY(8px);
+  transition:opacity .24s ease,transform .24s ease;pointer-events:none}
+.fab-barra[hidden]{display:none}
+.fab-palco.mostra-controles .fab-barra{opacity:1;transform:none;pointer-events:auto}
+.fab-bt{display:flex;flex:none;align-items:center;justify-content:center;
+  width:36px;height:36px;padding:0;border:0;background:transparent;color:inherit;
+  cursor:pointer;opacity:.86;transition:opacity .18s,background-color .18s}
+.fab-bt:hover{opacity:1;background:rgb(248 252 255 / .14)}
+.fab-glifo-alto{display:none}
+.fab-palco.com-som .fab-glifo-mudo{display:none}
+.fab-palco.com-som .fab-glifo-alto{display:inline}
+/* 24px de alvo para 3px de traço: arrastar não pode pedir mão firme */
+.fab-trilha{position:relative;flex:1;height:24px;cursor:pointer;touch-action:none}
+.fab-trilha-fundo,.fab-trilha-cheia{position:absolute;top:50%;left:0;height:3px;transform:translateY(-50%)}
+.fab-trilha-fundo{width:100%;background:rgb(248 252 255 / .28)}
+.fab-trilha-cheia{width:0;background:#AABED6}
+.fab-trilha-bola{position:absolute;top:50%;left:0;width:11px;height:11px;margin-left:-5.5px;
+  border-radius:50%;background:#AABED6;transform:translateY(-50%) scale(0);transition:transform .16s}
+.fab-trilha:hover .fab-trilha-bola,.fab-trilha:focus-visible .fab-trilha-bola{transform:translateY(-50%) scale(1)}
+.fab-tempo{flex:none;font-size:.75rem;font-variant-numeric:tabular-nums;opacity:.82}
+.fab-palco :focus-visible{outline-color:#AABED6}
+
+.fab-palco:fullscreen{width:100%;height:100%;aspect-ratio:auto;transform:none;box-shadow:none}
+.fab-palco:fullscreen .fab-midia{object-fit:contain}
+
+.fab-cta{margin-top:var(--s6);display:flex;justify-content:center}
+
+/* ── MODO CINEMA ─────────────────────────────────────────────────────
+   Uns segundos com o palco enquadrado e a página escurece por baixo de
+   um véu; ficam acesos só o título, o vídeo e o botão. Sai no instante
+   em que a dobra deixa a tela. O véu não recebe clique, então nada
+   trava a rolagem. Fica acima do header (40) e abaixo da barra do
+   celular (45): o pedido nunca apaga. A dobra sobe para 43 — `section`
+   tem z-index 1 e é contexto de empilhamento, então subir o palco
+   sozinho não alcançaria o véu. */
+.fab-veu{position:fixed;inset:0;z-index:42;pointer-events:none;
+  background:rgb(7 22 35 / .9);opacity:0;transition:opacity .9s var(--ease)}
+.cinema-on .fab-veu{opacity:1}
+.cinema-on .fab{z-index:43}
+/* No escuro a tinta da dobra vira a da metade escura da rampa, e o
+   botão inverte como no fecho: Preto sobre véu Preto sumiria. */
+.cinema-on .fab{--ink:#F8FCFF;--soft:#BBC8D4;--accent:#AABED6}
+.fab .cta{transition:color .45s var(--ease),background-color .7s var(--ease)}
+.cinema-on .fab .cta{background:#AABED6;color:#071623}
+.cinema-on .fab .cta::before{background:color-mix(in srgb,#AABED6 62%,#071623)}
+.cinema-on .fab .cta:hover{color:#F8FCFF}
+
+@media (max-width:860px){
+  .fab-palco{margin-top:var(--s6)}
+  .fab-grande{width:64px;height:64px}
+  .fab-som-dica{top:10px;left:10px;padding:8px 12px;font-size:.68rem;letter-spacing:.12em}
+  .fab-barra{padding:24px 8px 6px;gap:4px}
+  .fab-bt{width:34px;height:34px}
+}
+@media (prefers-reduced-motion:reduce){
+  .fab-palco.in.is-playing{transform:none}
+}
+
 /* ══ A BARRA DE CONVERSÃO DO CELULAR ═══════════════════════════════
    Todo botão do desktop existe também no celular, e a barra é quem se
    ajusta: ela aparece só quando NENHUM botão de conversão está na tela.
@@ -2107,7 +2225,81 @@ section{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- ══ 02 · O MOMENTO ═════════════════════════════════════════════
+<!-- ══ 02 · A FÁBRICA ═════════════════════════════════════════════
+     A dobra do vídeo, no molde da seção de vídeo da Ritma (Mateus,
+     20/10): título em cima, vídeo num palco escuro, botão embaixo.
+     Vem logo depois do modelo porque responde a objeção que ele deixa
+     no ar — "marca própria tira a sua loja da foto", mas quem produz? —
+     na voz de quem produz.
+
+     O vídeo mora no próprio site, não no YouTube: o embed traria o
+     script do YouTube, o logo e os relacionados por cima, e cookie de
+     terceiro numa página que hoje não faz request externo nenhum. O
+     master de 272 MB (3840x2160, HEVC) virou 1920x1080 H.264 CRF 28 =
+     11,8 MB, com +faststart para tocar durante o download; legenda
+     queimada conferida contra o master no recorte, sem diferença.
+     preload="none": quem não chega aqui não baixa um byte.
+
+     Sem JS o <video> nasce com `controls` nativo e o script tira o
+     atributo ao assumir: ninguém fica olhando um retângulo morto. -->
+<section class="sec wrap fab" id="fabrica">
+  <div class="fab-a">
+    <p class="eyebrow label rv"><span class="n">02</span><span>A fábrica</span></p>
+    <h2 class="d2 rvl">Marca própria dá trabalho. A produção não precisa ser <em>sua</em>.</h2>
+  </div>
+
+  <div class="fab-palco rv" data-video-stage>
+    <video class="fab-midia" data-video-midia poster="video/fabrica-poster.webp"
+      preload="none" playsinline muted controls width="1920" height="1080"
+      aria-label="Vídeo do dono da MR Private Label explicando como a fábrica cuida da coleção da sua marca">
+      <source src="video/fabrica.mp4" type="video/mp4">
+    </video>
+
+    <!-- botão central: espera antes do primeiro play e pausa depois -->
+    <button class="fab-grande" type="button" data-video-grande aria-label="Reproduzir vídeo" hidden>
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+
+    <!-- o autoplay é obrigatoriamente mudo: sem esta chamada o visitante
+         assiste inteiro achando que o vídeo é só legendado -->
+    <button class="fab-som-dica" type="button" data-video-som-dica hidden>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/><path d="M17 10l4 4m0-4l-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Ativar som
+    </button>
+
+    <div class="fab-barra" data-video-barra hidden>
+      <button class="fab-bt" type="button" data-video-play aria-label="Reproduzir">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path data-video-play-glifo d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="fab-trilha" data-video-trilha role="slider" tabindex="0"
+        aria-label="Progresso do vídeo" aria-valuemin="0" aria-valuemax="100"
+        aria-valuenow="0" aria-valuetext="0 por cento">
+        <span class="fab-trilha-fundo" aria-hidden="true"></span>
+        <span class="fab-trilha-cheia" data-video-progresso aria-hidden="true"></span>
+        <span class="fab-trilha-bola" data-video-bola aria-hidden="true"></span>
+      </div>
+      <span class="fab-tempo" data-video-tempo aria-hidden="true">0:00</span>
+      <button class="fab-bt" type="button" data-video-som aria-label="Ativar som">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/>
+          <!-- os dois estados no mesmo SVG; quem troca é a classe do palco,
+               porque `hidden` em <g> não é confiável entre navegadores -->
+          <g class="fab-glifo-mudo"><path d="M17 10l4 4m0-4l-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g>
+          <g class="fab-glifo-alto"><path d="M16.4 8.8a4.5 4.5 0 0 1 0 6.4M19 6.2a8 8 0 0 1 0 11.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g>
+        </svg>
+      </button>
+      <button class="fab-bt" type="button" data-video-tela aria-label="Tela cheia">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="fab-cta rv">
+    <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+  </div>
+</section>
+
+<!-- ══ 03 · O MOMENTO ═════════════════════════════════════════════
      A dobra do espelho: o leitor se reconhece num dos três e sai pela
      porta dele. Vem DEPOIS do modelo de propósito — os cards são saídas,
      e saída antes de argumento é lead indo embora sem motivo. Depois do
@@ -2122,7 +2314,7 @@ section{position:relative;z-index:1}
 <section class="sec wrap" id="momento" data-fold="3">
   <div class="g12">
     <div class="niv-a">
-      <p class="eyebrow label rv"><span class="n">02</span><span>O momento</span></p>
+      <p class="eyebrow label rv"><span class="n">03</span><span>O momento</span></p>
       <h2 class="d2 rvl">Em que momento o seu <em>negócio</em> está?</h2>
     </div>
 
@@ -2180,11 +2372,11 @@ section{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- ══ 03 · A TROCA ═══════════════════════════════════════════════ -->
+<!-- ══ 04 · A TROCA ═══════════════════════════════════════════════ -->
 <section class="sec wrap" id="troca" data-fold="4">
   <div class="g12">
     <div class="tro-a">
-      <p class="eyebrow label rv"><span class="n">03</span><span>A troca</span></p>
+      <p class="eyebrow label rv"><span class="n">04</span><span>A troca</span></p>
       <h2 class="d2 rvl">O que muda quando a peça é <em>sua</em></h2>
       <p class="lead rv">Quando a marca é sua, a reputação da peça também é.</p>
     </div>
@@ -2250,11 +2442,11 @@ section{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- ══ 04 · O CAMINHO ═════════════════════════════════════════════ -->
+<!-- ══ 05 · O CAMINHO ═════════════════════════════════════════════ -->
 <section class="sec wrap" id="caminho" data-fold="5">
   <div class="g12">
     <div class="cam-a">
-      <p class="eyebrow label rv"><span class="n">04</span><span>O caminho</span></p>
+      <p class="eyebrow label rv"><span class="n">05</span><span>O caminho</span></p>
       <h2 class="d2 rvl">O caminho até a peça <em>pronta</em></h2>
     </div>
     <p class="lead cam-b rv">Um prazo só, e você sabe de onde ele começa a contar antes de aprovar a arte.</p>
@@ -2307,11 +2499,11 @@ section{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- ══ 04 · O GRUPO ═══════════════════════════════════════════════ -->
+<!-- ══ 06 · O GRUPO ═══════════════════════════════════════════════ -->
 <section class="sec wrap" id="grupo">
   <div class="g12" data-fold="6">
     <div class="gru-a">
-      <p class="eyebrow label rv"><span class="n">05</span><span>O grupo</span></p>
+      <p class="eyebrow label rv"><span class="n">06</span><span>O grupo</span></p>
       <h2 class="d2 rvl">O que tem <em>dentro</em> do grupo</h2>
     </div>
 
@@ -3085,6 +3277,169 @@ if(!reduce) setInterval(()=>{
   const old=cur; cur=nx;
   setTimeout(()=>old.remove(),900);
 },5200);
+
+/* ══ 02 · A FÁBRICA — o player ═══════════════════════════════════════
+   Porte do player da Ritma. Controles próprios porque os nativos mudam
+   de cara a cada navegador e o do Safari cobre a legenda queimada.
+   Toca MUDO quando o palco entra na tela (regra de autoplay do Chrome e
+   do Safari, não escolha nossa) e por isso existe a pílula "Ativar
+   som"; pausa quando sai. Com movimento reduzido nada toca sozinho. */
+(function(){
+  const frame=document.querySelector('[data-video-stage]');
+  if(!frame) return;
+  const $=s=>frame.querySelector(s);
+  const video=$('[data-video-midia]'), btGrande=$('[data-video-grande]'),
+        somDica=$('[data-video-som-dica]'), barra=$('[data-video-barra]'),
+        btPlay=$('[data-video-play]'), playGlifo=$('[data-video-play-glifo]'),
+        trilha=$('[data-video-trilha]'), progresso=$('[data-video-progresso]'),
+        bola=$('[data-video-bola]'), tempoTexto=$('[data-video-tempo]'),
+        btSom=$('[data-video-som]'), btTela=$('[data-video-tela]');
+
+  /* assume o controle: fora os nativos, dentro os nossos, nessa ordem —
+     nunca existe um instante com dois conjuntos nem com nenhum */
+  video.removeAttribute('controls');
+  barra.hidden=false; btGrande.hidden=false;
+
+  const GLIFO_PLAY='M8 5v14l11-7z', GLIFO_PAUSE='M7 5h3.5v14H7zM13.5 5H17v14h-3.5z';
+  let arrastando=false, sumico=null;
+  const tocando=()=>!video.paused && !video.ended;
+  const dur=()=>isFinite(video.duration)?video.duration:0;
+  const relogio=s=>{s=Math.max(0,Math.floor(s||0));const r=s%60;return Math.floor(s/60)+':'+(r<10?'0':'')+r};
+  /* a duração só entra com os metadados: "0:00 / 0:00" parece quebrado */
+  const escreverTempo=t=>{tempoTexto.textContent=dur()?relogio(t)+' / '+relogio(dur()):relogio(t)};
+  function pintar(pct){
+    pct=Math.min(100,Math.max(0,pct));
+    progresso.style.width=pct+'%'; bola.style.left=pct+'%';
+    trilha.setAttribute('aria-valuenow',Math.round(pct));
+    trilha.setAttribute('aria-valuetext',Math.round(pct)+' por cento');
+  }
+  function atualizar(){
+    if(arrastando) return;
+    pintar(dur()?video.currentTime/dur()*100:0); escreverTempo(video.currentTime);
+  }
+
+  /* a barra some só enquanto TOCA; pausado, player sem controle à vista
+     é player quebrado para quem acabou de chegar */
+  function esconderDepois(){
+    clearTimeout(sumico);
+    sumico=setTimeout(()=>{if(tocando()&&!arrastando) frame.classList.remove('mostra-controles')},2600);
+  }
+  function mostrarBarra(fixar){
+    frame.classList.add('mostra-controles'); clearTimeout(sumico);
+    if(!fixar) esconderDepois();
+  }
+  /* um lugar só decide a cara dos controles, lendo o estado REAL do vídeo */
+  function sincronizar(){
+    const t=tocando();
+    frame.classList.toggle('is-playing',t);
+    playGlifo.setAttribute('d',t?GLIFO_PAUSE:GLIFO_PLAY);
+    btPlay.setAttribute('aria-label',t?'Pausar':'Reproduzir');
+    btGrande.hidden=t;
+    somDica.hidden=!(t&&video.muted);
+  }
+  /* play() pode ser recusado (autoplay bloqueado, economia de bateria) e
+     nem sempre vem 'pause' junto: sem o catch a barra mostraria "pausar"
+     em cima de vídeo parado */
+  function tocar(){const p=video.play(); if(p&&p.catch) p.catch(sincronizar)}
+  function alternar(){ if(tocando()) video.pause(); else tocar(); mostrarBarra(); }
+
+  /* no corpo do vídeo o 1º toque só ACENDE os controles; no celular a
+     barra fica escondida e o toque de "quanto falta?" não pode pausar */
+  let pausadoNaMao=false;
+  const marcarManual=()=>{pausadoNaMao=!tocando()};
+  video.addEventListener('click',()=>{
+    if(tocando() && !frame.classList.contains('mostra-controles')){mostrarBarra();return}
+    alternar(); marcarManual();
+  });
+  btGrande.addEventListener('click',()=>{alternar();marcarManual()});
+  btPlay.addEventListener('click',()=>{alternar();marcarManual()});
+
+  video.addEventListener('play',()=>{sincronizar();esconderDepois()});
+  video.addEventListener('pause',()=>{sincronizar();mostrarBarra(true)});
+  video.addEventListener('ended',()=>{sincronizar();mostrarBarra(true)});
+  ['timeupdate','loadedmetadata','durationchange'].forEach(ev=>video.addEventListener(ev,atualizar));
+
+  function alternarSom(){
+    video.muted=!video.muted;
+    if(!video.muted) video.volume=1;
+    frame.classList.toggle('com-som',!video.muted);
+    btSom.setAttribute('aria-label',video.muted?'Ativar som':'Desativar som');
+    somDica.hidden=!(video.muted&&tocando());
+    mostrarBarra();
+  }
+  btSom.addEventListener('click',alternarSom);
+  /* quem pede som pelo convite quer ouvir do começo: os segundos que
+     passaram mudos ele não ouviu */
+  somDica.addEventListener('click',()=>{ if(video.currentTime<8) video.currentTime=0; alternarSom(); });
+
+  /* tela cheia: o iPhone só põe o próprio <video> em tela cheia, com o
+     player do sistema — limitação do iOS; nos outros vai o palco */
+  btTela.addEventListener('click',()=>{
+    if(document.fullscreenElement) document.exitFullscreen();
+    else if(frame.requestFullscreen) frame.requestFullscreen();
+    else if(video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+  });
+  document.addEventListener('fullscreenchange',()=>{
+    btTela.setAttribute('aria-label',document.fullscreenElement===frame?'Sair da tela cheia':'Tela cheia');
+    mostrarBarra();
+  });
+
+  /* arraste na trilha: pointer events cobrem mouse, dedo e caneta */
+  const posicao=e=>{const r=trilha.getBoundingClientRect();return Math.min(1,Math.max(0,(e.clientX-r.left)/r.width))};
+  function buscar(e,soltar){
+    if(!dur()) return;
+    const f=posicao(e); pintar(f*100); escreverTempo(f*dur());
+    if(soltar) video.currentTime=f*dur();
+  }
+  trilha.addEventListener('pointerdown',e=>{arrastando=true;trilha.setPointerCapture(e.pointerId);buscar(e,false);mostrarBarra(true)});
+  trilha.addEventListener('pointermove',e=>{if(arrastando) buscar(e,false)});
+  trilha.addEventListener('pointerup',e=>{if(!arrastando)return;arrastando=false;buscar(e,true);esconderDepois()});
+  trilha.addEventListener('keydown',e=>{
+    if(!dur()) return;
+    let d=null;
+    if(e.key==='ArrowRight') d=video.currentTime+5;
+    else if(e.key==='ArrowLeft') d=video.currentTime-5;
+    else if(e.key==='Home') d=0;
+    else if(e.key==='End') d=dur();
+    else if(e.key===' '||e.key==='Enter'){e.preventDefault();alternar();marcarManual();return}
+    if(d===null) return;
+    e.preventDefault(); video.currentTime=Math.min(dur(),Math.max(0,d)); atualizar(); mostrarBarra();
+  });
+
+  frame.addEventListener('pointermove',()=>mostrarBarra());
+  frame.addEventListener('pointerleave',()=>{if(tocando()&&!arrastando) frame.classList.remove('mostra-controles')});
+  frame.addEventListener('focusin',()=>mostrarBarra(true));
+  mostrarBarra(true);
+
+  if(reduce || !('IntersectionObserver' in window)) return;
+
+  /* ── MODO CINEMA ── depois de ~3,5s com o palco enquadrado o véu cobre
+     a página; sai no instante em que a dobra deixa a tela. O véu nasce
+     na primeira vez e depois só reacende. setTimeout e não rAF antes de
+     ligar a classe: rAF não roda em aba de fundo e o véu ficava criado
+     porém invisível (visto na Ritma). */
+  let veu=null, tempoCinema=null;
+  function cinema(ligar){
+    if(!ligar){root.classList.remove('cinema-on');return}
+    if(!veu){
+      veu=document.createElement('div'); veu.className='fab-veu'; veu.setAttribute('aria-hidden','true');
+      document.body.appendChild(veu);
+      setTimeout(()=>root.classList.add('cinema-on'),20);
+    } else root.classList.add('cinema-on');
+  }
+
+  /* pausa por SAÍDA DE TELA ≠ pausa no clique: quem pausou na mão não
+     pode ver o vídeo religar sozinho quando volta à dobra.
+     40%: limiar que engata mesmo em notebook baixo. */
+  new IntersectionObserver(es=>{
+    const visivel=es[es.length-1].isIntersecting;
+    if(visivel){ if(!pausadoNaMao && !video.ended) tocar(); }
+    else if(tocando()){ video.pause(); pausadoNaMao=false; }
+    clearTimeout(tempoCinema);
+    if(visivel) tempoCinema=setTimeout(()=>cinema(true),3500);
+    else cinema(false);
+  },{threshold:0.4}).observe(frame);
+})();
 </script>
 </body>
 </html>

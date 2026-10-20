@@ -15,10 +15,10 @@ tags: [mxc, mr-private-label, seo]
 
 "O que falta de SEO na MR?" = esta ficha. Contexto: [README.md](README.md) ("Publicação" e "Ordem da virada").
 
-Prova "no ar" desta rodada: 10/10 por `cmp` na prévia; 14/10 por curl no domínio (canônica, robots, sitemap, cabeçalhos) e pelo navegador (os 3 botões da dobra 02).
+Prova "no ar" desta rodada: 10/10 por `cmp` na prévia; 14/10 por curl no domínio (canônica, robots, sitemap, cabeçalhos) e pelo navegador (os 3 botões da dobra 03).
 
 **Virada feita em 14/10 (Mateus):** CNAME e SSL no ar (2.01, 2.17); canônica, `og:url`, `og:image` e sitemap no domínio (1.06, 1.07, 1.15, 1.95);
-robots aberto pelo molde e `X-Robots-Tag` só no `pages.dev` (1.13, 1.14, 1.18); cópia do GitHub Pages desligada (2.09); os 3 botões da dobra 02 levam ao grupo por enquanto (1.93).
+robots aberto pelo molde e `X-Robots-Tag` só no `pages.dev` (1.13, 1.14, 1.18); cópia do GitHub Pages desligada (2.09); os 3 botões da dobra 03 levam ao grupo por enquanto (1.93).
 Segue aberto da trava antiga: os números do brandbook na página (1.12) e a decisão de treino de IA (0.10).
 
 **Leitura que precisa de Mateus:** tratei a MR como não `[local]` (fábrica B2B que vende pro Brasil todo; Perfil da Empresa e Apple/Bing Places ficam fora desta landing).
@@ -75,14 +75,14 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 1.02 Title e descrição: title de 63 caracteres com a marca na frente e sem cidade (`MR Private Label · fábrica de roupa masculina com marca própria`, index.html:6); descrição de 208 (index.html:7) (MXC: serviço + cidade, marca no fim, ~60/~155)
 - [ ] 1.03 H1 visível "Nossa fábrica. Sua marca na peça." (index.html:2019-2022) sem a palavra da busca e diferente do title; o subtítulo diz o quê e pra quem, não onde (index.html:2026) (MXC: title = H1, ou subtítulo com serviço + Taquaritinga do Norte/PE)
 - [ ] 1.04 Texto no HTML do servidor: estático, todo o texto principal no markup (index.html:2019-2370); o ticker do topo só existe por JS (`FATOS`, index.html:3049-3054) e o markup diz "4 anos" quando já são 5 (index.html:2056; o JS corrige, index.html:3010-3018) (MXC: fatos do ticker no HTML e "5 anos" no markup)
-- [ ] 1.05 Links `<a href>`: os 8 CTAs nascem `href="#"` e o link do grupo só entra por JS (index.html:1984, 2391-2392); os 3 botões da dobra 02 são `<button>` sem destino (index.html:2140, 2156, 2172) (MXC: `GRUPO_URL` direto no `href`; destino dos 3 botões no 1.93)
+- [ ] 1.05 Links `<a href>`: os 8 CTAs nascem `href="#"` e o link do grupo só entra por JS (index.html:1984, 2391-2392); os 3 botões da dobra 03 são `<button>` sem destino (index.html:2140, 2156, 2172) (MXC: `GRUPO_URL` direto no `href`; destino dos 3 botões no 1.93)
 - [x] 1.06 Canônica `https://comercial.mrprivatelabel.com.br/` (index.html, `<link rel="canonical">`; servida no domínio, curl 14/10) — 14/10
 - [x] 1.07 Prévia de link: título, descrição, imagem 1200×630 com width/height/type/alt, `og:url` e `og:image` no domínio (index.html e 404.html; `img/og.jpg` 200 em comercial.mrprivatelabel.com.br, curl 14/10) — 14/10
 - [ ] 1.08 Ícone: `favicon.ico` tem 16/32/48 mas é declarado `sizes="32x32"`, e o PNG grande declarado com `rel="icon"` não existe (só `.ico`, `.svg` e o `apple-touch-icon.png` 180×180, index.html:31-33; `favicon-32.png` solto no repo) (MXC: PNG quadrado ≥48 com `rel="icon"` e `sizes` certo no `.ico`, nos 2 arquivos)
 - [x] 1.09 `lang="pt-BR"` (index.html:2) e títulos sem pular nível, h1 → h2 → h3 (index.html:2019-2359) — 10/10
 - [ ] 1.10 Alt: as fotos de conteúdo têm alt descritivo (index.html:2136, 2152, 2168, 2224, 2295, 2328); a foto do hero tem `alt=""` com o rótulo num `div role="img"` (index.html:2010-2011), que o Google não lê como alt (MXC: alt na `<img>` do hero)
 - [ ] 1.11 Dados estruturados: nenhum JSON-LD (grep 0; conferir-seo ⚠️) (MXC: `Organization` da fábrica com endereço e redes, só o que está na tela)
-- [ ] 1.12 Aberto pro Google por decisão de Mateus (14/10) com os 3 botões da dobra 02 indo pro grupo; os números vêm do brandbook e da bio (CLAUDE.md "Fatos de prova social") e só os 80,3 mil foram confirmados (Ambos: confirmar os demais números)
+- [ ] 1.12 Aberto pro Google por decisão de Mateus (14/10) com os 3 botões da dobra 03 indo pro grupo; os números vêm do brandbook e da bio (CLAUDE.md "Fatos de prova social") e só os 80,3 mil foram confirmados (Ambos: confirmar os demais números)
 - [ ] 1.32 Bloco de fatos citáveis existe (index.html:2052-2056, 2232-2240), mas a lista pede só fato confirmado: 40 mil peças/mês e +1.500 marcas vêm do brandbook e da bio, sem confirmação (CLAUDE.md "Fatos de prova social"; 1.12), e o HTML do servidor diz "4 anos" quando já são 5 (index.html:2056) (Ambos: cliente confirma os 2 números; MXC: "5 anos" no markup)
 - [ ] 1.33 Nome de arquivo descritivo: `02-modelo.jpg`, `momento-01.webp`, `vitrine/01-900.webp` (img/) (MXC: renomear com o que a foto mostra)
 - [x] 1.34 Página de vídeo N/A — a landing não tem vídeo
@@ -98,7 +98,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [x] 1.31 Registro e regra de conselho N/A — nicho não regulado (0.09)
 - [x] 1.121 Saúde que atende em Pernambuco: tabela de preço da Lei PE 16.559/2019 N/A — a MR fica em PE, mas é confecção, não serviço de saúde (0.09)
 - [x] 1.46 `[blog]` `[portal]` Artigo: autor com página própria N/A — não é portal nem tem blog
-- [ ] 1.47 Conferido fato a fato: sem registro de conferência; as 3 fotos da dobra 02 são geradas por IA (commit a27f1e4, 30/07) e mostram cena de fábrica (MXC: conferir o texto; cliente: aprovar ou trocar as fotos por reais)
+- [ ] 1.47 Conferido fato a fato: sem registro de conferência; as 3 fotos da dobra 03 são geradas por IA (commit a27f1e4, 30/07) e mostram cena de fábrica (MXC: conferir o texto; cliente: aprovar ou trocar as fotos por reais)
 - [ ] 1.48 Perguntas reais com resposta direta: não há bloco de perguntas (cliente: dúvidas do WhatsApp, 0.18; MXC: subtítulo + resposta em 1-2 frases)
 - [x] 1.49 Afirmação comercial com prova: sem superlativo nem depoimento; números com fonte registrada (CLAUDE.md "Fatos de prova social") — 10/10
 - [x] 1.50 Links externos: só o grupo e o selo MXC; nenhum dado de terceiro citado, link pago ou área de visitante (index.html:2372, 2391) — 10/10
@@ -132,7 +132,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [x] 1.90 Duas naturezas no mesmo endereço N/A — a landing fala só da fábrica; a loja de atacado é outro site (CLAUDE.md "Fora do escopo")
 - [x] 1.91 Atalho de quem já é cliente N/A — landing de captação, sem área do cliente
 - [ ] 1.92 Número gerado do dado: a idade é calculada pelo JS, mas o markup diz "4 anos" e hoje são 5 (index.html:2055); "80,3 mil seguidores" escrito à mão (index.html:2054, 2368) (MXC: corrigir o markup; seguidores revistos no 7.05)
-- [x] 1.93 Os 3 botões da dobra 02 viraram `<a class="js-cta">` e levam ao grupo do WhatsApp por enquanto (Mateus, 14/10; conferido no navegador: os 3 com href do grupo e `_blank`); destino próprio de cada nível segue sem decisão (comentário em index.html na dobra 02) — 14/10
+- [x] 1.93 Os 3 botões da dobra 03 viraram `<a class="js-cta">` e levam ao grupo do WhatsApp por enquanto (Mateus, 14/10; conferido no navegador: os 3 com href do grupo e `_blank`); destino próprio de cada nível segue sem decisão (comentário em index.html na dobra 03) — 14/10
 - [x] 1.94 `[portal]` Notícia reescrita de outra fonte N/A — não é portal nem tem blog
 - [x] 1.122 `[portal]` `[blog]` Texto de terceiro publicado inteiro leva `noindex` N/A — não é portal nem tem blog
 - [x] 1.100 Serviço 100% online N/A — fábrica com endereço real em Taquaritinga do Norte/PE (CLAUDE.md "Cliente")
@@ -140,7 +140,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [x] 1.102 Palavras proibidas do nicho no build N/A — nicho não regulado (0.09)
 - [ ] 1.103 Animação com saída de emergência: `.rv` nasce com `opacity:0` no CSS e só aparece pelo JS (index.html:1554-1558), sem fallback de 2-2,5 s se o script travar (MXC)
 - [x] 1.104 Página pública com dado pessoal N/A — não há
-- [ ] 1.105 Procedência das fotos: as 3 da dobra 02 são de IA (commit a27f1e4), as outras vêm dos materiais da marca (README "Estrutura"); números velhos anotados, 72 mil e 64,4 mil (CLAUDE.md) (MXC: registrar a origem de cada foto de `img/`)
+- [ ] 1.105 Procedência das fotos: as 3 da dobra 03 são de IA (commit a27f1e4), as outras vêm dos materiais da marca (README "Estrutura"); números velhos anotados, 72 mil e 64,4 mil (CLAUDE.md) (MXC: registrar a origem de cada foto de `img/`)
 - [x] 1.109 `[portal]` `[blog]` Publieditorial, matéria paga ou conteúdo de parceiro com rótulo visível no… N/A — não é portal nem tem blog
 - [ ] 1.111 Imagem da página pro resultado (`primaryImageOfPage`): não existe; o `og.jpg` é card com frase (index.html:58) (MXC: foto real no 1.11)
 - [x] 1.113 `[portal]` Toda matéria com foto principal própria, nunca o logo nem arte cheia de texto N/A — não é portal nem tem blog

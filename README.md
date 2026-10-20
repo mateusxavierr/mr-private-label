@@ -22,6 +22,7 @@ python3 -m http.server 4501 --bind 127.0.0.1
 index.html   página inteira: markup + CSS + JS
 404.html     página de erro, mesmo sistema visual, CSS próprio
 img/         5 fotos, recortadas dos materiais da marca
+video/       vídeo do dono (dobra 02) em MP4 + capa
 fonts/       8 faces em woff2, subsetadas (latin e latin-ext)
 robots.txt   aberto, com a linha Sitemap (molde da seo-mxc)
 sitemap.xml  1 URL, no domínio do cliente
@@ -40,6 +41,27 @@ existe, e em `/a/b/c` um `fonts/x.woff2` viraria `/a/b/fonts/x.woff2`. Todo
 É o preço de não ter build: um `.svg` externo custaria um request a mais e
 impediria o `currentColor`. Se o símbolo mudar no `index.html`, **mudar no
 `404.html` junto** — nada avisa.
+
+## Vídeo da dobra 02 (A fábrica)
+
+O vídeo do dono mora **no próprio site**, não no YouTube (decisão de Mateus,
+2026-10-20): o embed traria script, logo e relacionados do YouTube e cookie de
+terceiro, e a página deixaria de ser "zero request externo". O molde é a seção
+de vídeo da Ritma: título em cima, palco escuro, botão embaixo; toca **mudo**
+quando entra na tela (regra de autoplay dos navegadores) com a pílula "Ativar
+som", pausa ao sair, e depois de ~3,5 s a página escurece em volta ("modo
+cinema"). Com movimento reduzido nada toca sozinho.
+
+Trocar o vídeo: reencodar o master e substituir os dois arquivos de `video/`,
+mantendo os nomes.
+
+```bash
+ffmpeg -i master.mov -vf "scale=1920:-2:flags=lanczos,format=yuv420p" -c:v libx264 -preset slow -crf 28 -profile:v high -movflags +faststart -c:a aac -b:a 128k video/fabrica.mp4
+ffmpeg -ss 11.3 -i video/fabrica.mp4 -frames:v 1 -vf scale=1280:-2 -c:v libwebp -quality 78 video/fabrica-poster.webp
+```
+
+O master de 272 MB (4K HEVC) virou 11,8 MB. O teto do Cloudflare Pages é 25 MB
+por arquivo; o `-ss` da capa é um quadro sem legenda, olhando pra câmera.
 
 ## Link do grupo
 
@@ -110,6 +132,6 @@ Link do grupo no ar (2026-10-05): os CTAs já levam ao WhatsApp.
 No Google desde 2026-10-14: `comercial.mrprivatelabel.com.br` no ar, a ordem da
 virada inteira feita — canônica, `og:url`, `og:image` e `sitemap.xml` no
 domínio; `robots.txt` aberto pelo molde da seo-mxc; `_headers` dá `noindex` só
-no `*.pages.dev`; cópia do GitHub Pages desligada. Os 3 botões da dobra 02
+no `*.pages.dev`; cópia do GitHub Pages desligada. Os 3 botões da dobra 03
 levam ao grupo por enquanto, até cada nível ganhar destino próprio. Falta
 divulgar e confirmar os números do brandbook (SEO.md 1.12).
