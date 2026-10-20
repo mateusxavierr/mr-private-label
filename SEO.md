@@ -4,6 +4,7 @@ tags: [mxc, mr-private-label, seo]
 
 # SEO · MR Private Label — ficha
 
+**Cliente no painel:** MR Private Label · **Domínio canônico:** https://comercial.mrprivatelabel.com.br
 **Site:** MR Private Label (confecção de roupa masculina com marca do lojista, Taquaritinga do Norte/PE; via Manolo) · **Domínio:** https://comercial.mrprivatelabel.com.br (decidido em 11/08; **no ar e aberto pro Google desde 14/10** — CNAME → `mr-private-label.pages.dev`, SSL Google Trust até 12/01/2027, dig/openssl 14/10)
 **Prévia:** https://mr-private-label.pages.dev (projeto de produção do Pages; fora do Google por `X-Robots-Tag: noindex` só no `*.pages.dev`, `_headers`, curl -I 14/10) · cópia do GitHub Pages desligada 14/10 (404)
 **Tipo:** landing estática de uma página (HTML puro, sem build, Cloudflare Pages) · **Etiquetas que valem:** `[landing]` · em aberto: `[pago]` (0.07)
