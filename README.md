@@ -22,7 +22,7 @@ python3 -m http.server 4501 --bind 127.0.0.1
 index.html   página inteira: markup + CSS + JS
 404.html     página de erro, mesmo sistema visual, CSS próprio
 img/         5 fotos, recortadas dos materiais da marca
-video/       vídeo do dono (dobra 02) em MP4 + capa
+video/       vídeo do dono (dobra 01) em MP4 + capa
 fonts/       8 faces em woff2, subsetadas (latin e latin-ext)
 robots.txt   aberto, com a linha Sitemap (molde da seo-mxc)
 sitemap.xml  1 URL, no domínio do cliente
@@ -42,12 +42,14 @@ existe, e em `/a/b/c` um `fonts/x.woff2` viraria `/a/b/fonts/x.woff2`. Todo
 impediria o `currentColor`. Se o símbolo mudar no `index.html`, **mudar no
 `404.html` junto** — nada avisa.
 
-## Vídeo da dobra 02 (A fábrica)
+## Vídeo da dobra 01 (A fábrica)
 
 O vídeo do dono mora **no próprio site**, não no YouTube (decisão de Mateus,
 2026-10-20): o embed traria script, logo e relacionados do YouTube e cookie de
 terceiro, e a página deixaria de ser "zero request externo". O molde é a seção
-de vídeo da Ritma: título em cima, palco escuro, botão embaixo; toca **mudo**
+de vídeo da Ritma: título em cima, palco escuro, botão embaixo, logo depois
+dos números e entre duas fitas do carimbo "mr" (a de cima corre para a
+esquerda, a de baixo para a direita); toca **mudo**
 quando entra na tela (regra de autoplay dos navegadores) com a pílula "Ativar
 som", pausa ao sair, e depois de ~3,5 s a página escurece em volta ("modo
 cinema"). Com movimento reduzido nada toca sozinho.

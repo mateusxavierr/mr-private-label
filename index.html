@@ -1615,6 +1615,10 @@ section{position:relative;z-index:1}
   background:rgb(7 22 35 / .9);opacity:0;transition:opacity .9s var(--ease)}
 .cinema-on .fab-veu{opacity:1}
 .cinema-on .fab{z-index:43}
+/* as duas fitas do carimbo emolduram o vídeo: apagar a moldura justo
+   quando ele toca desmontaria a composição. Sobem junto, em tinta clara. */
+.cinema-on .carimbo{position:relative;z-index:43;--ink:#F8FCFF;--accent:#AABED6}
+.carimbo svg{transition:color .7s var(--ease)}
 /* No escuro a tinta da dobra vira a da metade escura da rampa, e o
    botão inverte como no fecho: Preto sobre véu Preto sumiria. */
 .cinema-on .fab{--ink:#F8FCFF;--soft:#BBC8D4;--accent:#AABED6}
@@ -1752,11 +1756,15 @@ section{position:relative;z-index:1}
   from{transform:translateX(0)}
   to{transform:translateX(calc(-100% - var(--vao)))}
 }
+/* a fita de baixo do vídeo corre ao contrário: a mesma conta, invertida */
+.carimbo--dir ul{animation-direction:reverse}
 @media (prefers-reduced-motion:reduce){.carimbo ul{animation:none}}
 /* A dobra seguinte encurta o respiro de --sec para --s8, e o hero
    desconta o rodapé do card do lado dele: as duas folgas ópticas em
    torno da fita passam a medir o mesmo, e menos que antes. */
 .carimbo + section{padding-top:var(--s8)}
+/* entre as duas fitas o vídeo respira igual em cima e embaixo */
+.fab{padding-bottom:var(--s8)}
 
 /* ── GRADE DE FICHA TÉCNICA ──────────────────────────────────────────
    Só na dobra do método, onde a própria copy promete "tecido escolhido,
@@ -2176,61 +2184,20 @@ section{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- ══ 01 · O MODELO ══════════════════════════════════════════════ -->
-  <!-- CARIMBO DE FÁBRICA — uma vez só na página, aqui, onde ela passa
-       de "quem somos" para "o que defendemos". Repetido em toda
-       divisória viraria papel de parede e perderia o sentido. -->
+  <!-- CARIMBO DE FÁBRICA — emoldura o vídeo do dono (Mateus, 20/10):
+       a fita de cima corre para a esquerda, a de baixo para a direita,
+       e quem fala no meio é a fábrica. Só aqui na página: repetido em
+       toda divisória viraria papel de parede e perderia o sentido. -->
   <div class="carimbo" aria-hidden="true">
     <ul><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li></ul>
     <ul><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li></ul>
   </div>
 
-<section class="sec wrap" id="modelo" data-fold="2">
-  <div class="g12">
-    <div class="mod-a">
-      <p class="mod-folio rv" aria-hidden="true">01</p>
-      <p class="eyebrow label rv"><span class="n">01</span><span>O modelo</span></p>
-      <h2 class="d2 rvl">A peça da sua vitrine também está na vitrine <em>do vizinho</em>.</h2>
-      <div class="body rv">
-        <p>É assim que o modelo de revenda funciona: a peça chega pronta, com a marca de outra empresa e o preço sugerido junto. O caminho que trouxe essa peça até a sua loja é o mesmo que a leva para todas as outras.</p>
-      </div>
-      <p class="mod-tese rv">Quando o produto é igual, o que sobra para disputar é <b>desconto</b>.</p>
-    </div>
-
-    <!-- A prova visual: a MESMA imagem três vezes, de propósito. As
-         legendas fazem o trabalho do argumento; as imagens repetidas
-         são decorativas para o leitor de tela, que recebe a tese
-         inteira no rótulo do grupo. -->
-    <div class="mod-pilha" role="group" aria-label="A mesma fotografia de peça repetida três vezes: a peça é igual na loja do centro, na loja da rua de trás e na sua loja.">
-      <figure class="fig rv">
-        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
-        <figcaption class="label">Loja do centro</figcaption>
-      </figure>
-      <figure class="fig rv">
-        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
-        <figcaption class="label">Loja da rua de trás</figcaption>
-      </figure>
-      <figure class="fig rv">
-        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
-        <figcaption class="label">A sua loja</figcaption>
-      </figure>
-    </div>
-
-    <div class="mod-vira rv">
-      <h3 class="d2">Marca <em>própria</em> tira a sua loja dessa foto.</h3>
-      <p class="lead">Com a sua marca na peça, preço, margem e cliente deixam de depender de fornecedor.</p>
-      <a class="cta big js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
-      <p class="note">Mais de 1.500 marcas já produziram nesta fábrica.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══ 02 · A FÁBRICA ═════════════════════════════════════════════
+<!-- ══ 01 · A FÁBRICA ═════════════════════════════════════════════
      A dobra do vídeo, no molde da seção de vídeo da Ritma (Mateus,
      20/10): título em cima, vídeo num palco escuro, botão embaixo.
-     Vem logo depois do modelo porque responde a objeção que ele deixa
-     no ar — "marca própria tira a sua loja da foto", mas quem produz? —
-     na voz de quem produz.
+     Vem logo depois dos números (Mateus, 20/10): o 40 mil vira rosto —
+     quem produz fala antes de a página começar a argumentar.
 
      O vídeo mora no próprio site, não no YouTube: o embed traria o
      script do YouTube, o logo e os relacionados por cima, e cookie de
@@ -2244,7 +2211,7 @@ section{position:relative;z-index:1}
      atributo ao assumir: ninguém fica olhando um retângulo morto. -->
 <section class="sec wrap fab" id="fabrica">
   <div class="fab-a">
-    <p class="eyebrow label rv"><span class="n">02</span><span>A fábrica</span></p>
+    <p class="eyebrow label rv"><span class="n">01</span><span>A fábrica</span></p>
     <h2 class="d2 rvl">Marca própria dá trabalho. A produção não precisa ser <em>sua</em>.</h2>
   </div>
 
@@ -2296,6 +2263,52 @@ section{position:relative;z-index:1}
 
   <div class="fab-cta rv">
     <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+  </div>
+</section>
+
+  <div class="carimbo carimbo--dir" aria-hidden="true">
+    <ul><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li></ul>
+    <ul><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li><li><svg viewBox="0 0 2110 790" fill="currentColor"><use href="#mrg"/></svg></li><li><i></i></li></ul>
+  </div>
+
+<!-- ══ 02 · O MODELO ══════════════════════════════════════════════ -->
+<section class="sec wrap" id="modelo" data-fold="2">
+  <div class="g12">
+    <div class="mod-a">
+      <p class="mod-folio rv" aria-hidden="true">02</p>
+      <p class="eyebrow label rv"><span class="n">02</span><span>O modelo</span></p>
+      <h2 class="d2 rvl">A peça da sua vitrine também está na vitrine <em>do vizinho</em>.</h2>
+      <div class="body rv">
+        <p>É assim que o modelo de revenda funciona: a peça chega pronta, com a marca de outra empresa e o preço sugerido junto. O caminho que trouxe essa peça até a sua loja é o mesmo que a leva para todas as outras.</p>
+      </div>
+      <p class="mod-tese rv">Quando o produto é igual, o que sobra para disputar é <b>desconto</b>.</p>
+    </div>
+
+    <!-- A prova visual: a MESMA imagem três vezes, de propósito. As
+         legendas fazem o trabalho do argumento; as imagens repetidas
+         são decorativas para o leitor de tela, que recebe a tese
+         inteira no rótulo do grupo. -->
+    <div class="mod-pilha" role="group" aria-label="A mesma fotografia de peça repetida três vezes: a peça é igual na loja do centro, na loja da rua de trás e na sua loja.">
+      <figure class="fig rv">
+        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
+        <figcaption class="label">Loja do centro</figcaption>
+      </figure>
+      <figure class="fig rv">
+        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
+        <figcaption class="label">Loja da rua de trás</figcaption>
+      </figure>
+      <figure class="fig rv">
+        <div class="fig-in"><img loading="lazy" decoding="async" src="img/02-modelo.jpg" alt="" width="880" height="1100"></div>
+        <figcaption class="label">A sua loja</figcaption>
+      </figure>
+    </div>
+
+    <div class="mod-vira rv">
+      <h3 class="d2">Marca <em>própria</em> tira a sua loja dessa foto.</h3>
+      <p class="lead">Com a sua marca na peça, preço, margem e cliente deixam de depender de fornecedor.</p>
+      <a class="cta big js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
+      <p class="note">Mais de 1.500 marcas já produziram nesta fábrica.</p>
+    </div>
   </div>
 </section>
 
@@ -3219,9 +3232,8 @@ const RODA = 3200;
    A conta: cada cópia anda um CICLO (a própria largura mais um vão).
    Para nunca aparecer buraco, o que sobra depois de descontar um ciclo
    ainda precisa cobrir a tela — daí `teto(tela ÷ ciclo) + 1`.        */
-(()=>{
-  const fita=document.querySelector('.carimbo');
-  const molde=fita&&fita.querySelector('ul');
+document.querySelectorAll('.carimbo').forEach(fita=>{
+  const molde=fita.querySelector('ul');
   if(!molde) return;
   const ajusta=()=>{
     const vao=parseFloat(getComputedStyle(fita).columnGap)||0;
@@ -3236,7 +3248,7 @@ const RODA = 3200;
   /* o glifo é SVG, mas o vão vem de clamp sobre vw e a caixa só assenta
      depois do layout final — remedir no load evita cópia a menos */
   addEventListener('load',ajusta);
-})();
+});
 
 /* ── ticker do header — motion aprovado ──────────────────────────── */
 const FATOS=[
