@@ -8,12 +8,19 @@ do lojista. O funil leva a um grupo de WhatsApp.
 
 Não tem build, não tem dependência, não tem framework. `index.html` carrega o
 CSS e o JS inline, e as imagens e fontes são locais — a página não faz nenhum
-request externo.
+request externo, a não ser o pixel da Meta depois que o visitante aceita os
+cookies (seção Pixel e API de conversões).
 
 Abrir o arquivo direto no navegador funciona. Para servir por HTTP:
 
 ```bash
 python3 -m http.server 4501 --bind 127.0.0.1
+```
+
+Para testar junto a rota do servidor (`functions/`), que o Python não roda:
+
+```bash
+npx wrangler pages dev . --port 8798 --binding META_PIXEL_ID=<id> --binding META_CAPI_TOKEN=<token>
 ```
 
 ## Estrutura
@@ -28,6 +35,7 @@ robots.txt   aberto, com a linha Sitemap (molde da seo-mxc)
 sitemap.xml  1 URL, no domínio do cliente
 _headers     noindex só no *.pages.dev + segurança; não vai para o ar
 _redirects   regra de build do Cloudflare; não vai para o ar
+functions/   api/meta.js: API de conversões da Meta, roda no servidor do Pages
 ```
 
 O `404.html` repete os tokens do `index.html` em vez de importar: são dois
@@ -76,6 +84,50 @@ const GRUPO_URL = "https://chat.whatsapp.com/Lcc3SPFlFLx5NvgtlSBc1Z";
 
 Todos os botões com a classe `js-cta` recebem esse valor no carregamento. Se o
 grupo trocar de link (ou o convite for redefinido no WhatsApp), muda só aqui.
+
+## Pixel e API de conversões da Meta
+
+Pedido de Rodolpho (chegou por Manolo) em 23/10, instalado em 29/10. Mede dois
+eventos: `PageView` ao abrir a página e `Lead` no clique de qualquer botão do
+grupo. **Enquanto o ID não entra, nada disso existe na tela** — sem aviso, sem
+botão no rodapé, sem request.
+
+Como funciona:
+
+- **Aviso de cookies primeiro.** Nada da Meta carrega antes do "Aceitar"
+  (SEO-MXC 3.11). A escolha fica 180 dias no cookie `mr_consent`, e o link
+  "Preferências de cookies" no rodapé reabre o aviso. Recusar depois de aceitar
+  desliga o pixel e apaga os cookies `_fbp`/`_fbc`.
+- **Dois caminhos, um evento.** O mesmo evento sai pelo pixel (navegador) e por
+  `functions/api/meta.js` (servidor), com o mesmo id, e a Meta conta um. O
+  servidor existe porque bloqueador de anúncio e Safari comem parte do pixel.
+- **O token nunca entra no `index.html`**, que é público no GitHub. Ele fica num
+  segredo do projeto no Cloudflare Pages. A rota só aceita pedido da própria
+  página, com aceite gravado e evento da lista.
+- Sem correspondência avançada e com `autoConfig` desligado: o pixel não lê
+  campo nem adivinha clique.
+
+Para ligar, com o ID do pixel e o token (Gerenciador de Eventos → Configurações
+→ API de conversões → Gerar token):
+
+1. `index.html`, bloco 0 do script: `const PIXEL_ID = "<id>";`
+2. Segredos no Cloudflare, rodando da pasta do projeto:
+   ```bash
+   npx wrangler pages secret put META_PIXEL_ID --project-name mr-private-label
+   ```
+   ```bash
+   npx wrangler pages secret put META_CAPI_TOKEN --project-name mr-private-label
+   ```
+3. Commit e push (o segredo só vale no deploy seguinte).
+4. Conferir na aba "Eventos de teste" do Gerenciador: pôr o código dela em
+   `META_TEST_CODE` (mesmo comando), abrir a página, aceitar e clicar num botão.
+   Tem que aparecer `PageView` e `Lead` com "Navegador" e "Servidor"
+   deduplicados. Depois apagar o `META_TEST_CODE`
+   (`npx wrangler pages secret delete META_TEST_CODE --project-name mr-private-label`).
+
+Erro da Meta aparece no log da função (Pages → mr-private-label → Functions →
+Real-time logs). A versão da Graph API (`v26.0`) mora no topo de
+`functions/api/meta.js`.
 
 ## Publicação
 
@@ -137,3 +189,6 @@ domínio; `robots.txt` aberto pelo molde da seo-mxc; `_headers` dá `noindex` s�
 no `*.pages.dev`; cópia do GitHub Pages desligada. Os 3 botões da dobra 03
 levam ao grupo por enquanto, até cada nível ganhar destino próprio. Falta
 divulgar e confirmar os números do brandbook (SEO.md 1.12).
+Pixel da Meta + API de conversões instalados em 2026-10-29, desligados até o ID
+e o token de Rodolpho entrarem (seção Pixel e API de conversões). Falta a
+política de privacidade (SEO.md 1.29).

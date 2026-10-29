@@ -1515,6 +1515,31 @@ section{position:relative;z-index:1}
 .foot-mxc:hover{color:var(--ink)}
 .foot-mxc img{height:26px;width:auto}
 
+/* aviso de cookies — só existe com PIXEL_ID preenchido (bloco 0 do script).
+   Cor fixa da paleta, e não as variáveis do motor: o aviso flutua sobre
+   qualquer momento da jornada e o texto pequeno precisa de 7:1 em todos
+   (Preto sobre Branco, 17:1). Os dois botões têm o mesmo tamanho porque
+   recusar não pode dar mais trabalho que aceitar. O hover inverte. */
+.ck{position:fixed;z-index:46;left:var(--s3);bottom:calc(var(--s3) + env(safe-area-inset-bottom));
+  width:min(420px,calc(100vw - 2*var(--s3)));padding:var(--s4);
+  background:#F8FCFF;color:#071623;border:1px solid #071623;
+  font-family:var(--sans);font-size:.875rem;line-height:1.5}
+.ck[hidden]{display:none}
+.ck p{margin:0 0 var(--s3)}
+.ck-bt{display:flex;gap:var(--s2)}
+.ck-bt button{flex:1;padding:12px 16px;border:1px solid #071623;
+  font-size:.75rem;font-variation-settings:'wght' 620;letter-spacing:.16em;text-transform:uppercase;
+  transition:background-color .2s,color .2s}
+.ck-nao{background:#F8FCFF;color:#071623}
+.ck-sim{background:#071623;color:#F8FCFF}
+.ck-nao:hover{background:#071623;color:#F8FCFF}
+.ck-sim:hover{background:#F8FCFF;color:#071623}
+.ck :focus-visible{outline-color:#071623}
+.foot-ck{display:block;margin-top:var(--s2);padding:0;font-size:.875rem;color:var(--soft);
+  text-decoration:underline;text-underline-offset:3px;transition:color .2s}
+.foot-ck[hidden]{display:none}
+.foot-ck:hover{color:var(--ink)}
+
 /* barra fixa mobile */
 /* ══ 02 · A FÁBRICA — o vídeo ══════════════════════════════════════
    Molde da seção de vídeo da Ritma: título em cima, palco escuro no
@@ -2574,6 +2599,7 @@ section{position:relative;z-index:1}
       <p>Empresa aberta em 03/08/2021, com fábrica própria em Taquaritinga do Norte, Pernambuco.</p>
       <p>Instagram: @mr.privatelabel · 80,3 mil seguidores</p>
       <p>© 2026 MR Private Label
+        <button class="foot-ck" id="ck-abrir" type="button" hidden>Preferências de cookies</button>
         <!-- UTM de propósito (skill /rodape-rastreavel): utm_source = este cliente. Sem ele a visita cai em "direto" no GA4 da MXC. Não tirar ao mexer no selo. -->
         <a class="foot-mxc" href="https://mxcdigital.com.br/?utm_source=mr&amp;utm_medium=rodape&amp;utm_campaign=assinatura" target="_blank" rel="nofollow noopener" aria-label="Feito por MXC Digital (abre em nova aba)"><span>Feito por</span><img src="img/mxc-logo-claro.webp" width="281" height="64" alt="MXC Digital" loading="lazy" decoding="async"></a>
       </p>
@@ -2592,10 +2618,87 @@ section{position:relative;z-index:1}
   <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
 </div>
 
+<!-- Aviso de cookies. Nasce escondido e só aparece com PIXEL_ID preenchido
+     e sem escolha gravada. Sem pixel a página não grava nada, então não
+     tem o que perguntar. -->
+<div class="ck" id="ck" role="dialog" aria-label="Aviso de cookies" hidden>
+  <p>Usamos cookies para medir o resultado dos nossos anúncios (Meta Pixel). Você escolhe, e nada é coletado sem o seu aceite.</p>
+  <div class="ck-bt">
+    <button type="button" class="ck-nao" data-ck="nao">Recusar</button>
+    <button type="button" class="ck-sim" data-ck="sim">Aceitar</button>
+  </div>
+</div>
+
 <script>
 /* ── ponto único de configuração ─────────────────────────────────── */
 const GRUPO_URL = "https://chat.whatsapp.com/Lcc3SPFlFLx5NvgtlSBc1Z";   /* link do grupo: trocar só aqui */
 document.querySelectorAll('.js-cta').forEach(a=>{a.href=GRUPO_URL;a.target="_blank";a.rel="noopener"});
+
+/* ── 0 · MEDIÇÃO DA META (pixel + API de conversões) ─────────────────
+   Nada da Meta carrega antes do aceite (SEO-MXC 3.11), e com PIXEL_ID
+   vazio a página não mostra aviso nem grava nada.
+   Cada evento sai por dois caminhos com o mesmo id: o pixel, pelo
+   navegador, e functions/api/meta.js, pelo servidor. A Meta junta os
+   dois e conta um. O servidor existe porque bloqueador de anúncio e o
+   Safari comem parte do pixel, e é ele quem guarda o token: o token
+   NUNCA entra neste arquivo, que é público. Ele mora no segredo
+   META_CAPI_TOKEN do projeto no Cloudflare Pages, junto do META_PIXEL_ID.
+   Eventos: PageView ao abrir e Lead no clique de qualquer botão do grupo.
+   A escolha fica no cookie mr_consent, que o servidor também confere. */
+const PIXEL_ID = "";   /* ID do pixel: trocar aqui E no META_PIXEL_ID do Cloudflare */
+(()=>{
+  if(!PIXEL_ID) return;
+  const ck=document.getElementById('ck'), abrir=document.getElementById('ck-abrir');
+  const escolha=()=>(document.cookie.match(/(?:^|; )mr_consent=(sim|nao)/)||[])[1];
+  const capi=(evento,id)=>fetch('/api/meta',{method:'POST',keepalive:true,
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({evento,id,url:location.href})}).catch(()=>{});
+  const enviar=evento=>{
+    if(escolha()!=='sim') return;
+    const id=crypto.randomUUID();
+    fbq('track',evento,{},{eventID:id});
+    capi(evento,id);
+  };
+  let ligado=false;
+  function ligar(){
+    if(ligado){ fbq('consent','grant'); return; }
+    ligado=true;
+    /* snippet oficial da Meta, sem o <noscript>: sem script não há aceite */
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('set','autoConfig',false,PIXEL_ID);   /* sem evento adivinhado por clique */
+    fbq('init',PIXEL_ID);                     /* sem correspondência avançada (3.11) */
+    /* o servidor só manda depois que o pixel grava o _fbp, que é o que
+       casa as duas cópias do evento; bloqueado, manda assim mesmo */
+    const id=crypto.randomUUID();
+    fbq('track','PageView',{},{eventID:id});
+    const s=document.querySelector('script[src$="fbevents.js"]');
+    const vai=()=>capi('PageView',id);
+    s.addEventListener('load',vai,{once:true});
+    s.addEventListener('error',vai,{once:true});
+  }
+  function gravar(v){
+    document.cookie='mr_consent='+v+'; Max-Age=15552000; Path=/; SameSite=Lax'+(location.protocol==='https:'?'; Secure':'');
+    ck.hidden=true;
+    if(v==='sim') return ligar();
+    if(ligado) fbq('consent','revoke');
+    /* recusa depois de aceitar: os cookies da Meta saem junto. O pixel grava
+       no domínio-mãe, então apaga nos dois níveis */
+    const mae=location.hostname.split('.').slice(-3).join('.');
+    ['_fbp','_fbc'].forEach(c=>[location.hostname,mae].forEach(d=>{
+      document.cookie=c+'=; Max-Age=0; Path=/; Domain='+d;
+    }));
+  }
+  ck.querySelectorAll('[data-ck]').forEach(b=>b.addEventListener('click',()=>gravar(b.dataset.ck)));
+  abrir.hidden=false;
+  abrir.addEventListener('click',()=>{ ck.hidden=false; ck.querySelector('.ck-sim').focus(); });
+  document.querySelectorAll('.js-cta').forEach(a=>a.addEventListener('click',()=>enviar('Lead')));
+  if(escolha()==='sim') ligar();
+  else if(!escolha()) ck.hidden=false;
+})();
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* Declarada aqui em cima porque o motor de cor mexe nela (a inversão da

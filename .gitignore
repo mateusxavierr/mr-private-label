@@ -12,6 +12,8 @@ skills-lock.json
 # Ambiente / segredos
 .env
 .env.*
+.dev.vars
+.wrangler/
 
 # Sistema operacional
 .DS_Store

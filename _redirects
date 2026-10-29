@@ -1,6 +1,6 @@
 # Cloudflare Pages serve TUDO que está versionado, e o repositório tem arquivos
 # que não são o site: as notas do projeto (README e, desde 10/10, a ficha SEO.md),
-# o .gitignore e o gerador do cartão social. Publicados, eles vão junto quando o domínio do cliente apontar
+# o .gitignore, o gerador do cartão social e, desde 29/10, o código do servidor (functions/). Publicados, eles vão junto quando o domínio do cliente apontar
 # para cá — comercial.mrprivatelabel.com.br/README.md abrindo nota de trabalho
 # é lixo na vitrine do cliente.
 #
@@ -20,3 +20,4 @@
 /SEO.md        /  301
 /.gitignore    /  301
 /tools/*       /  301
+/functions/*   /  301

@@ -7,7 +7,7 @@ tags: [mxc, mr-private-label, seo]
 **Cliente no painel:** MR Private Label · **Domínio canônico:** https://comercial.mrprivatelabel.com.br
 **Site:** MR Private Label (confecção de roupa masculina com marca do lojista, Taquaritinga do Norte/PE; via Manolo) · **Domínio:** https://comercial.mrprivatelabel.com.br (decidido em 11/08; **no ar e aberto pro Google desde 14/10** — CNAME → `mr-private-label.pages.dev`, SSL Google Trust até 12/01/2027, dig/openssl 14/10)
 **Prévia:** https://mr-private-label.pages.dev (projeto de produção do Pages; fora do Google por `X-Robots-Tag: noindex` só no `*.pages.dev`, `_headers`, curl -I 14/10) · cópia do GitHub Pages desligada 14/10 (404)
-**Tipo:** landing estática de uma página (HTML puro, sem build, Cloudflare Pages) · **Etiquetas que valem:** `[landing]` · em aberto: `[pago]` (0.07)
+**Tipo:** landing estática de uma página (HTML puro, sem build, Cloudflare Pages) · **Etiquetas que valem:** `[landing]` `[pago]` (0.07, desde 29/10)
 · não valem: `[local]` `[loja]` `[ref]` `[UE]` `[plano]` `[plano 597]` `[blog]` `[portal]` `[evento]` `[saas]` `[vagas]` `[hotel]`
 **Plano:** nenhum (landing R$ 750, quitada; vault `projetos/mxc/financeiro.md`) · **Data:** 10/10/2026 · **molde:** `seo-mxc/SEO-MXC.md`
 
@@ -33,7 +33,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 0.04 Search Console, GA4 ou Merchant já existentes no domínio da marca, e de quem: a agência da loja pode ter propriedade de Domínio em `mrprivatelabel.com.br`, o que muda o 3.01 (Ambos: perguntar ao cliente e à agência)
 - [x] 0.05 `[local]` Endereço: comercial com placa · residencial · coworking · caixa postal · só área de… N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [ ] 0.06 Plano mensal: hoje nenhum (vault `projetos/mxc/financeiro.md`, "Sem manutenção nenhuma", com a dúvida "decisão ou esquecimento?") (Mateus: decidir ou oferecer; sem plano vale o 6.05)
-- [ ] 0.07 Anúncio pago: não registrado; o comentário do header cita "tráfego pago" (index.html:1977) (cliente: confirmar; decide 3.11 e 3.26)
+- [x] 0.07 Anúncio pago: anúncio na Meta — Rodolpho (chegou por Manolo) pediu pixel e token da API de conversões em 23/10, pelo WhatsApp; Google Ads segue sem registro (3.26) — 29/10
 - [x] 0.08 Público só no Brasil: lojista brasileiro, copy pt-BR, nenhum pedido de outro país (leitura MXC do CLAUDE.md "O que é") — 10/10
 - [x] 0.09 Nicho não regulado: confecção de roupa, sem conselho nem ANVISA (leitura MXC); a lei PE de tabela de preço vale só pra saúde (1.121) — 10/10
 - [ ] 0.10 Treino de IA: sem decisão; desde 14/10 o `robots.txt` está aberto e treino fica liberado por omissão (opção A do molde) (cliente: decidir por escrito; a recusa vai no robots, robô por robô — opção B do molde)
@@ -188,7 +188,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 1.25 WhatsApp: o funil é um grupo (`chat.whatsapp.com`, index.html:2391), sem número nem mensagem pronta por intenção; sem a bolinha padrão MXC, só a barra do celular (index.html:2385-2387) (Mateus: bolinha nesta landing ou a barra basta)
 - [x] 1.26 Formulário N/A — sem formulário e sem e-mail publicado na página
 - [ ] 1.27 Clique nos CTAs contado com seção e posição: nada mede (sem GA4) (MXC: com o 3.10)
-- [ ] 1.28 Aviso de cookies: não existe (grep 0) (MXC: entra junto do GA4, 3.10)
+- [ ] 1.28 Aviso de cookies: pronto no código desde 29/10 (`#ck` + bloco 0 do script, README "Pixel e API de conversões"), Recusar e Aceitar do mesmo tamanho, reabre pelo rodapé; só aparece com `PIXEL_ID` preenchido, que ainda está vazio (MXC: conferir no ar quando o ID entrar)
 - [ ] 1.29 Política de privacidade e linha legal: sem política; o rodapé não tem razão social, CNPJ, endereço nem e-mail (index.html:2367-2374) (MXC: política a partir do que roda; cliente: e-mail de contato)
 - [x] 1.30 Selo "Feito por MXC" com UTM e `rel="nofollow noopener"` (index.html:2372; commit 94f78ce) — 09/10
 - [ ] 1.70 Nenhum dado pessoal no GA4 (MXC: conferir quando o GA4 entrar)
@@ -291,7 +291,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [ ] 3.08 Foto do mês zero nas IAs: 5 perguntas, 5 IAs, 3 vezes (MXC)
 - [ ] 3.09 Case no portfólio da MXC: existe (`mxcdigital.com.br/portfolio/mr`, 200, curl 10/10) e o botão linka `https://mr-private-label.pages.dev/` (site-mxc-reformulacao/content/portfolio.ts:285-293) (MXC: trocar pro domínio na virada e pedir indexação)
 - [ ] 3.10 GA4: não existe; a página não faz nenhum request externo (README "Como rodar") (MXC: GA4 com aviso de cookies, salvo recusa escrita do cliente)
-- [ ] 3.11 `[pago]` GTM, Pixel e Clarity só depois do aceite (cliente: depende do 0.07; sem anúncio vira N/A)
+- [ ] 3.11 `[pago]` GTM, Pixel e Clarity só depois do aceite: pixel e API de conversões só carregam com `mr_consent=sim` (o servidor também confere, `functions/api/meta.js`), sem correspondência avançada e com `autoConfig` desligado; testado em 29/10 com ID falso (sem aceite: nada da Meta; com aceite: PageView e Lead nos dois caminhos; recusa desliga). Sem GTM nem Clarity (cliente: ID e token com Rodolpho; MXC: conferir na aba Eventos de teste depois)
 - [x] 3.12 `[loja]` Merchant Center criado na conta Google da MXC, como as outras contas do 3.06, com a… N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.49 `[loja]` Merchant ligado ao Search Console e ao GA4 N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.23 `[loja]` Microsoft Merchant Center importando do Google Merchant N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
