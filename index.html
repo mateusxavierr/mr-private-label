@@ -1515,7 +1515,7 @@ section{position:relative;z-index:1}
 .foot-mxc:hover{color:var(--ink)}
 .foot-mxc img{height:26px;width:auto}
 
-/* aviso de cookies — só existe com PIXEL_ID preenchido (bloco 0 do script).
+/* aviso de cookies — só existe com GTM_ID ou PIXEL_ID preenchido (bloco 0 do script).
    Cor fixa da paleta, e não as variáveis do motor: o aviso flutua sobre
    qualquer momento da jornada e o texto pequeno precisa de 7:1 em todos
    (Preto sobre Branco, 17:1). Os dois botões têm o mesmo tamanho porque
@@ -2618,11 +2618,11 @@ section{position:relative;z-index:1}
   <a class="cta js-cta" href="#"><span class="lbl">Entrar no grupo</span><span class="arw">&#8594;</span></a>
 </div>
 
-<!-- Aviso de cookies. Nasce escondido e só aparece com PIXEL_ID preenchido
-     e sem escolha gravada. Sem pixel a página não grava nada, então não
-     tem o que perguntar. -->
+<!-- Aviso de cookies. Nasce escondido e só aparece com GTM_ID ou PIXEL_ID
+     preenchido e sem escolha gravada. Sem os dois a página não grava nada,
+     então não tem o que perguntar. -->
 <div class="ck" id="ck" role="dialog" aria-label="Aviso de cookies" hidden>
-  <p>Usamos cookies para medir o resultado dos nossos anúncios (Meta Pixel). Você escolhe, e nada é coletado sem o seu aceite.</p>
+  <p>Usamos cookies para medir o resultado dos nossos anúncios (ferramentas do Google e da Meta). Você escolhe, e nada é coletado sem o seu aceite.</p>
   <div class="ck-bt">
     <button type="button" class="ck-nao" data-ck="nao">Recusar</button>
     <button type="button" class="ck-sim" data-ck="sim">Aceitar</button>
@@ -2634,9 +2634,15 @@ section{position:relative;z-index:1}
 const GRUPO_URL = "https://chat.whatsapp.com/Lcc3SPFlFLx5NvgtlSBc1Z";   /* link do grupo: trocar só aqui */
 document.querySelectorAll('.js-cta').forEach(a=>{a.href=GRUPO_URL;a.target="_blank";a.rel="noopener"});
 
-/* ── 0 · MEDIÇÃO DA META (pixel + API de conversões) ─────────────────
-   Nada da Meta carrega antes do aceite (SEO-MXC 3.11), e com PIXEL_ID
-   vazio a página não mostra aviso nem grava nada.
+/* ── 0 · MEDIÇÃO (GTM de Rodolpho + pixel e API de conversões) ───────
+   Nada de terceiro carrega antes do aceite (SEO-MXC 3.11), e com GTM_ID
+   e PIXEL_ID vazios a página não mostra aviso nem grava nada.
+   GTM: o contêiner é de Rodolpho, que configura as tags lá dentro. O
+   snippet é o oficial (o que ele colou no WhatsApp era meio gtag e não
+   dispara o evento gtm.js, que é o gatilho "Todas as páginas"). No
+   clique de qualquer botão do grupo vai {event:'lead'} pro dataLayer.
+   Pixel e GTM não ligam juntos com o pixel dentro do contêiner: a Meta
+   contaria cada evento duas vezes. Hoje o PIXEL_ID fica vazio.
    Cada evento sai por dois caminhos com o mesmo id: o pixel, pelo
    navegador, e functions/api/meta.js, pelo servidor. A Meta junta os
    dois e conta um. O servidor existe porque bloqueador de anúncio e o
@@ -2646,8 +2652,9 @@ document.querySelectorAll('.js-cta').forEach(a=>{a.href=GRUPO_URL;a.target="_bla
    Eventos: PageView ao abrir e Lead no clique de qualquer botão do grupo.
    A escolha fica no cookie mr_consent, que o servidor também confere. */
 const PIXEL_ID = "";   /* ID do pixel: trocar aqui E no META_PIXEL_ID do Cloudflare */
+const GTM_ID = "GTM-T7RXSVDS";   /* contêiner de Rodolpho (30/10) */
 (()=>{
-  if(!PIXEL_ID) return;
+  if(!PIXEL_ID && !GTM_ID) return;
   const ck=document.getElementById('ck'), abrir=document.getElementById('ck-abrir');
   const escolha=()=>(document.cookie.match(/(?:^|; )mr_consent=(sim|nao)/)||[])[1];
   const capi=(evento,id)=>fetch('/api/meta',{method:'POST',keepalive:true,
@@ -2655,12 +2662,24 @@ const PIXEL_ID = "";   /* ID do pixel: trocar aqui E no META_PIXEL_ID do Cloudfl
     body:JSON.stringify({evento,id,url:location.href})}).catch(()=>{});
   const enviar=evento=>{
     if(escolha()!=='sim') return;
+    if(gtm) dataLayer.push({event:evento.toLowerCase()});
+    if(!PIXEL_ID) return;
     const id=crypto.randomUUID();
     fbq('track',evento,{},{eventID:id});
     capi(evento,id);
   };
-  let ligado=false;
+  let ligado=false, gtm=false;
   function ligar(){
+    if(GTM_ID && !gtm){
+      gtm=true;
+      /* snippet oficial do GTM, sem o <noscript>: sem script não há aceite */
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer',GTM_ID);
+    }
+    if(!PIXEL_ID) return;
     if(ligado){ fbq('consent','grant'); return; }
     ligado=true;
     /* snippet oficial da Meta, sem o <noscript>: sem script não há aceite */
@@ -2685,12 +2704,17 @@ const PIXEL_ID = "";   /* ID do pixel: trocar aqui E no META_PIXEL_ID do Cloudfl
     ck.hidden=true;
     if(v==='sim') return ligar();
     if(ligado) fbq('consent','revoke');
-    /* recusa depois de aceitar: os cookies da Meta saem junto. O pixel grava
+    /* recusa depois de aceitar: os cookies de medição saem junto (Meta,
+       Google Analytics e Ads, e o que o contêiner pôs da Meta). Eles gravam
        no domínio-mãe, então apaga nos dois níveis */
     const mae=location.hostname.split('.').slice(-3).join('.');
-    ['_fbp','_fbc'].forEach(c=>[location.hostname,mae].forEach(d=>{
-      document.cookie=c+'=; Max-Age=0; Path=/; Domain='+d;
-    }));
+    document.cookie.split('; ').map(c=>c.split('=')[0])
+      .filter(c=>/^(_fbp|_fbc|_ga|_gid|_gat|_gcl)/.test(c))
+      .forEach(c=>[location.hostname,mae].forEach(d=>{
+        document.cookie=c+'=; Max-Age=0; Path=/; Domain='+d;
+      }));
+    /* o GTM não tem desligar: recarrega, e com mr_consent=nao nada sobe */
+    if(gtm) location.reload();
   }
   ck.querySelectorAll('[data-ck]').forEach(b=>b.addEventListener('click',()=>gravar(b.dataset.ck)));
   abrir.hidden=false;

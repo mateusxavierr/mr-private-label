@@ -8,8 +8,9 @@ do lojista. O funil leva a um grupo de WhatsApp.
 
 Não tem build, não tem dependência, não tem framework. `index.html` carrega o
 CSS e o JS inline, e as imagens e fontes são locais — a página não faz nenhum
-request externo, a não ser o pixel da Meta depois que o visitante aceita os
-cookies (seção Pixel e API de conversões).
+request externo, a não ser o Google Tag Manager (e o pixel da Meta, quando
+ligado) depois que o visitante aceita os cookies (seções Google Tag Manager e
+Pixel e API de conversões).
 
 Abrir o arquivo direto no navegador funciona. Para servir por HTTP:
 
@@ -84,6 +85,29 @@ const GRUPO_URL = "https://chat.whatsapp.com/Lcc3SPFlFLx5NvgtlSBc1Z";
 
 Todos os botões com a classe `js-cta` recebem esse valor no carregamento. Se o
 grupo trocar de link (ou o convite for redefinido no WhatsApp), muda só aqui.
+
+## Google Tag Manager
+
+Contêiner `GTM-T7RXSVDS`, de Rodolpho (tráfego), instalado em 30/10. Ele
+configura as tags dentro do GTM; a página só carrega o contêiner. **Mesmo aviso
+de cookies do pixel:** o GTM só carrega depois do "Aceitar" (SEO-MXC 3.11).
+Recusar depois de aceitar apaga os cookies `_ga`/`_gid`/`_gcl`/`_fbp`/`_fbc` e
+recarrega a página, porque o GTM não tem como ser desligado em tela.
+
+- **Snippet oficial**, no bloco 0 do script (`const GTM_ID`). O que Rodolpho
+  mandou era misturado com gtag e não dispara o evento `gtm.js`, que é o
+  gatilho "Todas as páginas" do GTM. Sem o `<noscript>`: sem script não há aceite.
+- **Clique no grupo:** todo botão `js-cta` manda `{event: 'lead'}` pro
+  `dataLayer`. No GTM vira gatilho "Evento personalizado" com nome `lead`.
+- **Pixel no GTM ou no código, nunca nos dois:** com o pixel da Meta dentro do
+  contêiner, o `PIXEL_ID` do código fica vazio, senão a Meta conta tudo dobrado
+  (e a API de conversões daqui fica desligada junto).
+- Trocar de contêiner: muda só o `GTM_ID`. Desligar: `GTM_ID = ""`.
+
+Conferir: abrir a página, aceitar, e no console `Object.keys(google_tag_manager)`
+tem que listar o ID. O que o contêiner publicado tem dentro:
+`curl -s "https://www.googletagmanager.com/gtm.js?id=GTM-T7RXSVDS" | grep -o '"tags":\[[^]]\{0,80\}'`
+— `"tags":[]` quer dizer que Rodolpho ainda não publicou nada.
 
 ## Pixel e API de conversões da Meta
 
@@ -192,3 +216,6 @@ divulgar e confirmar os números do brandbook (SEO.md 1.12).
 Pixel da Meta + API de conversões instalados em 2026-10-29, desligados até o ID
 e o token de Rodolpho entrarem (seção Pixel e API de conversões). Falta a
 política de privacidade (SEO.md 1.29).
+GTM de Rodolpho (`GTM-T7RXSVDS`) no ar desde 2026-10-30, atrás do aviso de
+cookies (seção Google Tag Manager). Em 30/10 o contêiner publicado estava vazio
+(versão 1, sem tag): falta Rodolpho publicar o que montou.
