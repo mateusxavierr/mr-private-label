@@ -11,7 +11,7 @@ tags: [mxc, mr-private-label, seo]
 · não valem: `[local]` `[loja]` `[ref]` `[UE]` `[plano]` `[plano 597]` `[blog]` `[portal]` `[evento]` `[saas]` `[vagas]` `[hotel]`
 **Plano:** nenhum (landing R$ 750, quitada; vault `projetos/mxc/financeiro.md`) · **Data:** 10/10/2026 · **molde:** `seo-mxc/SEO-MXC.md`
 
-**Atualizada pra lista de 346 itens em 10/10/2026** · virada de domínio 14/10 · 346 itens · 38 feitos · 182 N/A · 126 abertos
+**Atualizada pra lista de 346 itens em 10/10/2026** · virada de domínio 14/10 · 347 itens · 39 feitos · 183 N/A · 125 abertos
 
 "O que falta de SEO na MR?" = esta ficha. Contexto: [README.md](README.md) ("Publicação" e "Ordem da virada").
 
@@ -411,6 +411,7 @@ Se a decisão for o contrário, os 49 itens com `[local]` voltam a abrir.
 - [x] 7.14 `[loja]` Relatórios de Shopping do Search Console e diagnóstico do Merchant N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.31 `[loja]` Selo da loja do Google (store widget) no site quando o Merchant liberar N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
 - [x] L.37 `[loja]` "Buscas sem resultado" da busca interna lidas todo mês N/A — não é loja (a loja de atacado `mrprivatelabel.com.br` é outro site, fora do escopo)
+- [x] L.52 N/A — `[loja]` não vale pra este site (entrou na lista em 08/11/2026): Endereço que some ganha 301 no mesmo dia, sem depender de aviso de ninguém: verificação diária automática (`ferramentas/enderecos-loja.py` numa tarefa agendada) compara o mapa do site com o da véspera e acha produto e categoria que saíram e dão 404 no ar, porque o ERP apaga e recria a peça (endereço com sufixo novo), a cliente renomeia, tira uma cor ou exclui o esgotado. Destino pela regra MXC: mesmo produto com endereço novo e mesma categoria → o produto novo; senão → a categoria em que a peça estava (lida do breadcrumb quando ela entrou no mapa); sem nenhum dos dois, destino que não abre ou mais de 60 num dia (importação em massa) → lista "decidir", que ninguém cadastra sozinho. O 301 é cadastrado pelo caminho da plataforma (Nuvemshop: Configurações → Redirecionamentos 301, pelo painel; Shopify: Redirecionamentos de URL ou a API Redirects) e conferido no ar no mesmo dia; o histórico vai pro `REDIRECIONAMENTOS-AUTO.md` do projeto e o resumo pro dono do site. Plataforma que já cria o 301 sozinha quando o endereço muda (opção da Shopify ao trocar o handle) não dispensa a verificação: peça apagada e recriada pelo ERP não é troca de endereço. Nasce no go-live da loja, junto com o 3.06
 - [x] 7.15 `[local]` `[plano 597]` Geogrid repetido todo mês nas mesmas buscas N/A — não é `[local]`: fábrica B2B que vende pro Brasil todo; esta landing não tem Perfil da Empresa
 - [ ] 7.16 Vazamento pro Google: a cópia do GitHub Pages está aberta pro Google (2.09) e a indexação dela não foi conferida (MXC: Search Console ou `site:`; no índice, primeiro desligar a cópia ou pôr `noindex`, depois Remoções)
 - [x] 7.17 Ação manual N/A — nenhuma conhecida (a conferência é o 3.07, aberto); a regra vale se acontecer
